@@ -40,7 +40,7 @@ const RightDiv = styled.div`
   justify-content: flex-start;
 `;
 
-const Header: React.FC = () => (
+export const Header: React.FC = () => (
   <header>
     <HeaderContainerLink to="/" aria-label="Emily Fox Music Home">
       <LeftDiv aria-hidden>Emily Fox</LeftDiv>
@@ -48,5 +48,3 @@ const Header: React.FC = () => (
     </HeaderContainerLink>
   </header>
 );
-
-export default Header;
