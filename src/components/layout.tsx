@@ -8,9 +8,7 @@ const Layout: React.FC = ({ children }: PropsWithChildren<{}>) => {
     <>
       <GlobalFonts />
       <Header />
-      <div>
-        <main>{children}</main>
-      </div>
+      <main>{children}</main>
     </>
   );
 };
