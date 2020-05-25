@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fontFamily } from '../styles/fonts';
+import { fontFamily } from 'src/styles/fonts';
 
 export const PageHeading = styled.h1`
   font-family: ${fontFamily};
