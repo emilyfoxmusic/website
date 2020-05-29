@@ -7,3 +7,8 @@ export const PageHeading = styled.h1`
   font-size: 1.6rem;
   text-decoration: underline;
 `;
+
+export const Paragraph = styled.p`
+  font-family: ${fontFamily};
+  font-size: 1rem;
+`;
