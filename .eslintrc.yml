@@ -1,34 +1,69 @@
 env:
+  node: true
   browser: true
   es6: true
-  node: true
 extends:
   - plugin:react/recommended
   - eslint:recommended
-  - plugin:@typescript-eslint/eslint-recommended
-  - plugin:@typescript-eslint/recommended
   - plugin:import/errors
   - plugin:import/warnings
-  - plugin:import/typescript
+  - airbnb
+  - airbnb/hooks
   - plugin:prettier/recommended
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
-parser: '@typescript-eslint/parser'
+parser: 'babel-eslint'
 parserOptions:
-  ecmaFeatures:
-    jsx: true
   ecmaVersion: 2018
   sourceType: module
+  ecmaFeatures:
+    jsx: true
+  project: ./tsconfig.json
 plugins:
   - react
-  - '@typescript-eslint'
+  - prefer-arrow
 rules:
   prettier/prettier: warn
+  prefer-arrow/prefer-arrow-functions: error
+  react/prop-types:
+    - 0
+  import/order:
+    - error
+    - groups:
+        - external
+        - internal
+        - sibling
+        - index
+      pathGroups:
+        - # By default it only detects internal files that start with 'src', which ours don't. Note: this _should_
+          # be possible to do using the import/internal-regex setting, but I have not been able to get that working...
+          # See https://github.com/benmosher/eslint-plugin-import/blob/master/README.md#importinternal-regex
+          pattern: "@(components|pages|fonts|styles)/**"
+          group: internal
+          position: after
+      newlines-between: always
+      alphabetize:
+        order: asc
 settings:
   react:
     version: detect
   import/resolver:
     node:
-      paths: ["src"]
-      extensions: [".js", ".jsx", ".ts", ".tsx"]
+      extensions:
+        - .js
+        - .tsx
+        - .ts
+      moduleDirectory:
+        - node_modules
+        - src
+overrides:
+  - files: ["**/*.ts", "**/*.tsx"]
+    extends:
+      - plugin:@typescript-eslint/eslint-recommended
+      - plugin:@typescript-eslint/recommended
+      - plugin:import/typescript
+      - airbnb-typescript
+    parser: '@typescript-eslint/parser'
+    plugins:
+      - '@typescript-eslint'
