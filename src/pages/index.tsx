@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
+import Video from 'components/Video';
 import RoseImg from 'images/rose.svg';
 
 const NewAlbumContainer = styled.div`
@@ -30,6 +31,11 @@ const ButtonContainer = styled.div`
   }
 `;
 
+const VideoContainer = styled.div`
+  width: 100%;
+  margin: 2rem auto;
+`;
+
 const IndexPage: React.FC = () => (
   <Layout>
     <SEO title="Home" />
@@ -43,6 +49,12 @@ const IndexPage: React.FC = () => (
       <Button>Contact</Button>
       <Button>Tech</Button>
     </ButtonContainer>
+    <VideoContainer>
+      <Video
+        title="Bad Things Can Happen (Original Song)"
+        src="https://www.youtube.com/embed/peoXGwCcWBk"
+      />
+    </VideoContainer>
   </Layout>
 );
 
