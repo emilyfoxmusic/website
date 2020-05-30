@@ -20,6 +20,7 @@ const HalfOfHeaderCss = css`
 
 export const HeaderContainerLink = styled(Link)`
   display: flex;
+  text-decoration: none;
 `;
 
 export const LeftDiv = styled.div`
