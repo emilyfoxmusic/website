@@ -62,3 +62,9 @@ settings:
       moduleDirectory:
         - node_modules
         - src
+overrides:
+  - files:
+    - "**/*.ts"
+    rules:
+      import/prefer-default-export: off
+      prettier/prettier: warn
