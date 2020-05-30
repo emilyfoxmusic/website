@@ -35,9 +35,17 @@ module.exports = {
         exclude: /(node_modules|.cache|public)/,
         stages: ['develop'],
         options: {
-          failOnError: true
-        }
-      }
-    }
+          failOnError: true,
+        },
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /images/,
+        },
+      },
+    },
   ],
 };
