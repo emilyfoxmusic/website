@@ -9,7 +9,6 @@ const headerFontSize = '2.5rem';
 const HalfOfHeaderCss = css`
   font-family: ${fontFamily};
   font-size: ${headerFontSize};
-  font-weight: bold;
   width: 50%;
   height: ${headerHeight};
 
@@ -21,12 +20,15 @@ const HalfOfHeaderCss = css`
 export const HeaderContainerLink = styled(Link)`
   display: flex;
   text-decoration: none;
+
+  margin-top: 1rem;
 `;
 
 export const LeftDiv = styled.div`
   ${HalfOfHeaderCss}
   background: white;
   border: solid black 0.25rem;
+  border-left: none;
   color: black;
   justify-content: flex-end;
 `;
@@ -35,6 +37,7 @@ export const RightDiv = styled.div`
   ${HalfOfHeaderCss}
   background: black;
   border: solid white;
+  border-right: none;
   border-width: 0.25rem 0.25rem 0.25rem 0;
   color: white;
   justify-content: flex-start;
