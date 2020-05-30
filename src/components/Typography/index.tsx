@@ -7,6 +7,7 @@ export const PageHeading = styled.h1`
   font-size: 2rem;
   text-decoration: underline;
   font-weight: normal;
+  text-align: center;
 `;
 
 export const PageHeadingNoUnderline = styled.h1`
