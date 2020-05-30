@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 
 import { fontFamily } from 'styles/fonts';
 
-const headerHeight = '4rem';
-const headerFontSize = '2rem';
+const headerHeight = '5rem';
+const headerFontSize = '2.5rem';
 
 const HalfOfHeaderCss = css`
   font-family: ${fontFamily};
