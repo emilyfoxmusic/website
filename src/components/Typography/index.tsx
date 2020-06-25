@@ -2,18 +2,16 @@ import styled from 'styled-components';
 
 import { fontFamily } from 'styles/fonts';
 
-export const PageHeading = styled.h1`
-  font-family: ${fontFamily};
-  font-size: 2rem;
-  text-decoration: underline;
-  font-weight: normal;
-  text-align: center;
-`;
-
 export const PageHeadingNoUnderline = styled.h1`
   font-family: ${fontFamily};
   font-size: 2rem;
   font-weight: normal;
+  text-align: center;
+  margin: 2rem 0;
+`;
+
+export const PageHeading = styled(PageHeadingNoUnderline)`
+  text-decoration: underline;
 `;
 
 export const Paragraph = styled.p`
