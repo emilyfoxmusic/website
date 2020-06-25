@@ -4,12 +4,14 @@ import { Normalize } from 'styled-normalize';
 import Header from 'components/Header';
 import GlobalFonts from 'fonts/globalFonts';
 
+import { PageContainer } from './styles';
+
 const Layout: React.FC = ({ children }: PropsWithChildren<{}>) => (
   <>
     <Normalize />
     <GlobalFonts />
     <Header />
-    <main>{children}</main>
+    <PageContainer>{children}</PageContainer>
   </>
 );
 
