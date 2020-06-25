@@ -1,25 +1,40 @@
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 
+import { largeBreakpoint } from 'helpers/breakpoints';
+import ArrowImg from 'images/arrow.svg';
 import { fontFamily } from 'styles/fonts';
 
 export const Button = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   background: black;
   color: white;
-  border: black solid 0.25rem;
+  border: black solid 4px;
+  padding: 12px 16px;
 
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.25rem;
+  border-radius: 4px;
 
   font-family: ${fontFamily};
-  font-size: 1.5rem;
   text-decoration: none;
+
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+
+  margin: 16px 0;
+
+  ${largeBreakpoint`
+    font-size: 1.5rem;
+    padding: 12px 24px;
+  `}
 
   &:hover,
   &:focus {
     background: white;
     color: black;
-    border: black solid 0.25rem;
+    border: black solid 4px;
 
     & svg {
       stroke: black;
