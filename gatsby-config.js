@@ -35,7 +35,7 @@ module.exports = {
         exclude: /(node_modules|.cache|public)/,
         stages: ['develop'],
         options: {
-          failOnError: true,
+          failOnError: false,
         },
       },
     },
