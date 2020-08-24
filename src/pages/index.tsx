@@ -65,6 +65,9 @@ const VideoContainer = styled.div`
 
 const PortraitBackground = styled(BackgroundImage)`
   min-height: calc(100vw * (1080 / 1920));
+
+  width: 100vw;
+  margin: 0 calc((100% - 100vw) / 2);
 `;
 
 const IndexPage: React.FC = () => {
