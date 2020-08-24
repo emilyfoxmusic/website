@@ -18,6 +18,6 @@ export const PageContainer = styled.main`
   }
 
   font-family: ${fontFamily};
-  font-size: 1.25rem;
-  line-height: 1.5rem;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
 `;
