@@ -13,8 +13,13 @@ const Header: React.FC = () => (
           <a href="https://www.youtube.com/foxxemusic" aria-label="YouTube">
             <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
           </a>
-          <a href="https://www.facebook.com/emilyfoxmusic" aria-label="Facebook">
+          <a
+            href="https://www.facebook.com/emilyfoxmusic"
+            aria-label="Facebook">
             <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
+          </a>
+          <a href="https://emilyfoxmusic.bandcamp.com" aria-label="Bandcamp">
+            <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
           </a>
           <a href="mailto:emily@emilyfoxmusic.co.uk" aria-label="Email">
             <FontAwesomeIcon icon="envelope" aria-hidden />
