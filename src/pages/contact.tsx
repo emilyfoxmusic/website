@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Layout from 'components/Layout';
+import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 
@@ -21,13 +22,8 @@ const LinkWrapper = styled.div`
 `;
 
 const Contact: React.FC = () => (
-  <Layout
-    links={[
-      { text: 'home', path: '/' },
-      { text: 'music', path: '/music' },
-      { text: 'bio', path: '/bio' },
-      { text: 'tech', path: '/tech' },
-    ]}>
+  <Layout>
+    <SEO title="Emily Fox Music | Contact" />
     <MaxWidthContainer>
       <PageHeading>Contact</PageHeading>
       <LinkWrapper>

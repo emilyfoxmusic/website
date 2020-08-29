@@ -15,14 +15,9 @@ import {
 
 type LayoutProps = {
   fullHeightNav?: boolean;
-  links: {
-    text: string;
-    path: string;
-  }[];
 };
 
 const Layout: React.FC<LayoutProps> = ({
-  links,
   fullHeightNav,
   children,
 }: PropsWithChildren<{}>) => {
@@ -53,9 +48,10 @@ const Layout: React.FC<LayoutProps> = ({
           isFullHeight={fullHeightNav ?? false}>
           <MainContentContainer>
             <ButtonContainer>
-              {links.map(({ text, path }) => (
-                <ButtonLink to={path}>{text}</ButtonLink>
-              ))}
+              <ButtonLink to="/music">music</ButtonLink>
+              <ButtonLink to="/bio">bio</ButtonLink>
+              <ButtonLink to="/contact">contact</ButtonLink>
+              <ButtonLink to="/tech">tech</ButtonLink>
             </ButtonContainer>
           </MainContentContainer>
         </PortraitBackground>

@@ -7,13 +7,7 @@ import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 
 const Bio: React.FC = () => (
-  <Layout
-    links={[
-      { text: 'home', path: '/' },
-      { text: 'music', path: '/music' },
-      { text: 'contact', path: '/contact' },
-      { text: 'tech', path: '/tech' },
-    ]}>
+  <Layout>
     <SEO title="Emily Fox Music | Bio" />
     <PageHeading>Bio</PageHeading>
     <p>
@@ -40,7 +34,9 @@ const Bio: React.FC = () => (
     </p>
     <p>
       Business enquiries to:{' '}
-      <TextLink href="mailto:emily@emilyfoxmusic.co.uk" aria-label="send an email">
+      <TextLink
+        href="mailto:emily@emilyfoxmusic.co.uk"
+        aria-label="send an email">
         emily@emilyfoxmusic.co.uk
       </TextLink>
     </p>
