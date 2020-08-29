@@ -5,7 +5,7 @@ import { largeBreakpoint } from 'helpers/breakpoints';
 import { fontFamily } from 'styles/fonts';
 
 export const PageContainer = styled.main`
-  margin: 50px auto 0 auto;
+  margin: auto;
 
   width: calc(100vw - 64px);
 
