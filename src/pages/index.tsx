@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import Layout from 'components/Layout';
 import SEO from 'components/SEO';
-import TextLink from 'components/TextLink';
 import { PageHeadingNoUnderline } from 'components/Typography';
 import Video from 'components/Video';
 import { largeBreakpoint } from 'helpers/breakpoints';
@@ -48,15 +47,8 @@ const IndexPage: React.FC = () => {
       <NewAlbumContainer>
         <PageHeadingNoUnderline>
           New album:
-          <a
-            href="https://emilyfoxmusic.bandcamp.com"
-            tabIndex={-1}
-            aria-hidden>
-            <WhereFeelingsGrow aria-label="Where feelings grow" />
-          </a>
-          <TextLink href="https://emilyfoxmusic.bandcamp.com">
-            out now!
-          </TextLink>
+          <WhereFeelingsGrow aria-label="Where feelings grow" />
+          coming soon!
         </PageHeadingNoUnderline>
       </NewAlbumContainer>
       <VideoContainer>

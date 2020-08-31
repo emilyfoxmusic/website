@@ -19,9 +19,9 @@ const Bio: React.FC = () => (
     <p>
       Some years on and she now has{' '}
       <TextLink href="https://emilyfoxmusic.bandcamp.com">
-        three self-produced albums
+        two self-produced albums
       </TextLink>{' '}
-      under her belt,{' '}
+      under her belt, (and a third to be released shortly!),{' '}
       <TextLink href="https://https://www.youtube.com/user/foxxemusic">
         over 100 YouTube videos
       </TextLink>{' '}
