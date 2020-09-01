@@ -33,6 +33,7 @@ rules:
   prefer-arrow/prefer-arrow-functions: error
   react/jsx-one-expression-per-line: off
   react/jsx-closing-bracket-location: off
+  react/no-unescaped-entities: off
   react/prop-types:
     - 0
   import/order:
