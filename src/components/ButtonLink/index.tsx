@@ -4,13 +4,15 @@ import { Arrow, Button } from './styles';
 
 type ButtonLinkProps = {
   to: string;
+  className?: string;
 };
 
 const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
   to,
+  className,
   children,
 }) => (
-  <Button to={to} activeClassName="current-page">
+  <Button to={to} activeClassName="current-page" className={className}>
     {children}
     <Arrow />
   </Button>
