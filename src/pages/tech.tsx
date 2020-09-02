@@ -10,10 +10,11 @@ const Tech: React.FC = () => (
     <SEO title="Emily Fox Music | Tech" />
     <PageHeading>Tech</PageHeading>
     <p>
-      I started out using free and open source software because it was what I
-      had available, growing up with a Gentoo die-hard as a father (thanks,
-      dad!). But it soon became a conscious choice, and when I came to trying my
-      hand at music and video production, that was where I naturally went.
+      I started out using free and open source software (FOSS) because it was
+      what I had available, growing up with a Gentoo die-hard as a father
+      (thanks, dad!). But it soon became a conscious choice, and when I came to
+      trying my hand at music and video production, that was where I naturally
+      went.
     </p>
     <p>
       I have used a few different programs over the years, but I think I'm
