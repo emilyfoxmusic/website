@@ -1,3 +1,4 @@
+import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -24,9 +25,13 @@ const VideoContainer = styled.div`
   margin-top: 32px;
 `;
 
-const Music: React.FC = () => (
+const Music: React.FC<PageProps> = ({ location }) => (
   <Layout>
-    <SEO title="Emily Fox Music | Music" />
+    <SEO
+      title="Music"
+      description="Find the latest music from Emily Fox, original releases and YouTube covers."
+      location={location}
+    />
     <PageHeading>Music</PageHeading>
     <p>
       All my original music is available on{' '}
