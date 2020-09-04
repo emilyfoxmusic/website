@@ -42,21 +42,23 @@ const Layout: React.FC<LayoutProps> = ({
       <Normalize />
       <GlobalFonts />
       <Header />
-      <PageContainer>
-        <PortraitBackground
-          fluid={imageData}
-          isFullHeight={fullHeightNav ?? false}>
-          <MainContentContainer>
-            <ButtonContainer>
-              <ButtonLink to="/music">music</ButtonLink>
-              <ButtonLink to="/bio">bio</ButtonLink>
-              <ButtonLink to="/contact">contact</ButtonLink>
-              <ButtonLink to="/tech">tech</ButtonLink>
-            </ButtonContainer>
-          </MainContentContainer>
-        </PortraitBackground>
-        {children}
-      </PageContainer>
+      <div style={{ overflow: 'hidden' }}>
+        <PageContainer>
+          <PortraitBackground
+            fluid={imageData}
+            isFullHeight={fullHeightNav ?? false}>
+            <MainContentContainer>
+              <ButtonContainer>
+                <ButtonLink to="/music">music</ButtonLink>
+                <ButtonLink to="/bio">bio</ButtonLink>
+                <ButtonLink to="/contact">contact</ButtonLink>
+                <ButtonLink to="/tech">tech</ButtonLink>
+              </ButtonContainer>
+            </MainContentContainer>
+          </PortraitBackground>
+          {children}
+        </PageContainer>
+      </div>
     </>
   );
 };
