@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
+import { youtube, bandcamp, facebook, emailAddress } from 'utils/links';
+
 import { HeaderContainer, LeftDiv, RightDiv, SocialMedia } from './styles';
 
 const Header: React.FC = () => (
@@ -10,16 +12,16 @@ const Header: React.FC = () => (
       <RightDiv aria-hidden>| Music</RightDiv>
     </HeaderContainer>
     <SocialMedia aria-label="Social media links">
-      <a href="https://www.youtube.com/foxxemusic" aria-label="YouTube">
+      <a href={youtube} aria-label="YouTube">
         <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
       </a>
-      <a href="https://www.facebook.com/emilyfoxmusic" aria-label="Facebook">
+      <a href={facebook} aria-label="Facebook">
         <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
       </a>
-      <a href="https://emilyfoxmusic.bandcamp.com" aria-label="Bandcamp">
+      <a href={bandcamp} aria-label="Bandcamp">
         <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
       </a>
-      <a href="mailto:emily@emilyfoxmusic.co.uk" aria-label="Email">
+      <a href={`mailto:${emailAddress}`} aria-label="Email">
         <FontAwesomeIcon icon="envelope" aria-hidden />
       </a>
     </SocialMedia>

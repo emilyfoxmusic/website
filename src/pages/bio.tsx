@@ -5,6 +5,7 @@ import { Rose } from 'components/Rose';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
+import { bandcamp, youtube, emailAddress } from 'utils/links';
 
 const Bio: React.FC = () => (
   <Layout>
@@ -18,15 +19,10 @@ const Bio: React.FC = () => (
     </p>
     <p>
       Some years on and she now has{' '}
-      <TextLink href="https://emilyfoxmusic.bandcamp.com">
-        two self-produced albums
-      </TextLink>{' '}
-      under her belt, (and a third to be released shortly!),{' '}
-      <TextLink href="https://https://www.youtube.com/user/foxxemusic">
-        over 100 YouTube videos
-      </TextLink>{' '}
-      on her channel, and even a performance at the Royal Albert Hall to her
-      name.
+      <TextLink href={bandcamp}>two self-produced albums</TextLink> under her
+      belt, (and a third to be released shortly!),{' '}
+      <TextLink href={youtube}>over 100 YouTube videos</TextLink> on her
+      channel, and even a performance at the Royal Albert Hall to her name.
     </p>
     <p>
       By day Emily is a software developer/tech lead for a UK-based software
@@ -34,10 +30,8 @@ const Bio: React.FC = () => (
     </p>
     <p>
       Business enquiries to:{' '}
-      <TextLink
-        href="mailto:emily@emilyfoxmusic.co.uk"
-        aria-label="send an email">
-        emily@emilyfoxmusic.co.uk
+      <TextLink href={`mailto:${emailAddress}`} aria-label="send an email">
+        {emailAddress}
       </TextLink>
     </p>
     <Rose />
