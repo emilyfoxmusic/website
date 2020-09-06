@@ -1,10 +1,15 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useReducer } from 'react';
 
 import TextLink from 'components/TextLink';
 import { count } from 'helpers/goatcounter';
 
-import { InnerContainer, OuterContainer, CloseButton, Text } from './styles';
+import {
+  InnerContainer,
+  OuterContainer,
+  CloseButton,
+  Text,
+  Icon,
+} from './styles';
 
 const key = 'privacyClosed';
 
@@ -61,8 +66,8 @@ const PrivacyBanner: React.FC = () => {
           .
         </Text>
         <CloseButton type="button" onClick={hidePrivacyNotice}>
-          <span>Close</span>
-          <FontAwesomeIcon icon="times-circle" />
+          Close
+          <Icon icon="times-circle" />
         </CloseButton>
       </InnerContainer>
     </OuterContainer>
