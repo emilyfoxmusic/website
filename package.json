@@ -62,7 +62,6 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "lint": "eslint \"src/**/*.{js,jsx,tsx,ts}\"",
     "lint:fix": "prettier --write \"**/*.{js,jsx,json,md,tsx,ts}\" && eslint \"src/**/*.{js,jsx,tsx,ts}\"",
-    "tsc": "tsc",
-    "postinstall": "rm -rf node_modules/@types/react-native"
+    "tsc": "tsc"
   }
 }
