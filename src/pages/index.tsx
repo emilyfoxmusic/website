@@ -7,6 +7,7 @@ import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
 import { largeBreakpoint } from 'helpers/breakpoints';
+import { count } from 'helpers/goatcounter';
 import WhereFeelingsGrowImg from 'images/where-feelings-grow.svg';
 
 import '../utils/icons';
@@ -46,6 +47,9 @@ const MusicButton = styled(ButtonLink)`
 `;
 
 const IndexPage: React.FC<PageProps> = ({ location }) => {
+  const trackAlbumCta = (): void => {
+    count({ path: 'album-cta', title: 'Album CTA', event: true });
+  };
   return (
     <Layout fullHeightNav>
       <SEO
@@ -59,7 +63,9 @@ const IndexPage: React.FC<PageProps> = ({ location }) => {
           coming soon!
         </PageHeadingNoUnderline>
       </NewAlbumContainer>
-      <MusicButton to="/music/">Listen</MusicButton>
+      <MusicButton to="/music/" onClick={trackAlbumCta}>
+        Listen
+      </MusicButton>
     </Layout>
   );
 };
