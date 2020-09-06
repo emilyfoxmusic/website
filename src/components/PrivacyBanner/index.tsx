@@ -9,6 +9,7 @@ import {
   CloseButton,
   Text,
   Icon,
+  Spacing,
 } from './styles';
 
 const key = 'privacyClosed';
@@ -34,43 +35,45 @@ const PrivacyBanner: React.FC = () => {
   }
 
   return (
-    <OuterContainer>
-      <InnerContainer>
-        <Text>
-          I use{' '}
-          <TextLink
-            href="https://www.goatcounter.com/"
-            onClick={(): void =>
-              count({
-                path: 'privacy-goatcounter',
-                title: 'Goatcounter',
-                event: true,
-              })
-            }>
-            GoatCounter
-          </TextLink>{' '}
-          to <strong>anonymously</strong> track visits to this site in order to
-          make sure that it is doing its job effectively! For more details see
-          the{' '}
-          <TextLink
-            href="https://www.goatcounter.com/privacy"
-            onClick={(): void =>
-              count({
-                path: 'privacy-goatcounter-policy',
-                title: 'Goatcounter PP',
-                event: true,
-              })
-            }>
-            GoatCounter privacy policy
-          </TextLink>
-          .
-        </Text>
-        <CloseButton type="button" onClick={hidePrivacyNotice}>
-          Close
-          <Icon icon="times-circle" />
-        </CloseButton>
-      </InnerContainer>
-    </OuterContainer>
+    <Spacing>
+      <OuterContainer>
+        <InnerContainer>
+          <Text>
+            I use{' '}
+            <TextLink
+              href="https://www.goatcounter.com/"
+              onClick={(): void =>
+                count({
+                  path: 'privacy-goatcounter',
+                  title: 'Goatcounter',
+                  event: true,
+                })
+              }>
+              GoatCounter
+            </TextLink>{' '}
+            to <strong>anonymously</strong> track visits to this site in order
+            to make sure that it is doing its job effectively! For more details
+            see the{' '}
+            <TextLink
+              href="https://www.goatcounter.com/privacy"
+              onClick={(): void =>
+                count({
+                  path: 'privacy-goatcounter-policy',
+                  title: 'Goatcounter PP',
+                  event: true,
+                })
+              }>
+              GoatCounter privacy policy
+            </TextLink>
+            .
+          </Text>
+          <CloseButton type="button" onClick={hidePrivacyNotice}>
+            Close
+            <Icon icon="times-circle" />
+          </CloseButton>
+        </InnerContainer>
+      </OuterContainer>
+    </Spacing>
   );
 };
 

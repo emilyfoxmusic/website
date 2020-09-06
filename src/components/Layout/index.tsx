@@ -44,7 +44,6 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
     <>
       <Normalize />
       <GlobalFonts />
-      <PrivacyBanner />
       <Header />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>
@@ -78,6 +77,7 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
           </PortraitBackground>
           {children}
         </PageContainer>
+        <PrivacyBanner />
       </div>
     </>
   );

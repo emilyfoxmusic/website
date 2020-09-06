@@ -5,11 +5,20 @@ import { largeBreakpoint } from 'helpers/breakpoints';
 import { red } from 'styles/colors';
 import { fontFamily } from 'styles/fonts';
 
+export const Spacing = styled.div`
+  height: 110px;
+`;
+
 export const OuterContainer = styled.div`
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background: white;
 
   display: flex;
   justify-content: center;
+
+  border-top: black solid 2px;
 `;
 
 export const InnerContainer = styled.div`
@@ -29,7 +38,8 @@ export const Text = styled.p`
   margin: 8px 16px;
 
   ${largeBreakpoint`
-    margin: 16px 32px 8px;
+    margin: 16px 32px;
+    line-height: 1.6rem;
   `}
 `;
 
@@ -40,7 +50,7 @@ export const CloseButton = styled.button`
 
   display: flex;
   align-items: center;
-  margin: auto;
+  margin: 0 auto 16px;
 
   &:hover {
     color: ${red};
