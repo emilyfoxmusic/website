@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
+import { red } from 'styles/colors';
+
 export const Link = styled.a`
   color: black;
 
   &:hover {
-    color: #c60000;
+    color: ${red};
   }
 
   &:focus {

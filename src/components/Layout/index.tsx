@@ -1,9 +1,10 @@
 import { useStaticQuery, graphql } from 'gatsby';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { Normalize } from 'styled-normalize';
 
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
+import PrivacyBanner from 'components/PrivacyBanner';
 import GlobalFonts from 'fonts/globalFonts';
 
 import {
@@ -17,10 +18,7 @@ type LayoutProps = {
   fullHeightNav?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({
-  fullHeightNav,
-  children,
-}: PropsWithChildren<{}>) => {
+const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
   const { portrait } = useStaticQuery(
     graphql`
       query {
@@ -41,6 +39,7 @@ const Layout: React.FC<LayoutProps> = ({
     <>
       <Normalize />
       <GlobalFonts />
+      <PrivacyBanner />
       <Header />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>

@@ -4,6 +4,6 @@ import {
   faFacebook,
   faBandcamp,
 } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faEnvelope, faYoutube, faFacebook, faBandcamp);
+library.add(faEnvelope, faYoutube, faFacebook, faBandcamp, faTimesCircle);
