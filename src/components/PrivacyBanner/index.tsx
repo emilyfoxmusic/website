@@ -8,10 +8,15 @@ import { InnerContainer, OuterContainer, CloseButton, Text } from './styles';
 const key = 'privacyClosed';
 
 const PrivacyBanner: React.FC = () => {
-  const [privacyHidden, hidePrivacyNotice] = useReducer(() => {
-    localStorage.setItem(key, 'true');
-    return true;
-  }, !!localStorage.getItem(key));
+  const [privacyHidden, hidePrivacyNotice] = useReducer(
+    () => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(key, 'true');
+      }
+      return true;
+    },
+    typeof window !== 'undefined' ? !!localStorage.getItem(key) : false
+  );
 
   if (privacyHidden) {
     return null;
