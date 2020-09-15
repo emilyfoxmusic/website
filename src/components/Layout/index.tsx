@@ -1,11 +1,9 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import React from 'react';
-import { Normalize } from 'styled-normalize';
 
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
 import PrivacyBanner from 'components/PrivacyBanner';
-import GlobalFonts from 'fonts/globalFonts';
 import { count } from 'helpers/goatcounter';
 
 import {
@@ -42,8 +40,6 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
 
   return (
     <>
-      <Normalize />
-      <GlobalFonts />
       <Header />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>
