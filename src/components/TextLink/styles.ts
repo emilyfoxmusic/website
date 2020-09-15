@@ -17,5 +17,6 @@ export const Link = styled.a`
 
 export const ExternalLinkIcon = styled(FontAwesomeIcon)`
   margin-left: 6px;
-  height: 14px;
+  height: 14px !important;
+  width: 14px !important;
 `;
