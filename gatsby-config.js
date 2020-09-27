@@ -25,7 +25,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#000000`,
         display: `minimal-ui`,
-        icon: `src/images/rose.svg`,
+        icon: `src/images/favicon.png`,
       },
     },
     `gatsby-plugin-resolve-src`,
