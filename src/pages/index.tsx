@@ -58,7 +58,7 @@ const IndexPage: React.FC<PageProps> = ({ location }) => {
         <PageHeadingNoUnderline>
           New album:
           <WhereFeelingsGrow aria-label="Where feelings grow" />
-          coming soon!
+          out now!
         </PageHeadingNoUnderline>
       </NewAlbumContainer>
       <MusicButton to="/music/" onClick={trackAlbumCta}>

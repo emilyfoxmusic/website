@@ -32,9 +32,9 @@ const Bio: React.FC<PageProps> = ({ location }) => {
         <TextLink
           href={bandcamp}
           onClick={(): void => trackBioLink('Bandcamp')}>
-          two self-produced albums
+          three self-produced albums
         </TextLink>{' '}
-        under her belt, (and a third to be released shortly!),{' '}
+        under her belt,{' '}
         <TextLink href={youtube} onClick={(): void => trackBioLink('YouTube')}>
           over 100 YouTube videos
         </TextLink>{' '}
