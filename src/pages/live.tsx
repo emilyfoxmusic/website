@@ -69,11 +69,6 @@ const Live: React.FC<PageProps> = () => {
 
   return (
     <Layout liveLayout>
-      <div style={{ background: 'red', width: '100%' }}>
-        {user.isAuthenticated
-          ? `You are logged in as ${user.username}`
-          : 'You are not currently signed in'}
-      </div>
       <Router basepath="/live">
         <Queue path="/queue" />
         <Songlist path="/songlist" />

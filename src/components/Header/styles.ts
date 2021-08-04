@@ -2,6 +2,7 @@ import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
 import { largeBreakpoint } from 'helpers/breakpoints';
+import { mediumRed } from 'styles/colors';
 import { fontFamily } from 'styles/fonts';
 
 const HalfOfHeaderCss = css`
@@ -85,4 +86,24 @@ export const SocialMedia = styled.nav`
     margin: 8px;
     color: black;
   }
+`;
+
+export const UserBanner = styled.div`
+  background: black;
+  color: white;
+  text-align: right;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  padding: 8px 32px;
+
+  font-family: ${fontFamily};
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+`;
+
+export const Username = styled.b`
+  color: ${mediumRed};
 `;
