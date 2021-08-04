@@ -20,6 +20,8 @@
     "typescript": "^3.9.3"
   },
   "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "@types/react-helmet": "^6.0.0",
     "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
@@ -50,6 +52,9 @@
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "lint": "eslint \"src/**/*.{js,jsx,tsx,ts}\"",
-    "lint:fix": "prettier --write \"**/*.{js,jsx,json,md,tsx,ts}\" && eslint \"src/**/*.{js,jsx,tsx,ts}\""
+    "lint:fix": "prettier --write \"**/*.{js,jsx,json,md,tsx,ts}\" && eslint \"src/**/*.{js,jsx,tsx,ts}\"",
+    "tsc": "tsc",
+    "postinstall": "Due to a conflict in types for styled components dependencies, we need this hack :( See https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33311#issuecomment-560230205.",
+    "postinstall": "rm -rf node_modules/@types/react-native"
   }
 }
