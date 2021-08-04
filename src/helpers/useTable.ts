@@ -17,12 +17,12 @@ type ProcessedTableData<TData> = {
 const useTable = <TData extends Record<string, number | string>>(
   data: TableData<TData>,
   defaultSortKey: keyof TData,
-  pageSize = 20
+  pageSize?: number
 ): ProcessedTableData<TData> => {
   const [sortBy, setSortBy] = useState<keyof TData>(defaultSortKey);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const lastPage = Math.ceil(data.length / pageSize);
+  const lastPage = pageSize ? Math.ceil(data.length / pageSize) : 1;
 
   const setNextPage = (): void =>
     setCurrentPage(state => (state + 1 <= lastPage ? state + 1 : state));
@@ -37,18 +37,18 @@ const useTable = <TData extends Record<string, number | string>>(
     setCurrentPage(page);
   };
 
-  const currentPageData = data
-    .sort((a, b) => {
-      const aVal = a[sortBy];
-      const bVal = b[sortBy];
-      return typeof aVal === 'number'
-        ? aVal - (bVal as number)
-        : aVal.localeCompare(bVal as string);
-    })
-    .slice(pageSize * (currentPage - 1), pageSize * currentPage);
+  const sortedData = data.sort((a, b) => {
+    const aVal = a[sortBy];
+    const bVal = b[sortBy];
+    return typeof aVal === 'number'
+      ? aVal - (bVal as number)
+      : aVal.localeCompare(bVal as string);
+  });
 
   return {
-    data: currentPageData,
+    data: pageSize
+      ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
+      : sortedData,
     setSortBy,
     pagination: {
       currentPage,
