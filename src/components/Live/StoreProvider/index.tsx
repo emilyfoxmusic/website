@@ -4,6 +4,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
+import analyticsSaga from 'state/analyticsSaga';
 import notificationsSaga from 'state/notificationsSaga';
 import queueManagementSaga from 'state/queue/queueManagementSaga';
 import reducer from 'state/reducer';
@@ -26,6 +27,7 @@ const StoreProvider: React.FC = ({ children }) => {
   sagaMiddleware.run(notificationsSaga);
   sagaMiddleware.run(authenticateSaga);
   sagaMiddleware.run(requestStatusSaga);
+  sagaMiddleware.run(analyticsSaga);
 
   return <Provider store={store}>{children}</Provider>;
 };

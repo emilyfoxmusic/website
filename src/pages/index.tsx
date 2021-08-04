@@ -7,7 +7,7 @@ import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
 import { largeBreakpoint } from 'helpers/breakpoints';
-import { count } from 'helpers/goatcounter';
+import { trackCta } from 'helpers/goatcounter';
 import WhereFeelingsGrowImg from 'images/where-feelings-grow.svg';
 
 const NewAlbumContainer = styled.div`
@@ -44,28 +44,23 @@ const MusicButton = styled(ButtonLink)`
   `}
 `;
 
-const IndexPage: React.FC<PageProps> = ({ location }) => {
-  const trackAlbumCta = (): void => {
-    count({ path: 'album-cta', title: 'Album CTA', event: true });
-  };
-  return (
-    <Layout fullHeightNav>
-      <SEO
-        description="The home of Emily Fox Music: new album 'Where Feelings Grow' coming soon!"
-        location={location}
-      />
-      <NewAlbumContainer>
-        <PageHeadingNoUnderline>
-          New album:
-          <WhereFeelingsGrow aria-label="Where feelings grow" />
-          out now!
-        </PageHeadingNoUnderline>
-      </NewAlbumContainer>
-      <MusicButton to="/music/" onClick={trackAlbumCta}>
-        Listen
-      </MusicButton>
-    </Layout>
-  );
-};
+const IndexPage: React.FC<PageProps> = ({ location }) => (
+  <Layout fullHeightNav>
+    <SEO
+      description="The home of Emily Fox Music: new album 'Where Feelings Grow' coming soon!"
+      location={location}
+    />
+    <NewAlbumContainer>
+      <PageHeadingNoUnderline>
+        New album:
+        <WhereFeelingsGrow aria-label="Where feelings grow" />
+        out now!
+      </PageHeadingNoUnderline>
+    </NewAlbumContainer>
+    <MusicButton to="/music/" onClick={() => trackCta('Album')}>
+      Listen
+    </MusicButton>
+  </Layout>
+);
 
 export default IndexPage;

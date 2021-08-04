@@ -2,6 +2,7 @@
 
 import { TakeableChannel, eventChannel } from 'redux-saga';
 
+import { trackError } from 'helpers/goatcounter';
 import { notifyError } from 'helpers/notify';
 import {
   QUEUE_ADD,
@@ -24,7 +25,7 @@ const onOpen: WebsocketHandler = () => () => {
 };
 
 const onError: WebsocketHandler = emitter => event => {
-  notifyError('Socket communication error - you may need to refresh', event);
+  notifyError('Communication error - you may need to refresh', event);
   emitter({ type: WS_ERROR });
 };
 
@@ -60,6 +61,7 @@ const onMessage = (emitter: (a: RootAction) => void) => (event: {
         }
     }
   } catch (error) {
+    trackError('Error while processing websocket message');
     console.error('Error while processing websocket message', event, error);
   }
   return undefined;

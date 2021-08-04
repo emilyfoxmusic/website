@@ -4,7 +4,7 @@ import React from 'react';
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
 import PrivacyBanner from 'components/PrivacyBanner';
-import { count } from 'helpers/goatcounter';
+import { trackInternalNav } from 'helpers/goatcounter';
 
 import {
   PageContainer,
@@ -39,47 +39,42 @@ const Layout: React.FC<LayoutProps> = ({
 
   const imageData = portrait.childImageSharp.fluid;
 
-  const trackNavClick = (path: string): void => {
-    count({ path: `internal-nav:${path}`, title: path, event: true });
-  };
-
   const navButtons = liveLayout ? (
     <>
-      <ButtonLink
-        back
-        to="/music/"
-        onClick={(): void => trackNavClick('music')}>
+      <ButtonLink back to="/" onClick={(): void => trackInternalNav('Back')}>
         Back
       </ButtonLink>
-      <ButtonLink to="/live/" onClick={(): void => trackNavClick('music')}>
+      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
         Watch
       </ButtonLink>
       <ButtonLink
         to="/live/songlist/"
-        onClick={(): void => trackNavClick('music')}>
+        onClick={(): void => trackInternalNav('Songlist')}>
         Song list
       </ButtonLink>
       <ButtonLink
         to="/live/queue/"
-        onClick={(): void => trackNavClick('music')}>
+        onClick={(): void => trackInternalNav('Queue')}>
         Current queue
       </ButtonLink>
     </>
   ) : (
     <>
-      <ButtonLink to="/music/" onClick={(): void => trackNavClick('music')}>
+      <ButtonLink to="/music/" onClick={(): void => trackInternalNav('Music')}>
         music
       </ButtonLink>
-      <ButtonLink to="/bio/" onClick={(): void => trackNavClick('bio')}>
+      <ButtonLink to="/bio/" onClick={(): void => trackInternalNav('Bio')}>
         bio
       </ButtonLink>
-      <ButtonLink to="/contact/" onClick={(): void => trackNavClick('contact')}>
+      <ButtonLink
+        to="/contact/"
+        onClick={(): void => trackInternalNav('Contact')}>
         contact
       </ButtonLink>
-      <ButtonLink to="/tech/" onClick={(): void => trackNavClick('tech')}>
+      <ButtonLink to="/tech/" onClick={(): void => trackInternalNav('Tech')}>
         tech
       </ButtonLink>
-      <ButtonLink to="/live/" onClick={(): void => trackNavClick('live')}>
+      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
         live
       </ButtonLink>
     </>

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useRef, useEffect, Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { count } from 'helpers/goatcounter';
+import { trackInternalNav, trackSocialsHeaderClick } from 'helpers/goatcounter';
 import {
   RequestStatusAction,
   STATUS_REQUEST_UPDATE,
@@ -43,14 +43,6 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
     return () =>
       window.removeEventListener('resize', adjustBodyPaddingForUserBanner);
   }, []);
-
-  const trackSocialsEvent = (title: string): void => {
-    count({ path: `header-socials: ${title}`, title, event: true });
-  };
-
-  const trackHomeNavClick = (): void => {
-    count({ path: 'internal-nav:home', title: 'home', event: true });
-  };
 
   return (
     <header>
@@ -96,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
       <HeaderContainer
         to="/"
         aria-label="Emily Fox Music"
-        onClick={trackHomeNavClick}>
+        onClick={() => trackInternalNav('Home')}>
         <LeftDiv aria-hidden>Emily Fox</LeftDiv>
         <RightDiv aria-hidden>| Music</RightDiv>
       </HeaderContainer>
@@ -104,25 +96,33 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
         <a
           href={youtube}
           aria-label="YouTube"
-          onClick={(): void => trackSocialsEvent('YouTube')}>
+          onClick={(): void => trackSocialsHeaderClick('YouTube')}
+          target="_blank"
+          rel="noreferrer">
           <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
         </a>
         <a
           href={facebook}
           aria-label="Facebook"
-          onClick={(): void => trackSocialsEvent('Facebook')}>
+          onClick={(): void => trackSocialsHeaderClick('Facebook')}
+          target="_blank"
+          rel="noreferrer">
           <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
         </a>
         <a
           href={bandcamp}
           aria-label="Bandcamp"
-          onClick={(): void => trackSocialsEvent('Bandcamp')}>
+          onClick={(): void => trackSocialsHeaderClick('Bandcamp')}
+          target="_blank"
+          rel="noreferrer">
           <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
         </a>
         <a
           href={`mailto:${emailAddress}`}
           aria-label="Email"
-          onClick={(): void => trackSocialsEvent('Email')}>
+          onClick={(): void => trackSocialsHeaderClick('Email')}
+          target="_blank"
+          rel="noreferrer">
           <FontAwesomeIcon icon="envelope" aria-hidden />
         </a>
       </SocialMedia>

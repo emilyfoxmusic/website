@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { trackAction } from 'helpers/goatcounter';
 import { PaginationInfo } from 'helpers/useTable';
 
 import { PaginationButton, PaginationList, PaginationListItem } from './styles';
@@ -28,6 +29,7 @@ const Pagination: React.FC<PaginationInfo> = ({
               onClick={(e: { preventDefault: () => void }) => {
                 e.preventDefault();
                 setPage(page);
+                trackAction(`Pagination - page ${page}`);
               }}
               aria-label={`Go to page ${page}`}>
               {page}

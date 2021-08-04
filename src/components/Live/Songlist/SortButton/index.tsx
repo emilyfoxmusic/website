@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { trackAction } from 'helpers/goatcounter';
 import { DataObject, SortInfo } from 'helpers/useTable';
 
 import { CurrentArrow, SortButtonStyle } from './styles';
@@ -18,7 +19,10 @@ const SortButton = <TData extends DataObject>({
     <SortButtonStyle
       type="button"
       $active={active}
-      onClick={() => sort.toggleSort(sortKey)}
+      onClick={() => {
+        sort.toggleSort(sortKey);
+        trackAction(`Toggle sort by ${sortKey}`);
+      }}
       aria-label={sort.ariaToggleText(sortKey)}>
       <CurrentArrow
         aria-hidden

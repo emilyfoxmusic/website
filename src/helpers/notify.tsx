@@ -3,7 +3,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { count } from 'helpers/goatcounter';
+import { trackError } from 'helpers/goatcounter';
 
 export const notifyEvent = (message: string, onClick: () => void): void => {
   toast.dark(message, { onClick });
@@ -23,11 +23,7 @@ export const notifyError = (
   onClick?: () => void
 ): void => {
   console.error(message, error);
-  count({
-    event: true,
-    title: message,
-    path: `error:${message.toLowerCase().replace(/ /g, '-')}`,
-  });
+  trackError(message);
   toast.error(
     () => (
       <>

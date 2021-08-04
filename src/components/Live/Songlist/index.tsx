@@ -14,7 +14,7 @@ import { PageHeading } from 'components/Typography';
 import { buildTwitchRedirectUrl } from 'helpers/auth';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
-import { count } from 'helpers/goatcounter';
+import { trackAction } from 'helpers/goatcounter';
 import useTable, { SortConfig } from 'helpers/useTable';
 import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
 import { RootState } from 'state/types';
@@ -117,11 +117,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
             <TwitchLoginButton
               onClick={() => {
                 navigate(buildTwitchRedirectUrl());
-                count({
-                  path: 'live: authenticate with twitch',
-                  title: 'authenticate',
-                  event: true,
-                });
+                trackAction('Authenticate');
               }}>
               <TwitchIcon />
               Sign in with twitch to request a song
