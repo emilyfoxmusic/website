@@ -65,9 +65,7 @@ function* loadAuthentication(): Generator<
   never
 > {
   const user = yield select((state: RootState) => state.user);
-  console.info(user);
   if ((user as Principal).isAuthenticated) {
-    console.info('nope');
     return;
   }
   const storedPrincipal = (yield call(
