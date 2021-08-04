@@ -1,10 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
-import LiveHeader from 'components/LiveHeader';
 import { mediumRed } from 'styles/colors';
+import { fontFamily } from 'styles/fonts';
 
 export const PageContainer = styled.main`
-  width: 550px;
+  max-width: 550px;
 
   background: black;
   color: white;
@@ -15,19 +16,69 @@ export const PageContainer = styled.main`
   left: 0;
   bottom: 0;
 
-  border-top: solid white 4px;
+  border-top: solid white 1px;
+  border-right: solid white 1px;
 `;
 
-export const SmallRequestHeader = styled(LiveHeader)`
-  display: block;
-  right: unset;
-  border-radius: 0 0 8px 0;
+export const UnderlinedText = styled.span`
+  text-decoration: underline;
+`;
+
+export const UnderlinedTextWithMargin = styled(UnderlinedText)`
+  margin: 0 10px;
+`;
+
+const HeaderItem = styled.div`
+  font-size: 1.5rem;
+  color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
   padding: 12px 16px;
-  font-weight: bold;
 
-  border-right: solid white 4px;
-  // border-bottom: solid white 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ${fontFamily};
 
+  animation: headeritem 30s infinite;
+
+  @keyframes headeritem {
+    0% {
+      transform: translate3d(0px, -45px, 0px);
+      opacity: 0;
+    }
+    5% {
+      transform: translate3d(0px, 0px, 0px);
+      opacity: 1;
+    }
+    35% {
+      transform: translate3d(0px, 0px, 0px);
+      opacity: 1;
+    }
+    40%,
+    100% {
+      transform: translate3d(0px, -45px, 0px);
+      opacity: 0;
+    }
+  }
+`;
+
+export const RequestStatus = styled(HeaderItem)`
+  animation-delay: 15s;
+`;
+
+export const RequestIcon = styled(FontAwesomeIcon)`
+  stroke: black;
+  stroke-width: 32px;
+`;
+
+export const Social = styled(HeaderItem)``;
+
+export const SocialIcon = styled(FontAwesomeIcon)`
+  height: 32px !important;
+  width: 32px !important;
+  margin-right: 8px;
 `;
 
 export const Table = styled.table`

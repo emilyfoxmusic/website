@@ -6,9 +6,15 @@ import { useSelector } from 'react-redux';
 import SEO from 'components/SEO';
 import useTable from 'helpers/useTable';
 import { RootState } from 'state/types';
+import { red, green } from 'styles/colors';
 
 import {
-  SmallRequestHeader,
+  RequestStatus,
+  RequestIcon,
+  Social,
+  SocialIcon,
+  UnderlinedText,
+  UnderlinedTextWithMargin,
   SectionHeading,
   HeadingRow,
   PageContainer,
@@ -18,9 +24,7 @@ import {
 import TitleCell from '../Shared/TitleCell';
 
 const Overlay: React.FC<RouteComponentProps> = () => {
-  const queue = useSelector((state: RootState) =>
-    state.queue.sort((a, b) => a.priority - b.priority)
-  );
+  const { queue, requestStatus } = useSelector((state: RootState) => state);
 
   const { data: topOfQueue } = useTable(queue, {}, 'priority', 2);
 
@@ -28,7 +32,23 @@ const Overlay: React.FC<RouteComponentProps> = () => {
     <>
       <SEO title="Overlay" location={window.location} hideFromCrawlers />
       <header>
-        <SmallRequestHeader />
+        <RequestStatus>
+          Requests are
+          <UnderlinedTextWithMargin>
+            {requestStatus.requestsOpen ? 'open' : 'closed'}
+          </UnderlinedTextWithMargin>
+          <RequestIcon
+            icon="circle"
+            style={{ color: requestStatus.requestsOpen ? green : red }}
+          />
+        </RequestStatus>
+        <Social>
+          <SocialIcon icon={['fab', 'youtube']} />
+          <SocialIcon icon={['fab', 'facebook']} />
+          <SocialIcon icon={['fab', 'twitch']} />
+          <SocialIcon icon={['fab', 'bandcamp']} />
+          <UnderlinedText>emilyfox</UnderlinedText>music
+        </Social>
       </header>
       <PageContainer>
         <Table>
