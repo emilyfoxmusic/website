@@ -35,6 +35,7 @@ rules:
   react/jsx-closing-bracket-location: off
   react/jsx-curly-newline: off
   react/no-unescaped-entities: off
+  react/require-default-props: off
   react/prop-types:
     - 0
   import/order:
@@ -54,6 +55,9 @@ rules:
       newlines-between: always
       alphabetize:
         order: asc
+  '@typescript-eslint/explicit-function-return-type':
+    - error
+    - allowExpressions: true
 settings:
   react:
     version: detect
