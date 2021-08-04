@@ -52,7 +52,9 @@ const onMessage = (emitter: (a: RootAction) => void) => (event: {
           payload: { ...data.data, notify: true },
         });
       default:
-        console.warn('Unknown message received from websocket');
+        if (data !== 'pong') {
+          console.warn('Unknown message received from websocket');
+        }
     }
   } catch (error) {
     console.error('Error while processing websocket message', event, error);

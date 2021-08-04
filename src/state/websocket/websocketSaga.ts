@@ -1,10 +1,11 @@
 import { TakeableChannel } from 'redux-saga';
 import {
-  all,
-  AllEffect,
   call,
   CallEffect,
+  cancel,
   CancelEffect,
+  delay,
+  fork,
   ForkEffect,
   put,
   PutEffect,
@@ -50,8 +51,15 @@ function* closeWebsocket(
   yield call(socketClose, socket);
 }
 
+function* keepSocketAlive(): Generator<CallEffect | PutEffect, void, never> {
+  while (true) {
+    yield delay(0.25 * 60 * 1000); // 5 mins
+    yield put({ type: WS_SEND, payload: 'ping' });
+  }
+}
+
 function* initialiseWebsocket(): Generator<
-  AllEffect<unknown> | TakeEffect | CallEffect | PutEffect,
+  TakeEffect | CallEffect | PutEffect | CancelEffect | ForkEffect,
   void,
   never
 > {
@@ -63,11 +71,13 @@ function* initialiseWebsocket(): Generator<
     createWebsocketChannel,
     socket
   )) as TakeableChannel<RootAction>;
-  yield all([
-    takeEvery(channel, handleIncomingMessage),
-    takeEvery(WS_SEND, handleOutgoingMessage, socket),
-  ]);
+  yield takeEvery(channel, handleIncomingMessage);
+  yield takeEvery(WS_SEND, handleOutgoingMessage, socket);
+
+  const keepSocketAliveTask = yield fork(keepSocketAlive);
+
   yield take(WS_DISCONNECT);
+  yield cancel(keepSocketAliveTask);
   yield call(closeWebsocket, socket);
 }
 
