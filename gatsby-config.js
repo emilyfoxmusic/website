@@ -1,7 +1,7 @@
 // Load the environment variables, per
 // https://www.gatsbyjs.org/docs/environment-variables/#server-side-nodejs
 require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `.env.${process.env.NODE_ENV || 'production'}`,
 });
 
 function checkEnv(envName) {
