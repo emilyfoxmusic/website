@@ -21,7 +21,8 @@ const Header: React.FC = () => (
       <a
         href={facebook}
         aria-label="Facebook"
-        data-goatcounter-click="header: Facebook">
+        data-goatcounter-click="header: Facebook"
+        data-goatcounter-title="Facebook event">
         <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
       </a>
       <a

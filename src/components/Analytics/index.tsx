@@ -14,7 +14,8 @@ const Analytics: React.FC<AnalyticsProps> = ({ location }) => {
       const gc = (window as any).goatcounter;
 
       if (gc && gc.count) {
-        gc.count({ path });
+        gc.bind_events();
+        gc.count({ path, title: path });
       } else {
         setTimeout(registerPageVisit, 1000);
       }
