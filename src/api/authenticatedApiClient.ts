@@ -14,6 +14,7 @@ export type AuthenticatedClient = {
   queueBump: (songId: string, toPosition: number) => Promise<QueueItemUpdate>;
   queueCancel: (songId: string) => Promise<void>;
   queuePlayed: (songId: string) => Promise<void>;
+  statusUpdate: (requestsOpen: boolean) => Promise<void>;
 };
 
 const buildConfig = (user: AuthenticatedPrincipal): AxiosRequestConfig => ({
@@ -40,6 +41,8 @@ const authenticatedApiClient: AuthenticatedClientFactory = (
     queueCancel: (songId: string) => axios.delete(`/queue/${songId}`, config),
     queuePlayed: (songId: string) =>
       axios.patch(`/queue/${songId}/played`, {}, config),
+    statusUpdate: (requestsOpen: boolean) =>
+      axios.post('/status', { requestsOpen }, config),
   };
 };
 

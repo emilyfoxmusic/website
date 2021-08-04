@@ -9,6 +9,10 @@ import TwitchEmbed from 'components/Live';
 import Queue from 'components/Live/Queue';
 import Songlist from 'components/Live/Songlist';
 import { buildTwitchRedirectUrl } from 'helpers/auth';
+import {
+  RequestStatusAction,
+  STATUS_REQUEST_GET,
+} from 'state/requestStatus/actions';
 import { RootState } from 'state/types';
 import {
   AuthenticateAction,
@@ -25,12 +29,18 @@ import {
 const Live: React.FC<PageProps> = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<
-    Dispatch<WebsocketAction | AuthenticateAction | AuthenticateRefreshAction>
+    Dispatch<
+      | WebsocketAction
+      | AuthenticateAction
+      | AuthenticateRefreshAction
+      | RequestStatusAction
+    >
   >();
   const authFrameRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     dispatch({ type: WS_CONNECT });
+    dispatch({ type: STATUS_REQUEST_GET });
     return () => {
       dispatch({ type: WS_DISCONNECT });
     };

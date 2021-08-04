@@ -87,7 +87,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <>
-      <Header />
+      <Header liveLayout={liveLayout} />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>
           <PortraitBackground

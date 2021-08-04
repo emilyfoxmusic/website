@@ -9,6 +9,7 @@ import {
   faEnvelope,
   faTimesCircle,
   faExternalLinkAlt,
+  faCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -18,5 +19,6 @@ library.add(
   faBandcamp,
   faTwitch,
   faTimesCircle,
-  faExternalLinkAlt
+  faExternalLinkAlt,
+  faCircle
 );

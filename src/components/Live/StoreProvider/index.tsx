@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import notificationsSaga from 'state/notificationsSaga';
 import queueManagementSaga from 'state/queue/queueManagementSaga';
 import reducer from 'state/reducer';
+import requestStatusSaga from 'state/requestStatus/requestStatusSaga';
 import listManagementSaga from 'state/songlist/listManagementSaga';
 import authenticateSaga from 'state/user/authenticateSaga';
 import websocketSaga from 'state/websocket/websocketSaga';
@@ -24,6 +25,7 @@ const StoreProvider: React.FC = ({ children }) => {
   sagaMiddleware.run(queueManagementSaga);
   sagaMiddleware.run(notificationsSaga);
   sagaMiddleware.run(authenticateSaga);
+  sagaMiddleware.run(requestStatusSaga);
 
   return <Provider store={store}>{children}</Provider>;
 };

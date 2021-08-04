@@ -10,6 +10,7 @@ import {
   QUEUE_CANCEL,
   QUEUE_PLAYED,
 } from 'state/queue/actions';
+import { STATUS_SET } from 'state/requestStatus/actions';
 import { LIST_ADD } from 'state/songlist/actions';
 import { RootAction } from 'state/types';
 
@@ -45,6 +46,11 @@ const onMessage = (emitter: (a: RootAction) => void) => (event: {
         return emitter({ type: QUEUE_CANCEL, payload: data.data });
       case 'queuePlayed':
         return emitter({ type: QUEUE_PLAYED, payload: data.data });
+      case 'statusUpdate':
+        return emitter({
+          type: STATUS_SET,
+          payload: { ...data.data, notify: true },
+        });
       default:
         console.warn('Unknown message received from websocket');
     }

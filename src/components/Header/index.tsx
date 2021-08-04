@@ -1,31 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useEffect, Dispatch } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { count } from 'helpers/goatcounter';
+import {
+  RequestStatusAction,
+  STATUS_REQUEST_UPDATE,
+} from 'state/requestStatus/actions';
 import { RootState } from 'state/types';
 import { youtube, bandcamp, facebook, emailAddress } from 'utils/links';
 
 import {
   HeaderContainer,
   LeftDiv,
+  GreenText,
   RightDiv,
   SocialMedia,
   UserBanner,
-  Username,
+  RedText,
+  AuthenticationBlock,
+  RequestStatusBlock,
+  UpdateStatusButton,
 } from './styles';
 
-const Header: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
+type HeaderProps = {
+  liveLayout?: boolean;
+};
+
+const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
+  const { user, requestStatus } = useSelector((state: RootState) => state);
+  const dispatch = useDispatch<Dispatch<RequestStatusAction>>();
   const userBannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const adjustBodyPaddingForUserBanner = (): void => {
-      const height = userBannerRef.current?.getBoundingClientRect().height;
+      const height = userBannerRef.current?.getBoundingClientRect().height ?? 0;
       console.info(height);
-      if (height) {
-        document.body.style.paddingTop = `${height}px`;
-      }
+      document.body.style.paddingTop = `${height}px`;
     };
     window.addEventListener('resize', adjustBodyPaddingForUserBanner);
     adjustBodyPaddingForUserBanner();
@@ -41,15 +52,46 @@ const Header: React.FC = () => {
   const trackHomeNavClick = (): void => {
     count({ path: 'internal-nav:home', title: 'home', event: true });
   };
+
   return (
     <header>
-      {user.isAuthenticated && (
+      {liveLayout && (
         <UserBanner ref={userBannerRef} aria-live="polite">
-          You are signed in as{' '}
-          <Username>
-            {user.username}
-            {user.isAdmin ? ' (admin)' : ''}
-          </Username>
+          {user.isAuthenticated && (
+            <AuthenticationBlock>
+              You are signed in as{' '}
+              <RedText>
+                {user.username}
+                {user.isAdmin ? ' (admin)' : ''}
+              </RedText>
+            </AuthenticationBlock>
+          )}
+          <RequestStatusBlock>
+            Requests are{' '}
+            {requestStatus.requestsOpen ? (
+              <GreenText>
+                open <FontAwesomeIcon icon="circle" />
+              </GreenText>
+            ) : (
+              <RedText>
+                closed <FontAwesomeIcon icon="circle" />
+              </RedText>
+            )}
+            {user.isAdmin && (
+              <UpdateStatusButton
+                type="button"
+                onClick={() =>
+                  dispatch({
+                    type: STATUS_REQUEST_UPDATE,
+                    payload: { requestsOpen: !requestStatus.requestsOpen },
+                  })
+                }>
+                {requestStatus.requestsOpen
+                  ? 'Close requests'
+                  : 'Open requests'}
+              </UpdateStatusButton>
+            )}
+          </RequestStatusBlock>
         </UserBanner>
       )}
       <HeaderContainer

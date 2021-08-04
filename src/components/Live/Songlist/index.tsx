@@ -53,7 +53,7 @@ import {
 import TitleCell from '../Shared/TitleCell';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
-  const { songlist: songs, queue, user } = useSelector(
+  const { songlist: songs, queue, user, requestStatus } = useSelector(
     (state: RootState) => state
   );
   const dispatch = useDispatch<Dispatch<ListAction | QueueAction>>();
@@ -182,7 +182,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 Last played
                 <SortButton sort={sort} sortKey="lastPlayed" />
               </MedBreakpointOnlyHeaderCell>
-              {user.isAuthenticated && (
+              {user.isAuthenticated && requestStatus.requestsOpen && (
                 <TableHeaderCell $width="42px" $widthLarge="96px" />
               )}
             </TableRow>
@@ -203,7 +203,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <MedBreakpointOnlyCell>
                   {formatTimeAgo(song.lastPlayed)}
                 </MedBreakpointOnlyCell>
-                {user.isAuthenticated && (
+                {user.isAuthenticated && requestStatus.requestsOpen && (
                   <td>
                     {!song.isInQueue && (
                       <ActionButton

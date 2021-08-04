@@ -14,6 +14,8 @@ import {
 } from 'state/queue/actions';
 import { ListAddAction, LIST_ADD } from 'state/songlist/actions';
 
+import { StatusSetAction, STATUS_SET } from './requestStatus/actions';
+
 const notifyListAdd = (action: ListAddAction): void =>
   notifyEvent(
     `${action.payload.title} by ${action.payload.artist} has been added to the songlist`,
@@ -43,6 +45,16 @@ const notifyPlayed = (action: QueueSetPlayedAction): void =>
     () => navigate('/live/queue')
   );
 
+const notifyStatus = (action: StatusSetAction): void => {
+  if (action.payload.notify) {
+    if (action.payload.requestsOpen) {
+      notifyEvent('Requests are now open!', () => navigate('/live/songlist'));
+    } else {
+      notifyEvent('Requests are now closed!');
+    }
+  }
+};
+
 function* notifications(): Generator<AllEffect<ForkEffect>, void, never> {
   yield all([
     takeEvery(LIST_ADD, notifyListAdd),
@@ -50,6 +62,7 @@ function* notifications(): Generator<AllEffect<ForkEffect>, void, never> {
     takeEvery(QUEUE_BUMP, notifyBump),
     takeEvery(QUEUE_CANCEL, notifyCancel),
     takeEvery(QUEUE_PLAYED, notifyPlayed),
+    takeEvery(STATUS_SET, notifyStatus),
   ]);
 }
 
