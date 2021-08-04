@@ -8,7 +8,7 @@ import {
   STATUS_REQUEST_UPDATE,
 } from 'state/requestStatus/actions';
 import { RootState } from 'state/types';
-import { youtube, bandcamp, facebook, emailAddress } from 'utils/links';
+import { youtube, bandcamp, facebook, emailAddress, twitch } from 'utils/links';
 
 import {
   HeaderContainer,
@@ -108,6 +108,14 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
           target="_blank"
           rel="noreferrer">
           <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
+        </a>
+        <a
+          href={twitch}
+          aria-label="Twitch"
+          onClick={(): void => trackSocialsHeaderClick('Twitch')}
+          target="_blank"
+          rel="noreferrer">
+          <FontAwesomeIcon icon={['fab', 'twitch']} aria-hidden />
         </a>
         <a
           href={bandcamp}
