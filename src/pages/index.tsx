@@ -1,4 +1,4 @@
-import { useStaticQuery } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 import BackgroundImage from 'gatsby-background-image';
 import React from 'react';
 import styled from 'styled-components';
@@ -82,7 +82,7 @@ const IndexPage: React.FC = () => {
   const imageData = portrait.childImageSharp.fluid;
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Emily Fox Music" />
       <PortraitBackground fluid={imageData}>
         <MainContentContainer>
           <ButtonContainer>
