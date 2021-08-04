@@ -3,7 +3,12 @@ import React from 'react';
 import { trackAction } from 'helpers/goatcounter';
 import { PaginationInfo } from 'helpers/useTable';
 
-import { PaginationButton, PaginationList, PaginationListItem } from './styles';
+import {
+  Label,
+  PaginationButton,
+  PaginationList,
+  PaginationListItem,
+} from './styles';
 
 const Pagination: React.FC<PaginationInfo> = ({
   currentPage,
@@ -14,28 +19,43 @@ const Pagination: React.FC<PaginationInfo> = ({
     return null;
   }
 
-  const pagesWithButtons = [...Array(lastPage).keys()].map(n => n + 1);
+  const allPages = [...Array(lastPage).keys()].map(n => n + 1);
+  const pagesWithButtons = [
+    1,
+    lastPage,
+    currentPage,
+    currentPage + 1,
+    currentPage - 1,
+  ];
 
   return (
     <nav aria-label="Pagination navigation">
-      <span aria-hidden>Go to page:</span>
+      <Label aria-hidden>Go to page:</Label>
       <PaginationList>
-        {pagesWithButtons.map(page => (
-          <PaginationListItem key={page}>
-            <PaginationButton
-              current={page === currentPage}
-              as="a"
-              href="#"
-              onClick={(e: { preventDefault: () => void }) => {
-                e.preventDefault();
-                setPage(page);
-                trackAction(`Pagination - page ${page}`);
-              }}
-              aria-label={`Go to page ${page}`}>
-              {page}
-            </PaginationButton>
-          </PaginationListItem>
-        ))}
+        {allPages
+          .filter(page => pagesWithButtons.includes(page))
+          .map(page => (
+            <>
+              {page === lastPage && currentPage < lastPage - 2 && (
+                <span>...</span>
+              )}
+              <PaginationListItem key={page}>
+                <PaginationButton
+                  current={page === currentPage}
+                  as="a"
+                  href="#"
+                  onClick={(e: { preventDefault: () => void }) => {
+                    e.preventDefault();
+                    setPage(page);
+                    trackAction(`Pagination - page ${page}`);
+                  }}
+                  aria-label={`Go to page ${page}`}>
+                  {page}
+                </PaginationButton>
+              </PaginationListItem>
+              {page === 1 && currentPage > 3 && <span>...</span>}
+            </>
+          ))}
       </PaginationList>
     </nav>
   );

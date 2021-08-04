@@ -9,6 +9,7 @@ import { Dispatch } from 'redux';
 
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
+import ScreenreaderPagination from 'components/Pagination/ScreenreaderPagination';
 import SEO from 'components/SEO';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
@@ -30,6 +31,8 @@ import {
   VisuallyHiddenSortText,
   TwitchIcon,
   TwitchLoginButton,
+  TableControls,
+  SelectWithMargin,
 } from './styles';
 
 import {
@@ -124,7 +127,29 @@ const Songlist: React.FC<RouteComponentProps> = () => {
       )}
       {songs.length ? (
         <TableBlock>
-          <Pagination {...pagination} />
+          <TableControls>
+            <label htmlFor="pageSize">
+              Results per page
+              <SelectWithMargin
+                id="pageSize"
+                name="pageSize"
+                value={pagination.pageSize?.toString()}
+                onChange={e => pagination.setPageSize(Number(e.target.value))}>
+                {[10, 20, 30, 40, 50, 100].map(size => (
+                  <option key={size} value={size.toString()}>
+                    {size}
+                  </option>
+                ))}
+              </SelectWithMargin>
+            </label>
+            <ScreenreaderPagination
+              announceChanges
+              pageSize={pagination.pageSize ?? 0}
+              currentPage={pagination.currentPage}
+              total={songs.length}
+            />
+            <Pagination {...pagination} />
+          </TableControls>
           <VisuallyHiddenSortText aria-live="polite">
             Currently sorting by: {sort.currentSortText}
           </VisuallyHiddenSortText>
@@ -142,7 +167,6 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                   <SortButton sort={sort} sortKey="title" />
                 </TableHeaderCell>
                 <TableHeaderCell
-                  $width="30%"
                   $widthLarge="18%"
                   aria-sort={sort.ariaSort('artist')}>
                   Artist
@@ -199,6 +223,11 @@ const Songlist: React.FC<RouteComponentProps> = () => {
               ))}
             </tbody>
           </Table>
+          <ScreenreaderPagination
+            pageSize={pagination.pageSize ?? 0}
+            currentPage={pagination.currentPage}
+            total={songs.length}
+          />
           <Pagination {...pagination} />
         </TableBlock>
       ) : (

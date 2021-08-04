@@ -25,9 +25,11 @@ export type SortInfo<TData extends DataObject> = {
 export type PaginationInfo = {
   currentPage: number;
   lastPage: number;
+  pageSize: number | undefined;
   setNextPage: () => void;
   setPreviousPage: () => void;
   setPage: (page: number) => void;
+  setPageSize: (size: number) => void;
 };
 
 type ProcessedTableData<TData extends DataObject> = {
@@ -50,12 +52,13 @@ const useTable = <TData extends DataObject>(
   data: TableData<TData>,
   sortConfig: SortConfig<TData>,
   defaultSortKey: keyof TData & string,
-  pageSize?: number
+  defaultPageSize?: number
 ): ProcessedTableData<TData> => {
   const [currentSort, setCurrentSort] = useState<CurrentSort<TData>>({
     sortKey: defaultSortKey,
     sortOrder: sortConfig[defaultSortKey]?.defaultOrder ?? 'ascending',
   });
+  const [pageSize, setPageSize] = useState(defaultPageSize);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const lastPage = pageSize ? Math.ceil(data.length / pageSize) : 1;
@@ -130,6 +133,17 @@ const useTable = <TData extends DataObject>(
       ? currentSort.sortOrder
       : sortConfig[key]?.defaultOrder ?? 'ascending';
 
+  const updatePageSize = (size: number): void => {
+    if (!pageSize) {
+      return;
+    }
+    const firstResultOnPage = pageSize * (currentPage - 1);
+    const updatedPage = Math.ceil((firstResultOnPage + 1) / size);
+
+    setPageSize(size);
+    setCurrentPage(updatedPage);
+  };
+
   return {
     data: pageSize
       ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
@@ -145,9 +159,11 @@ const useTable = <TData extends DataObject>(
     pagination: {
       currentPage,
       lastPage,
+      pageSize,
       setNextPage,
       setPreviousPage,
       setPage,
+      setPageSize: updatePageSize,
     },
   };
 };

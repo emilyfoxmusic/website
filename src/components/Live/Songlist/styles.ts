@@ -29,6 +29,23 @@ export const TableBlock = styled.div`
   margin-bottom: 64px;
 `;
 
+export const TableControls = styled.div`
+  display: block;
+
+  ${largeBreakpoint`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+  `}
+
+  min-height: 76px;
+`;
+
+export const SelectWithMargin = styled.select`
+  margin-left: 16px;
+`;
+
 export const VisuallyHiddenSortText = styled.span`
   border: 0;
   clip: rect(0 0 0 0);
