@@ -20,7 +20,10 @@ const TwitchEmbedWrapper = styled.div`
 const TwitchEmbed: React.FC<RouteComponentProps> = () => {
   return (
     <TwitchEmbedWrapper>
-      <ReactTwitchEmbedVideo channel="EmIsThePenguin" width="100%" />
+      <ReactTwitchEmbedVideo
+        channel={process.env.TWITCH_CHANNEL}
+        width="100%"
+      />
     </TwitchEmbedWrapper>
   );
 };
