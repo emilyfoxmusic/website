@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
-import { fontFamily } from 'src/styles/fonts';
+import { fontFamily } from 'styles/fonts';
 
 const headerHeight = '4rem';
 const headerFontSize = '2rem';
