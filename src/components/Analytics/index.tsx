@@ -22,7 +22,7 @@ const Analytics: React.FC<AnalyticsProps> = ({ location }) => {
   return (
     <Helmet>
       <script
-        data-goatcounter="https://emilyfoxmusicdev.goatcounter.com/count"
+        data-goatcounter="https://emilyfoxmusic.goatcounter.com/count"
         async
         src="//gc.zgo.at/count.js"
       />
