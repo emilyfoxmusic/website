@@ -9,6 +9,7 @@ import {
 } from 'redux-saga/effects';
 
 import { authorize } from 'helpers/auth';
+import { notifyError } from 'helpers/notify';
 import {
   AUTHENTICATE,
   AuthenticateAction,
@@ -28,13 +29,14 @@ function* authenticate(
       action.payload.state
     );
     yield put({ type: SET_USER, payload: principal });
+  } catch (error) {
+    notifyError('Sign in failed', error);
+    yield put({ type: CLEAR_USER });
+  } finally {
     // We don't redirect if we're refreshing since the twitch magic happened in an iframe
     if (action.type !== AUTHENTICATE_REFRESH) {
       yield call(url => navigate(url, { replace: true }), '/live/songlist');
     }
-  } catch (error) {
-    console.error('Authentication failed', error);
-    yield put({ type: CLEAR_USER });
   }
 }
 
