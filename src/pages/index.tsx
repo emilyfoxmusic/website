@@ -35,7 +35,7 @@ const Rose = styled(RoseImg)`
   `}
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.nav`
   flex: 0 1 50%;
 
   ${largeBreakpoint`
