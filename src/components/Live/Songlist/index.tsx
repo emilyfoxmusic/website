@@ -7,7 +7,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Button from 'components/Button';
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
@@ -41,6 +40,7 @@ import {
   XLargeBreakpointOnlyCell,
   VisuallyHiddenSortText,
   TwitchIcon,
+  TwitchLoginButton,
 } from './styles';
 
 import {
@@ -131,8 +131,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         it I <i>might</i> give it a shot!
       </p>
       {!user.isAuthenticated && (
-        <Button
-          type="button"
+        <TwitchLoginButton
           onClick={() => {
             navigate(buildTwitchRedirectUrl());
             count({
@@ -142,8 +141,8 @@ const Songlist: React.FC<RouteComponentProps> = () => {
             });
           }}>
           <TwitchIcon />
-          Sign in with twitch to request a song!
-        </Button>
+          Sign in with twitch to request a song
+        </TwitchLoginButton>
       )}
       <TableBlock>
         <Pagination {...pagination} />

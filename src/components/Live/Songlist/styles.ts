@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
+import Button from 'components/Button';
 import { TableHeaderCell } from 'components/Table';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import { fontFamily } from 'styles/fonts';
@@ -83,5 +84,19 @@ export const TwitchIcon = styled(FontAwesomeIcon).attrs({
   icon: ['fab', 'twitch'],
   'aria-hidden': true,
 })`
-  margin-right: 8px;
+  margin-right: 16px;
+
+  ${largeBreakpoint`
+    margin-right: 24px;
+  `}
+`;
+
+export const TwitchLoginButton = styled(Button).attrs({
+  type: 'button',
+})`
+  margin-top: 0;
+
+  ${largeBreakpoint`
+    margin-bottom: 24px;
+  `}
 `;
