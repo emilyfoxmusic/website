@@ -58,6 +58,11 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
           {children}
         </PageContainer>
       </div>
+      <script
+        data-goatcounter="https://emilyfoxmusicdev.goatcounter.com/count"
+        async
+        src="//gc.zgo.at/count.js"
+      />
     </>
   );
 };
