@@ -1,6 +1,7 @@
-import { Dispatch, useEffect } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import SEO from 'components/SEO';
 import { AUTHENTICATE, AuthenticateAction } from 'state/user/actions';
 
 const Redirect: React.FC = () => {
@@ -25,7 +26,11 @@ const Redirect: React.FC = () => {
     }
   }, [dispatch]);
 
-  return null;
+  return (
+    <>
+      <SEO title="Redirect" location={window.location} hideFromCrawlers />
+    </>
+  );
 };
 
 export default Redirect;

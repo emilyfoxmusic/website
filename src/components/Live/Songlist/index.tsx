@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import Pagination from 'components/Pagination';
+import SEO from 'components/SEO';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import { buildTwitchRedirectUrl } from 'helpers/auth';
@@ -99,6 +100,11 @@ const Songlist: React.FC<RouteComponentProps> = () => {
 
   return (
     <>
+      <SEO
+        title="Song list"
+        description="Song list for Emily Fox's live performances on Twitch."
+        location={window.location}
+      />
       <PageHeading>Song list</PageHeading>
       <p>
         These are the current 'official' songs in my repertoire. If you pop into

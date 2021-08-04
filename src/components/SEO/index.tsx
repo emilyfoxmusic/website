@@ -6,6 +6,7 @@ type SEOProps = {
   title?: string;
   description?: string;
   location?: Location;
+  hideFromCrawlers?: boolean;
 };
 
 type SiteMetadata = {
@@ -24,6 +25,7 @@ const SEO: React.FC<SEOProps> = ({
   title,
   description,
   location,
+  hideFromCrawlers,
 }: SEOProps) => {
   const {
     site: { siteMetadata },
@@ -43,7 +45,7 @@ const SEO: React.FC<SEOProps> = ({
 
   return (
     <Helmet
-      title={title ? `${siteMetadata.title} | ${title}` : siteMetadata.title}>
+      title={title ? `${title} | ${siteMetadata.title}` : siteMetadata.title}>
       <html lang="en" />
       {description && <meta name="description" content={description} />}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -80,6 +82,7 @@ const SEO: React.FC<SEOProps> = ({
           })}
         </script>
       )}
+      {hideFromCrawlers && <meta name="robots" content="noindex" />}
     </Helmet>
   );
 };

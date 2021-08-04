@@ -6,6 +6,7 @@ import React from 'react';
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video';
 import styled from 'styled-components';
 
+import SEO from 'components/SEO';
 import { largeBreakpoint } from 'helpers/breakpoints';
 
 const TwitchEmbedWrapper = styled.div`
@@ -19,12 +20,19 @@ const TwitchEmbedWrapper = styled.div`
 
 const TwitchEmbed: React.FC<RouteComponentProps> = () => {
   return (
-    <TwitchEmbedWrapper>
-      <ReactTwitchEmbedVideo
-        channel={process.env.TWITCH_CHANNEL}
-        width="100%"
+    <>
+      <SEO
+        title="Live on Twitch"
+        description="Watch Emily Fox live on Twitch."
+        location={window.location}
       />
-    </TwitchEmbedWrapper>
+      <TwitchEmbedWrapper>
+        <ReactTwitchEmbedVideo
+          channel={process.env.TWITCH_CHANNEL}
+          width="100%"
+        />
+      </TwitchEmbedWrapper>
+    </>
   );
 };
 

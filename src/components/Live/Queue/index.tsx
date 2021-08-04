@@ -3,6 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import SEO from 'components/SEO';
 import { Table, TableHeaderCell, TableRow } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import useTable from 'helpers/useTable';
@@ -58,6 +59,11 @@ const Queue: React.FC<RouteComponentProps> = () => {
 
   return (
     <>
+      <SEO
+        title="Song queue"
+        description="Song queue for Emily Fox's live performances on Twitch."
+        location={window.location}
+      />
       <PageHeading>Current queue</PageHeading>
       {queuedSongs.length ? (
         <TableBlock>
