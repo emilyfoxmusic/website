@@ -4,8 +4,8 @@ import { PageProps } from 'gatsby';
 import React, { Dispatch, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Layout from 'components/Layout';
 import TwitchEmbed from 'components/Live';
+import Overlay from 'components/Live/Overlay';
 import Queue from 'components/Live/Queue';
 import Songlist from 'components/Live/Songlist';
 import { buildTwitchRedirectUrl } from 'helpers/auth';
@@ -65,11 +65,12 @@ const Live: React.FC<PageProps> = () => {
   }, [dispatch, user]);
 
   return (
-    <Layout liveLayout>
+    <>
       <Router basepath="/live">
         <Queue path="/queue" />
         <Songlist path="/songlist" />
         <TwitchEmbed path="/" />
+        <Overlay path="/overlay" />
       </Router>
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
       <iframe
@@ -84,7 +85,7 @@ const Live: React.FC<PageProps> = () => {
           visibility: 'hidden',
         }}
       />
-    </Layout>
+    </>
   );
 };
 

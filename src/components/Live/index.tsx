@@ -6,6 +6,7 @@ import React from 'react';
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video';
 import styled from 'styled-components';
 
+import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { largeBreakpoint } from 'helpers/breakpoints';
 
@@ -20,7 +21,7 @@ const TwitchEmbedWrapper = styled.div`
 
 const TwitchEmbed: React.FC<RouteComponentProps> = () => {
   return (
-    <>
+    <Layout liveLayout>
       <SEO
         title="Live on Twitch"
         description="Watch Emily Fox live on Twitch."
@@ -32,7 +33,7 @@ const TwitchEmbed: React.FC<RouteComponentProps> = () => {
           width="100%"
         />
       </TwitchEmbedWrapper>
-    </>
+    </Layout>
   );
 };
 

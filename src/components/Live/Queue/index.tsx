@@ -3,6 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { Table, TableHeaderCell, TableRow } from 'components/Table';
 import { PageHeading } from 'components/Typography';
@@ -58,7 +59,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
   };
 
   return (
-    <>
+    <Layout liveLayout>
       <SEO
         title="Song queue"
         description="Song queue for Emily Fox's live performances on Twitch."
@@ -142,7 +143,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
       ) : (
         <p>The queue is currently empty.</p>
       )}
-    </>
+    </Layout>
   );
 };
 
