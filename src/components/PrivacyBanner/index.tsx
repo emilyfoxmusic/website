@@ -27,7 +27,7 @@ const PrivacyBanner: React.FC = () => {
       });
       return true;
     },
-    typeof window !== 'undefined' ? !!localStorage.getItem(key) : false
+    typeof window !== 'undefined' ? !!localStorage.getItem(key) : true
   );
 
   if (privacyHidden) {
