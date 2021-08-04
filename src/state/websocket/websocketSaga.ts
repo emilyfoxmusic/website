@@ -9,6 +9,8 @@ import {
   ForkEffect,
   put,
   PutEffect,
+  race,
+  RaceEffect,
   take,
   TakeEffect,
   takeEvery,
@@ -18,8 +20,10 @@ import { RootAction } from 'state/types';
 
 import {
   WebsocketSendAction,
+  WS_CLOSED,
   WS_CONNECT,
   WS_DISCONNECT,
+  WS_ERROR,
   WS_SEND,
 } from './actions';
 import { createWebsocketChannel } from './channel';
@@ -59,7 +63,7 @@ function* keepSocketAlive(): Generator<CallEffect | PutEffect, void, never> {
 }
 
 function* initialiseWebsocket(): Generator<
-  TakeEffect | CallEffect | PutEffect | CancelEffect | ForkEffect,
+  CallEffect | PutEffect | CancelEffect | ForkEffect | RaceEffect<TakeEffect>,
   void,
   never
 > {
@@ -76,9 +80,19 @@ function* initialiseWebsocket(): Generator<
 
   const keepSocketAliveTask = yield fork(keepSocketAlive);
 
-  yield take(WS_DISCONNECT);
+  const { disconnect, closed } = yield race({
+    disconnect: take(WS_DISCONNECT),
+    error: take(WS_ERROR),
+    closed: take(WS_CLOSED),
+  });
   yield cancel(keepSocketAliveTask);
-  yield call(closeWebsocket, socket);
+
+  if (disconnect) {
+    yield call(closeWebsocket, socket);
+  } else if (closed) {
+    // forcibly closed - so reopen
+    yield put({ type: WS_CONNECT });
+  }
 }
 
 function* websocketSaga(): Generator<

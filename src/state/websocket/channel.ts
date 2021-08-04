@@ -13,6 +13,8 @@ import { STATUS_SET } from 'state/requestStatus/actions';
 import { LIST_ADD } from 'state/songlist/actions';
 import { RootAction } from 'state/types';
 
+import { WS_CLOSED, WS_ERROR } from './actions';
+
 type WebsocketHandler = (
   emitter: (a: RootAction) => void
 ) => (event: Event) => void;
@@ -21,12 +23,14 @@ const onOpen: WebsocketHandler = () => () => {
   console.info('Websocket open');
 };
 
-const onError: WebsocketHandler = () => event => {
+const onError: WebsocketHandler = emitter => event => {
   notifyError('Socket communication error - you may need to refresh', event);
+  emitter({ type: WS_ERROR });
 };
 
-const onClose: WebsocketHandler = () => () => {
+const onClose: WebsocketHandler = emitter => () => {
   console.info('Websocket closed');
+  emitter({ type: WS_CLOSED });
 };
 
 const onMessage = (emitter: (a: RootAction) => void) => (event: {
