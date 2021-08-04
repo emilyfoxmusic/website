@@ -55,7 +55,7 @@ const notifyStatus = (action: StatusSetAction): void => {
   }
 };
 
-function* notifications(): Generator<AllEffect<ForkEffect>, void, never> {
+function* notificationsSaga(): Generator<AllEffect<ForkEffect>, void, never> {
   yield all([
     takeEvery(LIST_ADD, notifyListAdd),
     takeEvery(QUEUE_ADD, notifyQueueAdd),
@@ -66,4 +66,4 @@ function* notifications(): Generator<AllEffect<ForkEffect>, void, never> {
   ]);
 }
 
-export default notifications;
+export default notificationsSaga;
