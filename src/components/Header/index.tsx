@@ -35,7 +35,6 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
   useEffect(() => {
     const adjustBodyPaddingForUserBanner = (): void => {
       const height = userBannerRef.current?.getBoundingClientRect().height ?? 0;
-      console.info(height);
       document.body.style.paddingTop = `${height}px`;
     };
     window.addEventListener('resize', adjustBodyPaddingForUserBanner);
