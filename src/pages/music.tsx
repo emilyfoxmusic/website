@@ -18,7 +18,7 @@ const CenteredContainer = styled.div`
 const BandcampEmbed = styled.iframe`
   border: none;
   width: 600px;
-  height: 380px;
+  height: 440px;
 `;
 
 const VideoContainer = styled.div`
@@ -55,11 +55,10 @@ const Music: React.FC<PageProps> = ({ location }) => {
       </p>
       <CenteredContainer>
         <BandcampEmbed
-          title="Real EP"
-          src="https://bandcamp.com/EmbeddedPlayer/album=4081268358/size=large/bgcol=ffffff/linkcol=de270f/artwork=small/transparent=true/"
+          src="https://bandcamp.com/EmbeddedPlayer/album=1322260653/size=large/bgcol=ffffff/linkcol=de270f/artwork=small/transparent=true/"
           seamless>
-          <a href="http://emilyfoxmusic.bandcamp.com/album/real">
-            Real by Emily Fox
+          <a href="https://emilyfoxmusic.bandcamp.com/album/where-feelings-grow">
+            Where Feelings Grow by Emily Fox
           </a>
         </BandcampEmbed>
       </CenteredContainer>
