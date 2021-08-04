@@ -1,9 +1,13 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
+import { largeBreakpoint } from 'helpers/breakpoints';
 import { red } from 'styles/colors';
 import { fontFamily } from 'styles/fonts';
 
 export const OuterContainer = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: center;
 `;
@@ -13,27 +17,30 @@ export const InnerContainer = styled.div`
   text-align: center;
 
   font-family: ${fontFamily};
+  font-size: 0.8rem;
+
+  ${largeBreakpoint`
+    font-size: 1rem;
+  `}
 `;
 
 export const Text = styled.p`
-  font-size: 1rem;
-  line-height: 1.3rem;
+  line-height: 1rem;
+  margin: 8px 16px;
 
-  margin: 16px 32px 0;
+  ${largeBreakpoint`
+    margin: 16px 32px 8px;
+  `}
 `;
 
 export const CloseButton = styled.button`
   cursor: pointer;
   background: none;
-  border: none;
+  border-width: 0;
 
-  padding: 8px;
-
-  position: absolute;
-  top: 8px;
-  right: 32px;
-
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  margin: auto;
 
   &:hover {
     color: ${red};
@@ -43,7 +50,20 @@ export const CloseButton = styled.button`
     outline: dotted 2px black;
   }
 
-  & > span {
-    margin-right: 8px;
+  ${largeBreakpoint`
+    font-size: 1.0rem;
+  `}
+
+  @media (min-width:1050px) {
+    position: absolute;
+    top: 8px;
+    right: 32px;
+    padding: 8px;
   }
+`;
+
+export const Icon = styled(FontAwesomeIcon)`
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 `;
