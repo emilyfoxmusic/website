@@ -2,7 +2,10 @@
   "compilerOptions": {
     "jsx": "react",
     "baseUrl": "src",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noEmit": true,
+    "strict": true,
+    "pretty": true
   },
   "include": ["./src/**/*"]
 }
