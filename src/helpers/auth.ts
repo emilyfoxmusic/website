@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { v4 as uuidv4 } from 'uuid';
 
-import apiClient from 'api/apiClient';
+import apiClient from 'clients/apiClient';
 
 import { Principal } from 'state/user/types';
 

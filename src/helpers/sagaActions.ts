@@ -9,7 +9,7 @@ import {
 
 import authenticatedApiClient, {
   AuthenticatedClient,
-} from 'api/authenticatedApiClient';
+} from 'clients/authenticatedApiClient';
 
 import { RootState } from 'state/types';
 import { CLEAR_USER } from 'state/user/actions';

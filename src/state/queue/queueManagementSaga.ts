@@ -7,7 +7,7 @@ import {
   PutEffect,
 } from 'redux-saga/effects';
 
-import apiClient from 'api/apiClient';
+import apiClient from 'clients/apiClient';
 
 import { notifyError } from 'helpers/notify';
 import {
