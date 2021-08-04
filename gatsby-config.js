@@ -2,8 +2,8 @@
 module.exports = {
   siteMetadata: {
     title: `Emily Fox Music`,
-    url: 'http://www.emilyfoxmusic.co.uk',
-    image: '/portrait.jpg'
+    siteUrl: 'http://www.emilyfoxmusic.co.uk',
+    image: '/portrait.jpg',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

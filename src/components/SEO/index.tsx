@@ -10,7 +10,7 @@ type SEOProps = {
 
 type SiteMetadata = {
   title: string;
-  url: string;
+  siteUrl: string;
   image: string;
 };
 
@@ -33,7 +33,7 @@ const SEO: React.FC<SEOProps> = ({
         site {
           siteMetadata {
             title
-            url
+            siteUrl
             image
           }
         }
@@ -55,7 +55,7 @@ const SEO: React.FC<SEOProps> = ({
       {location && (
         <meta
           property="og:url"
-          content={`${siteMetadata.url}${location.pathname}`}
+          content={`${siteMetadata.siteUrl}${location.pathname}`}
         />
       )}
       {location && (
@@ -68,13 +68,13 @@ const SEO: React.FC<SEOProps> = ({
                 '@type': 'ListItem',
                 position: 1,
                 name: siteMetadata.title,
-                item: siteMetadata.url,
+                item: siteMetadata.siteUrl,
               },
               title && {
                 '@type': 'ListItem',
                 position: 2,
                 name: title,
-                item: `${siteMetadata.url}${location.pathname}`,
+                item: `${siteMetadata.siteUrl}${location.pathname}`,
               },
             ].filter(item => !!item),
           })}
