@@ -6,6 +6,7 @@ import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
 import PrivacyBanner from 'components/PrivacyBanner';
 import GlobalFonts from 'fonts/globalFonts';
+import { count } from 'helpers/goatcounter';
 
 import {
   PageContainer,
@@ -35,6 +36,10 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
 
   const imageData = portrait.childImageSharp.fluid;
 
+  const trackNavClick = (path: string): void => {
+    count({ path: `internal-nav:${path}`, title: path, event: true });
+  };
+
   return (
     <>
       <Normalize />
@@ -48,10 +53,26 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
             isFullHeight={fullHeightNav ?? false}>
             <MainContentContainer>
               <ButtonContainer>
-                <ButtonLink to="/music/">music</ButtonLink>
-                <ButtonLink to="/bio/">bio</ButtonLink>
-                <ButtonLink to="/contact/">contact</ButtonLink>
-                <ButtonLink to="/tech/">tech</ButtonLink>
+                <ButtonLink
+                  to="/music/"
+                  onClick={(): void => trackNavClick('music')}>
+                  music
+                </ButtonLink>
+                <ButtonLink
+                  to="/bio/"
+                  onClick={(): void => trackNavClick('bio')}>
+                  bio
+                </ButtonLink>
+                <ButtonLink
+                  to="/contact/"
+                  onClick={(): void => trackNavClick('contact')}>
+                  contact
+                </ButtonLink>
+                <ButtonLink
+                  to="/tech/"
+                  onClick={(): void => trackNavClick('tech')}>
+                  tech
+                </ButtonLink>
               </ButtonContainer>
             </MainContentContainer>
           </PortraitBackground>
