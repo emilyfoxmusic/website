@@ -35,6 +35,8 @@ export type QueueSetPlayedAction = {
   type: typeof QUEUE_PLAYED;
   payload: {
     songId: string;
+    title: string;
+    artist: string;
     numberOfPlays: number;
     lastPlayed: string;
   };
@@ -51,6 +53,8 @@ export type QueueCancelAction = {
   type: typeof QUEUE_CANCEL;
   payload: {
     songId: string;
+    title: string;
+    artist: string;
   };
 };
 
@@ -78,7 +82,10 @@ export type QueueBumpAction = {
   type: typeof QUEUE_BUMP;
   payload: {
     songId: string;
+    title: string;
+    artist: string;
     priority: string;
+    position: number;
   };
 };
 

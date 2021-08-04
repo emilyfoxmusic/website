@@ -4,6 +4,8 @@ import { ForkEffect, takeEvery, all, AllEffect } from 'redux-saga/effects';
 import {
   QueueAddAction,
   QueueBumpAction,
+  QueueCancelAction,
+  QueueSetPlayedAction,
   QUEUE_ADD,
   QUEUE_BUMP,
   QUEUE_CANCEL,
@@ -23,14 +25,16 @@ const notifyQueueAdd = (action: QueueAddAction): unknown =>
 
 const notifyBump = (action: QueueBumpAction): unknown =>
   toast.dark(
-    `TODO SONG has been bumped to position ${action.payload.priority}`
+    `${action.payload.title} has been bumped to position ${action.payload.position}`
   );
 
-const notifyCancel = (): unknown =>
-  toast.dark('TODO SONG has been removed from the queue');
+const notifyCancel = (action: QueueCancelAction): unknown =>
+  toast.dark(`${action.payload.title} has been removed from the queue`);
 
-const notifyPlayed = (): unknown =>
-  toast.dark('TODO SONG was just played and removed from the queue');
+const notifyPlayed = (action: QueueSetPlayedAction): unknown =>
+  toast.dark(
+    `${action.payload.title} was just played and removed from the queue`
+  );
 
 function* notifications(): Generator<AllEffect<ForkEffect>, void, never> {
   yield all([
