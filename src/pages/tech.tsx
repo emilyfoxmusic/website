@@ -35,12 +35,14 @@ const Tech: React.FC<PageProps> = ({ location }) => {
         <li>
           <b>Operating system</b>:{' '}
           <TextLink
+            openInNewTab
             href="https://www.bunsenlabs.org/"
             onClick={(): void => trackExternalTechLink('bunsenlabs')}>
             BunsenLabs
           </TextLink>{' '}
           and{' '}
           <TextLink
+            openInNewTab
             href="https://manjaro.org/"
             onClick={(): void => trackExternalTechLink('manjaro')}>
             Manjaro
@@ -49,6 +51,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
         <li>
           <b>Digital Audio Workstation (DAW)</b>:{' '}
           <TextLink
+            openInNewTab
             href="https://ardour.org/"
             onClick={(): void => trackExternalTechLink('ardour')}>
             Ardour
@@ -57,6 +60,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
         <li>
           <b>Video editor</b>:{' '}
           <TextLink
+            openInNewTab
             href="https://www.openshot.org/"
             onClick={(): void => trackExternalTechLink('openshot')}>
             Openshot
@@ -65,12 +69,14 @@ const Tech: React.FC<PageProps> = ({ location }) => {
         <li>
           <b>Synthesisers</b>:{' '}
           <TextLink
+            openInNewTab
             href="https://zynaddsubfx.sourceforge.io/"
             onClick={(): void => trackExternalTechLink('zynaddsubfx')}>
             ZynAddSubFX
           </TextLink>{' '}
           and{' '}
           <TextLink
+            openInNewTab
             href="https://tytel.org/helm/"
             onClick={(): void => trackExternalTechLink('helm')}>
             Helm
@@ -81,6 +87,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
           <ul>
             <li>
               <TextLink
+                openInNewTab
                 href="https://calf-studio-gear.org/"
                 onClick={(): void => trackExternalTechLink('calf')}>
                 Calf studio gear
@@ -88,6 +95,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
             </li>
             <li>
               <TextLink
+                openInNewTab
                 href="https://qjackctl.sourceforge.io/"
                 onClick={(): void => trackExternalTechLink('qjackctl')}>
                 QjackCtl
@@ -95,6 +103,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
             </li>
             <li>
               <TextLink
+                openInNewTab
                 href="https://www.gimp.org/"
                 onClick={(): void => trackExternalTechLink('gimp')}>
                 Gimp
@@ -102,6 +111,7 @@ const Tech: React.FC<PageProps> = ({ location }) => {
             </li>
             <li>
               <TextLink
+                openInNewTab
                 href="https://inkscape.org/"
                 onClick={(): void => trackExternalTechLink('inkscape')}>
                 Inkscape

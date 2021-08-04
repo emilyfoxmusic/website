@@ -41,6 +41,7 @@ const PrivacyBanner: React.FC = () => {
           <Text>
             I use{' '}
             <TextLink
+              openInNewTab
               href="https://www.goatcounter.com/"
               onClick={(): void =>
                 count({
@@ -55,6 +56,7 @@ const PrivacyBanner: React.FC = () => {
             to make sure that it is doing its job effectively! For more details
             see the{' '}
             <TextLink
+              openInNewTab
               href="https://www.goatcounter.com/privacy"
               onClick={(): void =>
                 count({
