@@ -67,6 +67,8 @@ rules:
   '@typescript-eslint/explicit-function-return-type':
     - error
     - allowExpressions: true
+  consistent-return:
+    - treatUndefinedAsUnspecified: true
 settings:
   react:
     version: detect

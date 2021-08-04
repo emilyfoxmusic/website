@@ -5,10 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
 import reducer from 'state/reducer';
-import initWebSocketSaga from 'state/sagas/initWebSocket';
 import listManagementSaga from 'state/sagas/listManagement';
 import notificationsSaga from 'state/sagas/notificationsSaga';
 import queueManagementSaga from 'state/sagas/queueManagement';
+import websocketSaga from 'state/websocket/websocketSaga';
 
 const StoreProvider: React.FC = ({ children }) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -18,7 +18,7 @@ const StoreProvider: React.FC = ({ children }) => {
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
 
-  sagaMiddleware.run(initWebSocketSaga);
+  sagaMiddleware.run(websocketSaga);
   sagaMiddleware.run(listManagementSaga);
   sagaMiddleware.run(queueManagementSaga);
   sagaMiddleware.run(notificationsSaga);

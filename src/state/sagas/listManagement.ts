@@ -5,37 +5,50 @@ import {
   ForkEffect,
   take,
   takeEvery,
-  all,
-  AllEffect,
+  PutEffect,
+  put,
 } from 'redux-saga/effects';
 
-import { webSocket } from 'helpers/webSocketConnection';
 import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
 import {
   ListRequestAddAction,
   LIST_REQUEST_GET,
   LIST_REQUEST_ADD,
 } from 'state/songlist/actions';
+import { WS_SEND } from 'state/websocket/actions';
 
-const requestGet = (): void => webSocket.send({ action: 'listGet' });
+function* requestGet(): Generator<PutEffect, void, never> {
+  yield put({ type: WS_SEND, payload: { action: 'listGet' } });
+}
 
-const requestAdd = (action: ListRequestAddAction): void =>
-  webSocket.send({ action: 'listAdd', ...action.payload });
+function* requestAdd(
+  action: ListRequestAddAction
+): Generator<PutEffect, void, never> {
+  console.info('request add');
+  yield put({
+    type: WS_SEND,
+    payload: { ...action.payload, action: 'listAdd' },
+  });
+}
 
-const requestAddToQueue = (action: QueueRequestAddAction): void =>
-  webSocket.send({ ...action.payload, action: 'queueAdd' });
+function* requestAddToQueue(
+  action: QueueRequestAddAction
+): Generator<PutEffect, void, never> {
+  yield put({
+    type: WS_SEND,
+    payload: { ...action.payload, action: 'queueAdd' },
+  });
+}
 
 function* listManagement(): Generator<
-  TakeEffect | CallEffect | AllEffect<ForkEffect>,
+  TakeEffect | CallEffect | ForkEffect,
   void,
   never
 > {
   yield take(LIST_REQUEST_GET);
   yield call(requestGet);
-  yield all([
-    takeEvery(LIST_REQUEST_ADD, requestAdd),
-    takeEvery(QUEUE_REQUEST_ADD, requestAddToQueue),
-  ]);
+  yield takeEvery(LIST_REQUEST_ADD, requestAdd);
+  yield takeEvery(QUEUE_REQUEST_ADD, requestAddToQueue);
 }
 
 export default listManagement;

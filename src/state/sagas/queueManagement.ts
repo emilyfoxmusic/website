@@ -7,9 +7,10 @@ import {
   takeEvery,
   all,
   AllEffect,
+  put,
+  PutEffect,
 } from 'redux-saga/effects';
 
-import { webSocket } from 'helpers/webSocketConnection';
 import {
   QueueRequestBumpAction,
   QueueRequestCancelAction,
@@ -19,20 +20,29 @@ import {
   QUEUE_REQUEST_GET,
   QUEUE_REQUEST_PLAYED,
 } from 'state/queue/actions';
+import { WS_SEND } from 'state/websocket/actions';
 
-const requestGet = (): void => webSocket.send({ action: 'queueGet' });
+function* requestGet(): Generator<PutEffect, void, never> {
+  yield put({ type: WS_SEND, payload: { action: 'queueGet' } });
+}
 
-const requestBump = (action: QueueRequestBumpAction): void =>
-  webSocket.send({ ...action.payload, action: 'queueBump' });
+function* requestBump(
+  action: QueueRequestBumpAction
+): Generator<PutEffect, void, never> {
+  yield put({ type: WS_SEND, payload: { ...action.payload, action: 'queueBump' } });
+}
 
-const requestCancel = (action: QueueRequestCancelAction): void =>
-  webSocket.send({ ...action.payload, action: 'queueCancel' });
+function* requestCancel(
+  action: QueueRequestCancelAction
+): Generator<PutEffect, void, never> {
+  yield put({ type: WS_SEND, payload: { ...action.payload, action: 'queueCancel' } });
+}
 
-const requestPlayed = (action: QueueRequestPlayedAction): void =>
-  webSocket.send({
-    ...action.payload,
-    action: 'queuePlayed',
-  });
+function* requestPlayed(
+  action: QueueRequestPlayedAction
+): Generator<PutEffect, void, never> {
+  yield put({ type: WS_SEND, payload: { ...action.payload, action: 'queuePlayed' } });
+}
 
 function* queueManagement(): Generator<
   TakeEffect | CallEffect | AllEffect<ForkEffect>,

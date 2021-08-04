@@ -16,12 +16,10 @@ import {
   QueueRequestAddAction,
   QueueRequestGetAction,
   QUEUE_REQUEST_ADD,
-  QUEUE_REQUEST_GET,
 } from 'state/queue/actions';
 import {
   ListAction,
   LIST_REQUEST_ADD,
-  LIST_REQUEST_GET,
 } from 'state/songlist/actions';
 import { RootState } from 'state/types';
 import { lightRed } from 'styles/colors';
@@ -53,11 +51,6 @@ const Songlist: React.FC<RouteComponentProps> = () => {
   const dispatch = useDispatch<
     Dispatch<ListAction | QueueRequestGetAction | QueueRequestAddAction>
   >();
-
-  useEffect(() => {
-    dispatch({ type: LIST_REQUEST_GET });
-    dispatch({ type: QUEUE_REQUEST_GET });
-  }, [dispatch]);
 
   const [title, setTitle] = useState<string>('');
   const [artist, setArtist] = useState<string>('');
