@@ -53,7 +53,7 @@ function* closeWebsocket(
 
 function* keepSocketAlive(): Generator<CallEffect | PutEffect, void, never> {
   while (true) {
-    yield delay(0.25 * 60 * 1000); // 5 mins
+    yield delay(5 * 60 * 1000); // 5 mins
     yield put({ type: WS_SEND, payload: 'ping' });
   }
 }
