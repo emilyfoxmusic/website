@@ -25,6 +25,11 @@ export const Button = styled(Link)`
       border-color: black;
     }
   }
+
+  &:focus {
+    outline: black dotted 2px;
+    outline-offset: 2px;
+  }
 `;
 
 export const Arrow = styled.div`
