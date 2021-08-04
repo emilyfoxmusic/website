@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
+import { init, count } from 'helpers/goatcounter';
+
 type AnalyticsProps = {
   location: Location;
 };
@@ -9,29 +11,16 @@ const Analytics: React.FC<AnalyticsProps> = ({ location }) => {
   const path = location.pathname;
 
   useEffect(() => {
-    const registerPageVisit = (): void => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const gc = (window as any).goatcounter;
+    init({ no_onload: true, allow_local: true });
+  }, []);
 
-      if (gc && gc.count) {
-        gc.bind_events();
-        gc.count({ path, title: path });
-      } else {
-        setTimeout(registerPageVisit, 1000);
-      }
-    };
-
-    registerPageVisit();
+  useEffect(() => {
+    // Allow time for the page header to update
+    setTimeout(() => count({ path }), 50);
   }, [path]);
 
   return (
     <Helmet>
-      <script
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{
-          __html: 'window.goatcounter = { no_onload: true }',
-        }}
-      />
       <script
         data-goatcounter="https://emilyfoxmusicdev.goatcounter.com/count"
         async
