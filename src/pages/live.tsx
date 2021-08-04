@@ -13,7 +13,7 @@ import { QUEUE_REQUEST_GET } from 'state/queue/actions';
 import { STATUS_REQUEST_GET } from 'state/requestStatus/actions';
 import { LIST_REQUEST_GET } from 'state/songlist/actions';
 import { RootAction, RootState } from 'state/types';
-import { AUTHENTICATE_REFRESH } from 'state/user/actions';
+import { AUTHENTICATE_REFRESH, LOAD_AUTHENTICATION } from 'state/user/actions';
 import { WS_CONNECT, WS_DISCONNECT } from 'state/websocket/actions';
 
 const Live: React.FC<PageProps> = () => {
@@ -26,6 +26,7 @@ const Live: React.FC<PageProps> = () => {
     dispatch({ type: STATUS_REQUEST_GET });
     dispatch({ type: QUEUE_REQUEST_GET });
     dispatch({ type: LIST_REQUEST_GET });
+    dispatch({ type: LOAD_AUTHENTICATION });
 
     return () => {
       dispatch({ type: WS_DISCONNECT });
