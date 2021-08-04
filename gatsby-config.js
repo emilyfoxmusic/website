@@ -28,5 +28,16 @@ module.exports = {
       },
     },
     `gatsby-plugin-resolve-src`,
+    {
+      resolve: 'gatsby-plugin-eslint',
+      options: {
+        test: /\.ts$|\.tsx$/,
+        exclude: /(node_modules|.cache|public)/,
+        stages: ['develop'],
+        options: {
+          failOnError: true
+        }
+      }
+    }
   ],
 };
