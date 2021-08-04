@@ -1,3 +1,5 @@
+import { useStaticQuery } from 'gatsby';
+import BackgroundImage from 'gatsby-background-image';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -11,9 +13,8 @@ import RoseImg from 'images/rose.svg';
 
 const NewAlbumContainer = styled.div`
   flex: 0 1 50%;
+  margin: 24px;
 
-  margin-top: 32px;
-  margin-right: 32px;
   text-align: center;
 
   ${largeBreakpoint`
@@ -38,12 +39,11 @@ const ButtonContainer = styled.div`
   ${largeBreakpoint`
     display: flex;
     justify-content: space-evenly;
-    margin-top: 48px;
   `}
 `;
 
 const MainContentContainer = styled.div`
-  padding: 16px 32px;
+  padding: 16px 24px;
 
   display: flex;
   justify-content: space-between;
@@ -61,28 +61,49 @@ const VideoContainer = styled.div`
   `}
 `;
 
-const IndexPage: React.FC = () => (
-  <Layout>
-    <SEO title="Home" />
-    <MainContentContainer>
+const PortraitBackground = styled(BackgroundImage)`
+  min-height: calc(100vw * (1080 / 1920));
+`;
+
+const IndexPage: React.FC = () => {
+  const { portrait } = useStaticQuery(
+    graphql`
+      query {
+        portrait: file(relativePath: { eq: "portrait.jpg" }) {
+          childImageSharp {
+            fluid(quality: 90, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    `
+  );
+  const imageData = portrait.childImageSharp.fluid;
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <PortraitBackground fluid={imageData}>
+        <MainContentContainer>
+          <ButtonContainer>
+            <ButtonLink to="/bio">Bio</ButtonLink>
+            <ButtonLink to="/contact">Contact</ButtonLink>
+            <ButtonLink to="/tech">Tech</ButtonLink>
+          </ButtonContainer>
+        </MainContentContainer>
+      </PortraitBackground>
       <NewAlbumContainer>
         <PageHeadingNoUnderline>New album coming soon!</PageHeadingNoUnderline>
         <Rose />
       </NewAlbumContainer>
-      <ButtonContainer>
-        <ButtonLink to="/music">Music</ButtonLink>
-        <ButtonLink to="/bio">Bio</ButtonLink>
-        <ButtonLink to="/contact">Contact</ButtonLink>
-        <ButtonLink to="/tech">Tech</ButtonLink>
-      </ButtonContainer>
-    </MainContentContainer>
-    <VideoContainer>
-      <Video
-        title="Bad Things Can Happen (Original Song)"
-        src="https://www.youtube.com/embed/peoXGwCcWBk"
-      />
-    </VideoContainer>
-  </Layout>
-);
+      <VideoContainer>
+        <Video
+          title="Bad Things Can Happen (Original Song)"
+          src="https://www.youtube.com/embed/peoXGwCcWBk"
+        />
+      </VideoContainer>
+    </Layout>
+  );
+};
 
 export default IndexPage;
