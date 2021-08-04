@@ -21,8 +21,8 @@ export const Button = styled(Link)`
     color: black;
     border: black solid 0.25rem;
 
-    & div {
-      border-color: black;
+    & svg {
+      stroke: black;
     }
   }
 
@@ -32,15 +32,13 @@ export const Button = styled(Link)`
   }
 `;
 
-export const Arrow = styled.div`
-  margin-left: 1rem;
+export const Arrow = styled(ArrowImg)`
+  stroke: white;
+  height: 24px;
 
-  border: solid;
-  border-color: white;
-  border-width: 0 0.25rem 0.25rem 0;
-  display: inline-block;
-  padding: 0.3rem;
+  margin-left: 16px;
 
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
+  ${largeBreakpoint`
+    margin-left: 24px;
+  `}
 `;
