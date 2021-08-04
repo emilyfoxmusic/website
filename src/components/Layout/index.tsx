@@ -15,9 +15,14 @@ import {
 
 type LayoutProps = {
   fullHeightNav?: boolean;
+  liveLayout?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
+const Layout: React.FC<LayoutProps> = ({
+  fullHeightNav,
+  liveLayout,
+  children,
+}) => {
   const { portrait } = useStaticQuery(
     graphql`
       query {
@@ -38,6 +43,48 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
     count({ path: `internal-nav:${path}`, title: path, event: true });
   };
 
+  const navButtons = liveLayout ? (
+    <>
+      <ButtonLink
+        back
+        to="/music/"
+        onClick={(): void => trackNavClick('music')}>
+        Back to main site
+      </ButtonLink>
+      <ButtonLink to="/live/" onClick={(): void => trackNavClick('music')}>
+        Watch
+      </ButtonLink>
+      <ButtonLink
+        to="/live/songlist/"
+        onClick={(): void => trackNavClick('music')}>
+        Song list
+      </ButtonLink>
+      <ButtonLink
+        to="/live/queue/"
+        onClick={(): void => trackNavClick('music')}>
+        Current queue
+      </ButtonLink>
+    </>
+  ) : (
+    <>
+      <ButtonLink to="/music/" onClick={(): void => trackNavClick('music')}>
+        music
+      </ButtonLink>
+      <ButtonLink to="/bio/" onClick={(): void => trackNavClick('bio')}>
+        bio
+      </ButtonLink>
+      <ButtonLink to="/contact/" onClick={(): void => trackNavClick('contact')}>
+        contact
+      </ButtonLink>
+      <ButtonLink to="/tech/" onClick={(): void => trackNavClick('tech')}>
+        tech
+      </ButtonLink>
+      <ButtonLink to="/live/" onClick={(): void => trackNavClick('live')}>
+        live
+      </ButtonLink>
+    </>
+  );
+
   return (
     <>
       <Header />
@@ -47,33 +94,7 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
             fluid={imageData}
             isFullHeight={fullHeightNav ?? false}>
             <MainContentContainer>
-              <ButtonContainer>
-                <ButtonLink
-                  to="/music/"
-                  onClick={(): void => trackNavClick('music')}>
-                  music
-                </ButtonLink>
-                <ButtonLink
-                  to="/bio/"
-                  onClick={(): void => trackNavClick('bio')}>
-                  bio
-                </ButtonLink>
-                <ButtonLink
-                  to="/contact/"
-                  onClick={(): void => trackNavClick('contact')}>
-                  contact
-                </ButtonLink>
-                <ButtonLink
-                  to="/tech/"
-                  onClick={(): void => trackNavClick('tech')}>
-                  tech
-                </ButtonLink>
-                <ButtonLink
-                  to="/live/"
-                  onClick={(): void => trackNavClick('live')}>
-                  live
-                </ButtonLink>
-              </ButtonContainer>
+              <ButtonContainer>{navButtons}</ButtonContainer>
             </MainContentContainer>
           </PortraitBackground>
           {children}

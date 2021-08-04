@@ -1,33 +1,23 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Router } from '@reach/router';
 import { PageProps } from 'gatsby';
 import React from 'react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import ReactTwitchEmbedVideo from 'react-twitch-embed-video';
-import styled from 'styled-components';
 
 import Layout from 'components/Layout';
-import SEO from 'components/SEO';
-import { largeBreakpoint } from 'helpers/breakpoints';
+import Login from 'components/Live/Login';
+import Queue from 'components/Live/Queue';
+import Songlist from 'components/Live/Songlist';
+import TwitchEmbed from 'components/Live/TwitchEmbed';
 
-const TwitchEmbedWrapper = styled.div`
-  margin-top: 24px;
-
-  ${largeBreakpoint`
-    position: relative;
-    margin-top: -150px;
- `}
-`;
-
-const Live: React.FC<PageProps> = ({ location }) => {
+const Live: React.FC<PageProps> = () => {
   return (
-    <Layout>
-      <SEO
-        description="Catch Emily Fox Music live on twitch."
-        location={location}
-      />
-      <TwitchEmbedWrapper>
-        <ReactTwitchEmbedVideo channel="EmIsThePenguin" width="100%" />
-      </TwitchEmbedWrapper>
+    <Layout liveLayout>
+      <Router basepath="/live">
+        <Login path="/login" />
+        <Queue path="/queue" />
+        <Songlist path="/songlist" />
+        <TwitchEmbed path="/" />
+      </Router>
     </Layout>
   );
 };

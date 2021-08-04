@@ -1,11 +1,14 @@
-import { css, SimpleInterpolation } from 'styled-components';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { css, ThemeProps, Interpolation } from 'styled-components';
 
 const breakpoint = '800px';
 
 export const largeBreakpoint = (
-  styling: TemplateStringsArray
-): SimpleInterpolation => css`
+  strings: TemplateStringsArray,
+  ...interpolations: Interpolation<ThemeProps<any>>[]
+): Interpolation<ThemeProps<any>> => css`
   @media (min-width: ${breakpoint}) {
-    ${styling}
+    ${css(strings, ...interpolations)}
   }
 `;
