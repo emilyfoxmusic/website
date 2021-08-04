@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
@@ -6,10 +5,6 @@ import { fontFamily } from 'styles/fonts';
 
 const headerHeight = '4rem';
 const headerFontSize = '2rem';
-
-const HeaderContainerLink = styled(Link)`
-  display: flex;
-`;
 
 const HalfOfHeaderCss = css`
   font-family: ${fontFamily};
@@ -23,7 +18,11 @@ const HalfOfHeaderCss = css`
   padding: 0 0.5rem;
 `;
 
-const LeftDiv = styled.div`
+export const HeaderContainerLink = styled(Link)`
+  display: flex;
+`;
+
+export const LeftDiv = styled.div`
   ${HalfOfHeaderCss}
   background: white;
   border: solid black 0.25rem;
@@ -31,7 +30,7 @@ const LeftDiv = styled.div`
   justify-content: flex-end;
 `;
 
-const RightDiv = styled.div`
+export const RightDiv = styled.div`
   ${HalfOfHeaderCss}
   background: black;
   border: solid white;
@@ -39,12 +38,3 @@ const RightDiv = styled.div`
   color: white;
   justify-content: flex-start;
 `;
-
-export const Header: React.FC = () => (
-  <header>
-    <HeaderContainerLink to="/" aria-label="Emily Fox Music Home">
-      <LeftDiv aria-hidden>Emily Fox</LeftDiv>
-      <RightDiv aria-hidden>| Music</RightDiv>
-    </HeaderContainerLink>
-  </header>
-);

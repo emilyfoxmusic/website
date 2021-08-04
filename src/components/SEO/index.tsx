@@ -1,13 +1,13 @@
+import { useStaticQuery, graphql } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { useStaticQuery, graphql } from 'gatsby';
 
 type SEOProps = {
   title?: string;
   description?: string;
 };
 
-export const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
+const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -30,9 +30,9 @@ export const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
         name="description"
         content={description || siteMetadata.description}
       />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Helmet>
   );
 };
+
+export default SEO;
