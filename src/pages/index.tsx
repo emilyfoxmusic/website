@@ -59,7 +59,7 @@ const IndexPage: React.FC<PageProps> = ({ location }) => {
           coming soon!
         </PageHeadingNoUnderline>
       </NewAlbumContainer>
-      <MusicButton to="/music">Listen</MusicButton>
+      <MusicButton to="/music/">Listen</MusicButton>
     </Layout>
   );
 };

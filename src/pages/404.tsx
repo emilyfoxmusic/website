@@ -20,7 +20,7 @@ const NotFoundPage: React.FC = () => (
     <SEO title="Page not found" />
     <PageHeading>NOT FOUND</PageHeading>
     <CenteredParagraph>Sorry, that page doesn't exist.</CenteredParagraph>
-    <MusicButton to="/music">Find music instead</MusicButton>
+    <MusicButton to="/music/">Find music instead</MusicButton>
   </Layout>
 );
 
