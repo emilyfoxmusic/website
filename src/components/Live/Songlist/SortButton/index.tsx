@@ -1,38 +1,28 @@
 import React, { ReactElement } from 'react';
 
-import { SortInfo } from 'helpers/useTable';
+import { DataObject, SortInfo } from 'helpers/useTable';
 
 import { CurrentArrow, SortButtonStyle } from './styles';
 
-type SortButtonProps<TData> = {
+type SortButtonProps<TData extends DataObject> = {
   sort: SortInfo<TData>;
-  sortKey: keyof TData;
-  switchDefaultOrder?: boolean;
-  'aria-label': string;
+  sortKey: keyof TData & string;
 };
 
-const SortButton = <TData,>({
+const SortButton = <TData extends DataObject>({
   sort,
   sortKey,
-  switchDefaultOrder,
-  'aria-label': ariaLabel,
 }: SortButtonProps<TData>): ReactElement => {
-  const active = sort.currentSort.key === sortKey;
+  const active = sort.currentSort.sortKey === sortKey;
   return (
     <SortButtonStyle
       type="button"
       $active={active}
-      onClick={() => sort.toggleSort(sortKey, !switchDefaultOrder)}
-      aria-label={ariaLabel}>
+      onClick={() => sort.toggleSort(sortKey)}
+      aria-label={sort.ariaToggleText(sortKey)}>
       <CurrentArrow
         aria-hidden
-        $ascending={
-          active
-            ? switchDefaultOrder
-              ? !sort.currentSort.ascending
-              : sort.currentSort.ascending
-            : true
-        }
+        $ascending={sort.toggleDirection(sortKey) === 'ascending'}
       />
     </SortButtonStyle>
   );

@@ -1,27 +1,25 @@
 import { useState } from 'react';
 
-type DataObject = {
+import { recursivelyCompareObjects } from './sort';
+
+export type DataObject = {
   [K: string]: boolean | string | number;
+};
+
+type CurrentSort<TData> = {
+  sortKey: keyof TData & string;
+  sortOrder: 'ascending' | 'descending';
 };
 
 type TableData<TData extends DataObject> = TData[];
 
-export type SortInfo<TData> = {
-  currentSort: {
-    key: keyof TData;
-    ascending: boolean;
-  };
-  sortByKey: (key: keyof TData) => void;
-  switchSortDirection: () => void;
-  setSort: (key: keyof TData, ascending: boolean) => void;
-  toggleSort: (key: keyof TData, defaultAscending?: boolean) => void;
-  ariaText: (
-    key: keyof TData,
-    label: string,
-    switchDefaultOrder?: boolean,
-    ascendingText?: string,
-    descendingText?: string
-  ) => string;
+export type SortInfo<TData extends DataObject> = {
+  currentSort: CurrentSort<TData>;
+  toggleSort: (key: keyof TData & string) => void;
+  ariaToggleText: (key: keyof TData & string) => string;
+  currentSortText: string;
+  ariaSort: (key: keyof TData) => 'ascending' | 'descending' | undefined;
+  toggleDirection: (key: keyof TData) => 'ascending' | 'descending';
 };
 
 export type PaginationInfo = {
@@ -32,57 +30,31 @@ export type PaginationInfo = {
   setPage: (page: number) => void;
 };
 
-type ProcessedTableData<TData> = {
+type ProcessedTableData<TData extends DataObject> = {
   data: TData[];
   sort: SortInfo<TData>;
   pagination: PaginationInfo;
 };
 
-const compareFn = <TData extends DataObject>(
-  a: TData,
-  b: TData,
-  sortBy: keyof TData
-): number => {
-  const aVal = a[sortBy];
-  const bVal = b[sortBy];
-  switch (typeof aVal) {
-    case 'number':
-      return aVal - (bVal as number);
-    case 'string':
-      return aVal.localeCompare(bVal as string);
-    case 'boolean':
-      if (aVal === bVal) {
-        return 0;
-      }
-      return aVal ? 1 : -1;
-    default:
-      throw new Error('Sort key of of unsupported type.');
-  }
-};
-
-const compareFn2 = <TData extends DataObject>(
-  a: TData,
-  b: TData,
-  sortBy: keyof TData,
-  thenBy: keyof TData
-): number => {
-  const aVal = a[sortBy];
-  const bVal = b[sortBy];
-  if (aVal === bVal) {
-    return compareFn(a, b, thenBy);
-  }
-  return compareFn(a, b, sortBy);
+export type SortConfig<TData extends DataObject> = {
+  [K in keyof TData]?: {
+    label?: string;
+    otherSortKeys: (keyof TData)[];
+    defaultOrder?: 'ascending' | 'descending';
+    ascendingText?: string;
+    descendingText?: string;
+  };
 };
 
 const useTable = <TData extends DataObject>(
   data: TableData<TData>,
-  defaultPrimarySortKey: keyof TData,
-  secondarySortKey: keyof TData,
+  sortConfig: SortConfig<TData>,
+  defaultSortKey: keyof TData & string,
   pageSize?: number
 ): ProcessedTableData<TData> => {
-  const [currentSort, setCurrentSort] = useState({
-    key: defaultPrimarySortKey,
-    ascending: true,
+  const [currentSort, setCurrentSort] = useState<CurrentSort<TData>>({
+    sortKey: defaultSortKey,
+    sortOrder: sortConfig[defaultSortKey]?.defaultOrder ?? 'ascending',
   });
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -101,47 +73,62 @@ const useTable = <TData extends DataObject>(
     setCurrentPage(page);
   };
 
-  const sortedData = data.sort((a, b) =>
-    currentSort.ascending
-      ? compareFn2(a, b, currentSort.key, secondarySortKey)
-      : -compareFn2(a, b, currentSort.key, secondarySortKey)
-  );
+  const sortedData = data.sort((a, b) => {
+    const comparison = recursivelyCompareObjects(
+      a,
+      b,
+      currentSort.sortKey,
+      sortConfig[currentSort.sortKey]?.otherSortKeys ?? []
+    );
+    return currentSort.sortOrder === 'ascending' ? comparison : -comparison;
+  });
 
-  const sortByKey = (key: keyof TData): void =>
-    setCurrentSort(state => ({ ...state, key }));
-
-  const switchSortDirection = (): void =>
-    setCurrentSort(state => ({ ...state, ascending: !!state.ascending }));
-
-  const setSort = (key: keyof TData, ascending: boolean): void =>
-    setCurrentSort({ key, ascending });
-
-  const toggleSort = (key: keyof TData, defaultAscending?: boolean): void =>
+  const toggleSort = (key: keyof TData & string): void =>
     setCurrentSort(state => {
-      if (state.key === key) {
-        return { ...state, ascending: !state.ascending };
+      if (state.sortKey === key) {
+        return {
+          ...state,
+          sortOrder:
+            state.sortOrder === 'ascending' ? 'descending' : 'ascending',
+        };
       }
-      return { key, ascending: defaultAscending ?? true };
+      return {
+        sortKey: key,
+        sortOrder: sortConfig[key]?.defaultOrder ?? 'ascending',
+      };
     });
 
-  const ariaText = (
-    key: keyof TData,
-    label: string,
-    switchDefaultOrder?: boolean,
-    ascendingText?: string,
-    descendingText?: string
-  ): string =>
-    currentSort.key === key
-      ? `Sort by ${label} ${
-          currentSort.ascending
-            ? descendingText ?? 'descending'
-            : ascendingText ?? 'ascending'
+  const withBrackets = (explanatoryText: string | undefined): string =>
+    explanatoryText ? ` (${explanatoryText})` : '';
+
+  const ariaToggleText = (key: keyof TData & string): string =>
+    currentSort.sortKey === key
+      ? `Sort by ${sortConfig[key]?.label ?? key} ${
+          currentSort.sortOrder === 'ascending'
+            ? `descending${withBrackets(sortConfig[key]?.descendingText)}`
+            : `ascending${withBrackets(sortConfig[key]?.ascendingText)}`
         }`
-      : `Sort by ${label} ${
-          switchDefaultOrder
-            ? descendingText ?? 'descending'
-            : ascendingText ?? 'ascending'
+      : `Sort by ${sortConfig[key]?.label ?? key} ${
+          sortConfig[key]?.defaultOrder === 'ascending'
+            ? `ascending${withBrackets(sortConfig[key]?.ascendingText)}`
+            : `descending${withBrackets(sortConfig[key]?.descendingText)}`
         }`;
+
+  const currentSortText = `${
+    sortConfig[currentSort.sortKey]?.label ?? currentSort.sortKey
+  }, ${currentSort.sortOrder}${
+    currentSort.sortOrder === 'ascending'
+      ? withBrackets(sortConfig[currentSort.sortKey]?.ascendingText)
+      : withBrackets(sortConfig[currentSort.sortKey]?.descendingText)
+  }`;
+
+  const ariaSort = (key: keyof TData): 'ascending' | 'descending' | undefined =>
+    currentSort.sortKey === key ? currentSort.sortOrder : undefined;
+
+  const toggleDirection = (key: keyof TData): 'ascending' | 'descending' =>
+    currentSort.sortKey === key
+      ? currentSort.sortOrder
+      : sortConfig[key]?.defaultOrder ?? 'ascending';
 
   return {
     data: pageSize
@@ -149,11 +136,11 @@ const useTable = <TData extends DataObject>(
       : sortedData,
     sort: {
       currentSort,
-      sortByKey,
-      switchSortDirection,
-      setSort,
       toggleSort,
-      ariaText,
+      ariaToggleText,
+      currentSortText,
+      ariaSort,
+      toggleDirection,
     },
     pagination: {
       currentPage,

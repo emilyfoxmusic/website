@@ -11,7 +11,7 @@ import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
-import useTable from 'helpers/useTable';
+import useTable, { SortConfig } from 'helpers/useTable';
 import {
   QueueRequestAddAction,
   QueueRequestGetAction,
@@ -36,6 +36,7 @@ import {
   TableSection,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
+  VisuallyHiddenSortText,
 } from './styles';
 
 import {
@@ -77,10 +78,37 @@ const Songlist: React.FC<RouteComponentProps> = () => {
     };
   });
 
+  const sortConfig: SortConfig<typeof augmentedSongs[0]> = {
+    title: {
+      otherSortKeys: ['artist'],
+    },
+    artist: {
+      otherSortKeys: ['title'],
+    },
+    numberOfPlays: {
+      otherSortKeys: ['artist', 'title'],
+      label: 'number of plays',
+      defaultOrder: 'descending',
+      ascendingText: 'least popular first',
+      descendingText: 'most popular first',
+    },
+    positionInQueue: {
+      otherSortKeys: ['artist', 'title'],
+      label: 'position in queue',
+    },
+    lastPlayed: {
+      otherSortKeys: ['artist', 'title'],
+      label: 'last played',
+      defaultOrder: 'descending',
+      ascendingText: 'least recent first',
+      descendingText: 'most recent first',
+    },
+  };
+
   const { data, sort, pagination } = useTable(
     augmentedSongs,
+    sortConfig,
     'artist',
-    'title',
     10
   );
 
@@ -98,63 +126,40 @@ const Songlist: React.FC<RouteComponentProps> = () => {
       </p>
       <TableSection>
         <Pagination {...pagination} />
+        <VisuallyHiddenSortText aria-live="polite">
+          Currently sorting by: {sort.currentSortText}
+        </VisuallyHiddenSortText>
         <Table>
           <thead>
             <TableRow>
-              <LargeBreakpointOnlyHeaderCell $width="120px">
+              <LargeBreakpointOnlyHeaderCell
+                $width="120px"
+                aria-sort={sort.ariaSort('positionInQueue')}>
                 <span aria-label="Position in queue">#Queue</span>
-                <SortButton
-                  sort={sort}
-                  sortKey="positionInQueue"
-                  aria-label={sort.ariaText(
-                    'positionInQueue',
-                    'position in queue'
-                  )}
-                />
+                <SortButton sort={sort} sortKey="positionInQueue" />
               </LargeBreakpointOnlyHeaderCell>
-              <TableHeaderCell>
+              <TableHeaderCell aria-sort={sort.ariaSort('title')}>
                 Title
-                <SortButton
-                  sort={sort}
-                  sortKey="title"
-                  aria-label={sort.ariaText('title', 'title')}
-                />
+                <SortButton sort={sort} sortKey="title" />
               </TableHeaderCell>
-              <TableHeaderCell $width="30%" $widthLarge="17%">
+              <TableHeaderCell
+                $width="30%"
+                $widthLarge="17%"
+                aria-sort={sort.ariaSort('artist')}>
                 Artist
-                <SortButton
-                  sort={sort}
-                  sortKey="artist"
-                  aria-label={sort.ariaText('artist', 'artist')}
-                />
+                <SortButton sort={sort} sortKey="artist" />
               </TableHeaderCell>
-              <XLargeBreakpointOnlyHeaderCell $width="130px">
+              <XLargeBreakpointOnlyHeaderCell
+                $width="130px"
+                aria-sort={sort.ariaSort('numberOfPlays')}>
                 <span aria-label="Number of plays">#Plays</span>
-                <SortButton
-                  sort={sort}
-                  sortKey="numberOfPlays"
-                  switchDefaultOrder
-                  aria-label={sort.ariaText(
-                    'numberOfPlays',
-                    'number of plays',
-                    true
-                  )}
-                />
+                <SortButton sort={sort} sortKey="numberOfPlays" />
               </XLargeBreakpointOnlyHeaderCell>
-              <LargeBreakpointOnlyHeaderCell $width="180px">
+              <LargeBreakpointOnlyHeaderCell
+                $width="180px"
+                aria-sort={sort.ariaSort('lastPlayed')}>
                 Last played
-                <SortButton
-                  sort={sort}
-                  sortKey="lastPlayed"
-                  switchDefaultOrder
-                  aria-label={sort.ariaText(
-                    'lastPlayed',
-                    'last played',
-                    true,
-                    '- least recently played first',
-                    '- most recently played first'
-                  )}
-                />
+                <SortButton sort={sort} sortKey="lastPlayed" />
               </LargeBreakpointOnlyHeaderCell>
               <TableHeaderCell $width="42px" $widthLarge="96px" />
             </TableRow>
