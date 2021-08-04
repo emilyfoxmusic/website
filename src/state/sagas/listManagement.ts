@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   CallEffect,
   call,
@@ -5,6 +6,8 @@ import {
   ForkEffect,
   take,
   takeEvery,
+  all,
+  AllEffect,
 } from 'redux-saga/effects';
 
 import { webSocket } from 'helpers/webSocketConnection';
@@ -12,26 +15,31 @@ import {
   ListRequestAddAction,
   LIST_REQUEST_GET,
   LIST_REQUEST_ADD,
+  LIST_ADD,
+  ListAddAction,
 } from 'state/songlist/actions';
 
-const listRequestGet = (): void => webSocket.send({ action: 'listGet' });
-const listRequestAdd = (payload: ListRequestAddAction['payload']): void =>
-  webSocket.send({ action: 'listAdd', ...payload });
+const requestGet = (): void => webSocket.send({ action: 'listGet' });
 
-function* listAddHandler(
-  action: ListRequestAddAction
-): Generator<CallEffect, void, never> {
-  yield call(listRequestAdd, action.payload);
-}
+const requestAdd = (action: ListRequestAddAction): void =>
+  webSocket.send({ action: 'listAdd', ...action.payload });
+
+const notifyAdd = (action: ListAddAction): unknown =>
+  toast.dark(
+    `${action.payload.title} by ${action.payload.artist} has been added to the songlist`
+  );
 
 function* listManagement(): Generator<
-  TakeEffect | CallEffect | ForkEffect,
+  TakeEffect | CallEffect | AllEffect<ForkEffect>,
   void,
   never
 > {
   yield take(LIST_REQUEST_GET);
-  yield call(listRequestGet);
-  yield takeEvery(LIST_REQUEST_ADD, listAddHandler);
+  yield call(requestGet);
+  yield all([
+    takeEvery(LIST_REQUEST_ADD, requestAdd),
+    takeEvery(LIST_ADD, notifyAdd),
+  ]);
 }
 
 export default listManagement;
