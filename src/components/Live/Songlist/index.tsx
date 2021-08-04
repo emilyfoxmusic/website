@@ -109,6 +109,9 @@ const Songlist: React.FC<RouteComponentProps> = () => {
     dispatch({ type: QUEUE_REQUEST_ADD, payload: { songId } });
   };
 
+  const enableRequests =
+    user.isAuthenticated && (requestStatus.requestsOpen || user.isAdmin);
+
   return (
     <>
       <PageHeading>Song list</PageHeading>
@@ -169,7 +172,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 Last played
                 <SortButton sort={sort} sortKey="lastPlayed" />
               </MedBreakpointOnlyHeaderCell>
-              {user.isAuthenticated && requestStatus.requestsOpen && (
+              {enableRequests && (
                 <TableHeaderCell $width="42px" $widthLarge="96px" />
               )}
             </TableRow>
@@ -190,7 +193,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <MedBreakpointOnlyCell>
                   {formatTimeAgo(song.lastPlayed)}
                 </MedBreakpointOnlyCell>
-                {user.isAuthenticated && requestStatus.requestsOpen && (
+                {enableRequests && (
                   <td>
                     {!song.isInQueue && (
                       <ActionButton
