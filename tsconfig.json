@@ -8,7 +8,7 @@
     "noEmit": true,
     "strict": true,
     "pretty": true,
-    "types": ["react"],
+    "types": ["react", "node"],
     "target": "esnext"
   },
   "include": ["./src/**/*"],

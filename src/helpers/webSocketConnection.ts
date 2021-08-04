@@ -25,9 +25,11 @@ export const webSocket = new WebSocketWrapper();
 
 export const createWebSocketConnection = (): Promise<WebSocket> => {
   return new Promise((resolve, reject) => {
-    const socket = new WebSocket(
-      'wss://kywvvmz6va.execute-api.eu-west-2.amazonaws.com/dev'
-    );
+    if (!process.env.GATSBY_WEBSOCKET_URL) {
+      throw new Error('Websocket URL not set');
+    }
+
+    const socket = new WebSocket(process.env.GATSBY_WEBSOCKET_URL);
 
     socket.onopen = () => {
       console.info('Socket open');
@@ -36,6 +38,7 @@ export const createWebSocketConnection = (): Promise<WebSocket> => {
     };
 
     socket.onerror = event => {
+      console.info('Socket error');
       reject(event);
     };
   });
