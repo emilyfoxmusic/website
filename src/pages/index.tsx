@@ -10,8 +10,6 @@ import { largeBreakpoint } from 'helpers/breakpoints';
 import { count } from 'helpers/goatcounter';
 import WhereFeelingsGrowImg from 'images/where-feelings-grow.svg';
 
-import '../utils/icons';
-
 const NewAlbumContainer = styled.div`
   flex: 0 1 50%;
   margin-top: 32px;
