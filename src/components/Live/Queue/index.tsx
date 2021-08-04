@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import React, { Dispatch, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TableHeaderCell, TableRow } from 'components/Table';
+import { Table, TableHeaderCell, TableRow } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import useTable from 'helpers/useTable';
 import {
@@ -16,13 +16,7 @@ import {
 import { QueueItem } from 'state/queue/types';
 import { RootState } from 'state/types';
 
-import {
-  Bump1Button,
-  Bump2Button,
-  Bump3Button,
-  TableBlock,
-  TableWithBottomMargin,
-} from './styles';
+import { Bump1Button, Bump2Button, Bump3Button, TableBlock } from './styles';
 
 import {
   LargeBreakpointOnlyHeaderCell,
@@ -72,7 +66,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
       <PageHeading>Current queue</PageHeading>
       {queuedSongs.length ? (
         <TableBlock>
-          <TableWithBottomMargin>
+          <Table>
             <thead>
               <TableRow>
                 <TableHeaderCell
@@ -142,7 +136,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
                 </TableRow>
               ))}
             </tbody>
-          </TableWithBottomMargin>
+          </Table>
         </TableBlock>
       ) : (
         <p>The queue is currently empty.</p>

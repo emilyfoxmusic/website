@@ -44,6 +44,8 @@ export const TableBlock = styled.div`
   width: min(90vw, 1400px);
   position: relative;
   left: calc((min(90vw, 1400px)) * -0.5 + 50%);
+
+  margin-bottom: 64px;
 `;
 
 export const SecretAdminSection = styled.section`
