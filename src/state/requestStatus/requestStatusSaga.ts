@@ -1,9 +1,7 @@
 import {
   CallEffect,
   call,
-  TakeEffect,
   ForkEffect,
-  take,
   takeEvery,
   PutEffect,
   put,
@@ -42,13 +40,8 @@ const requestStatusUpdate = (
     action.payload.requestsOpen
   );
 
-function* requestStatusSaga(): Generator<
-  TakeEffect | CallEffect | ForkEffect,
-  void,
-  never
-> {
-  yield take(STATUS_REQUEST_GET);
-  yield call(requestGet);
+function* requestStatusSaga(): Generator<ForkEffect, void, never> {
+  yield takeEvery(STATUS_REQUEST_GET, requestGet);
   yield takeEvery(STATUS_REQUEST_UPDATE, requestStatusUpdate);
 }
 
