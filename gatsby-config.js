@@ -51,5 +51,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-styled-components`,
     },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        serialize: ({ site, allSitePage }) =>
+          allSitePage.edges.map(edge => ({
+            url: site.siteMetadata.siteUrl + edge.node.path,
+            changefreq: `daily`,
+            priority: ['/', '/music/'].includes(edge.node.path) ? 1 : 0.7,
+          })),
+      },
+    },
   ],
 };
