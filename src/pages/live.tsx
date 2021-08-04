@@ -4,10 +4,10 @@ import { PageProps } from 'gatsby';
 import React from 'react';
 
 import Layout from 'components/Layout';
+import TwitchEmbed from 'components/Live';
 import Login from 'components/Live/Login';
 import Queue from 'components/Live/Queue';
 import Songlist from 'components/Live/Songlist';
-import TwitchEmbed from 'components/Live/TwitchEmbed';
 
 const Live: React.FC<PageProps> = () => {
   return (
