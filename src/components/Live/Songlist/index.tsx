@@ -31,6 +31,8 @@ import {
   Label,
   FormHeading,
   FullWidthInput,
+  MedBreakpointOnlyHeaderCell,
+  MedBreakpointOnlyCell,
   SecretAdminSection,
   SubmitSongButton,
   TableSection,
@@ -144,7 +146,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
               </TableHeaderCell>
               <TableHeaderCell
                 $width="30%"
-                $widthLarge="17%"
+                $widthLarge="18%"
                 aria-sort={sort.ariaSort('artist')}>
                 Artist
                 <SortButton sort={sort} sortKey="artist" />
@@ -155,12 +157,13 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <span aria-label="Number of plays">#Plays</span>
                 <SortButton sort={sort} sortKey="numberOfPlays" />
               </XLargeBreakpointOnlyHeaderCell>
-              <LargeBreakpointOnlyHeaderCell
-                $width="180px"
+              <MedBreakpointOnlyHeaderCell
+                $width="123px"
+                $widthLarge="180px"
                 aria-sort={sort.ariaSort('lastPlayed')}>
                 Last played
                 <SortButton sort={sort} sortKey="lastPlayed" />
-              </LargeBreakpointOnlyHeaderCell>
+              </MedBreakpointOnlyHeaderCell>
               <TableHeaderCell $width="42px" $widthLarge="96px" />
             </TableRow>
           </thead>
@@ -177,9 +180,9 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <XLargeBreakpointOnlyCell>
                   {song.numberOfPlays}
                 </XLargeBreakpointOnlyCell>
-                <LargeBreakpointOnlyCell>
+                <MedBreakpointOnlyCell>
                   {formatTimeAgo(song.lastPlayed)}
-                </LargeBreakpointOnlyCell>
+                </MedBreakpointOnlyCell>
                 <td>
                   {!song.isInQueue && (
                     <ActionButton

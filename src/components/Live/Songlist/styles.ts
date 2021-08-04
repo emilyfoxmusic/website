@@ -22,10 +22,26 @@ export const FormHeading = styled.h2`
   `}
 `;
 
+export const MedBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
+  display: none;
+
+  @media (min-width: 600px) {
+    display: table-cell;
+  }
+`;
+
 export const XLargeBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
   display: none;
 
   @media (min-width: 1000px) {
+    display: table-cell;
+  }
+`;
+
+export const MedBreakpointOnlyCell = styled.td`
+  display: none;
+
+  @media (min-width: 600px) {
     display: table-cell;
   }
 `;
