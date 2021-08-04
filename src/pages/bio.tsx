@@ -1,3 +1,4 @@
+import { PageProps } from 'gatsby';
 import React from 'react';
 
 import Layout from 'components/Layout';
@@ -7,9 +8,13 @@ import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 import { bandcamp, youtube, emailAddress } from 'utils/links';
 
-const Bio: React.FC = () => (
+const Bio: React.FC<PageProps> = ({ location }) => (
   <Layout>
-    <SEO title="Emily Fox Music | Bio" />
+    <SEO
+      title="Bio"
+      description="About Emily Fox and her music."
+      location={location}
+    />
     <PageHeading>Bio</PageHeading>
     <p>
       Emily discovered the guitar at the age of 15 and never looked back. Before

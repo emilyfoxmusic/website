@@ -5,9 +5,14 @@ import { Helmet } from 'react-helmet';
 type SEOProps = {
   title?: string;
   description?: string;
+  location?: Location;
 };
 
-const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
+const SEO: React.FC<SEOProps> = ({
+  title,
+  description,
+  location,
+}: SEOProps) => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -16,7 +21,7 @@ const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
         site {
           siteMetadata {
             title
-            description
+            url
           }
         }
       }
@@ -24,13 +29,32 @@ const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
   );
 
   return (
-    <Helmet title={title || siteMetadata.title}>
+    <Helmet title={title ? `Emily Fox Music | ${title}` : siteMetadata.title}>
       <html lang="en" />
-      <meta
-        name="description"
-        content={description || siteMetadata.description}
-      />
+      {description && <meta name="description" content={description} />}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      {location && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Emily Fox Music',
+                item: siteMetadata.url,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: title,
+                item: `${siteMetadata.url}${location.pathname}`,
+              },
+            ],
+          })}
+        </script>
+      )}
     </Helmet>
   );
 };

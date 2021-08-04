@@ -1,3 +1,4 @@
+import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -44,10 +45,13 @@ const MusicButton = styled(ButtonLink)`
   `}
 `;
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC<PageProps> = ({ location }) => {
   return (
     <Layout fullHeightNav>
-      <SEO title="Emily Fox Music" />
+      <SEO
+        description="The home of Emily Fox Music: new album 'Where Feelings Grow' coming soon!"
+        location={location}
+      />
       <NewAlbumContainer>
         <PageHeadingNoUnderline>
           New album:

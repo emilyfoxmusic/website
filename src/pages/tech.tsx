@@ -1,3 +1,4 @@
+import { PageProps } from 'gatsby';
 import React from 'react';
 
 import Layout from 'components/Layout';
@@ -5,9 +6,13 @@ import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 
-const Tech: React.FC = () => (
+const Tech: React.FC<PageProps> = ({ location }) => (
   <Layout>
-    <SEO title="Emily Fox Music | Tech" />
+    <SEO
+      title="Tech"
+      description="A dive into the free and open source software the powers Emily Fox Music."
+      location={location}
+    />
     <PageHeading>Tech</PageHeading>
     <p>
       I started out using free and open source software (FOSS) because it was

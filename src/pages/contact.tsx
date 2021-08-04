@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -22,9 +23,13 @@ const LinkWrapper = styled.div`
   margin: 16px;
 `;
 
-const Contact: React.FC = () => (
+const Contact: React.FC<PageProps> = ({ location }) => (
   <Layout>
-    <SEO title="Emily Fox Music | Contact" />
+    <SEO
+      title="Contact"
+      description="Contact details and social media links for Emily Fox."
+      location={location}
+    />
     <MaxWidthContainer>
       <PageHeading>Contact</PageHeading>
       <LinkWrapper>
