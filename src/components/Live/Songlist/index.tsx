@@ -102,6 +102,8 @@ const Songlist: React.FC<RouteComponentProps> = () => {
   const enableRequests =
     user.isAuthenticated && (requestStatus.requestsOpen || user.isAdmin);
 
+  const resetPagination = (): void => pagination.setPage(1);
+
   return (
     <Layout liveLayout>
       <SEO
@@ -160,30 +162,50 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                   $width="120px"
                   aria-sort={sort.ariaSort('positionInQueue')}>
                   <span aria-label="Position in queue">#Queue</span>
-                  <SortButton sort={sort} sortKey="positionInQueue" />
+                  <SortButton
+                    sort={sort}
+                    sortKey="positionInQueue"
+                    onSort={resetPagination}
+                  />
                 </LargeBreakpointOnlyHeaderCell>
                 <TableHeaderCell aria-sort={sort.ariaSort('title')}>
                   Title
-                  <SortButton sort={sort} sortKey="title" />
+                  <SortButton
+                    sort={sort}
+                    sortKey="title"
+                    onSort={resetPagination}
+                  />
                 </TableHeaderCell>
                 <TableHeaderCell
                   $widthLarge="18%"
                   aria-sort={sort.ariaSort('artist')}>
                   Artist
-                  <SortButton sort={sort} sortKey="artist" />
+                  <SortButton
+                    sort={sort}
+                    sortKey="artist"
+                    onSort={resetPagination}
+                  />
                 </TableHeaderCell>
                 <XLargeBreakpointOnlyHeaderCell
                   $width="130px"
                   aria-sort={sort.ariaSort('numberOfPlays')}>
                   <span aria-label="Number of plays">#Plays</span>
-                  <SortButton sort={sort} sortKey="numberOfPlays" />
+                  <SortButton
+                    sort={sort}
+                    sortKey="numberOfPlays"
+                    onSort={resetPagination}
+                  />
                 </XLargeBreakpointOnlyHeaderCell>
                 <MedBreakpointOnlyHeaderCell
                   $width="123px"
                   $widthLarge="180px"
                   aria-sort={sort.ariaSort('lastPlayed')}>
                   Last played
-                  <SortButton sort={sort} sortKey="lastPlayed" />
+                  <SortButton
+                    sort={sort}
+                    sortKey="lastPlayed"
+                    onSort={resetPagination}
+                  />
                 </MedBreakpointOnlyHeaderCell>
                 {enableRequests && (
                   <TableHeaderCell $width="42px" $widthLarge="96px" />

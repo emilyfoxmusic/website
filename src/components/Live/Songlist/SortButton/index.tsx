@@ -8,11 +8,13 @@ import { CurrentArrow, SortButtonStyle } from './styles';
 type SortButtonProps<TData extends DataObject> = {
   sort: SortInfo<TData>;
   sortKey: keyof TData & string;
+  onSort: () => void;
 };
 
 const SortButton = <TData extends DataObject>({
   sort,
   sortKey,
+  onSort,
 }: SortButtonProps<TData>): ReactElement => {
   const active = sort.currentSort.sortKey === sortKey;
   return (
@@ -21,6 +23,7 @@ const SortButton = <TData extends DataObject>({
       $active={active}
       onClick={() => {
         sort.toggleSort(sortKey);
+        onSort();
         trackAction(`Toggle sort by ${sortKey}`);
       }}
       aria-label={sort.ariaToggleText(sortKey)}>
