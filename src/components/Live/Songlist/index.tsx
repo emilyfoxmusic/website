@@ -2,23 +2,31 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React, { useState } from 'react';
+import { navigate } from 'gatsby';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import Button from 'components/Button';
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
-import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
-import { twitchAuthUrl } from 'helpers/auth';
+import { buildTwitchRedirectUrl } from 'helpers/auth';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
 import { count } from 'helpers/goatcounter';
 import useTable, { SortConfig } from 'helpers/useTable';
-import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
-import { ListAction, LIST_REQUEST_ADD } from 'state/songlist/actions';
+import {
+  QueueAction,
+  QUEUE_REQUEST_ADD,
+  QUEUE_REQUEST_GET,
+} from 'state/queue/actions';
+import {
+  ListAction,
+  LIST_REQUEST_ADD,
+  LIST_REQUEST_GET,
+} from 'state/songlist/actions';
 import { RootState } from 'state/types';
-import { AuthenticateAction } from 'state/user/actions';
 import { lightRed } from 'styles/colors';
 
 import SortButton from './SortButton';
@@ -48,9 +56,12 @@ const Songlist: React.FC<RouteComponentProps> = () => {
   const { songlist: songs, queue, user } = useSelector(
     (state: RootState) => state
   );
-  const dispatch = useDispatch<
-    Dispatch<ListAction | QueueRequestAddAction | AuthenticateAction>
-  >();
+  const dispatch = useDispatch<Dispatch<ListAction | QueueAction>>();
+
+  useEffect(() => {
+    dispatch({ type: LIST_REQUEST_GET });
+    dispatch({ type: QUEUE_REQUEST_GET });
+  }, [dispatch]);
 
   const [title, setTitle] = useState<string>('');
   const [artist, setArtist] = useState<string>('');
@@ -120,18 +131,19 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         it I <i>might</i> give it a shot!
       </p>
       {!user.isAuthenticated && (
-        <TextLink
-          href={twitchAuthUrl(window.location)}
-          onClick={() =>
+        <Button
+          type="button"
+          onClick={() => {
+            navigate(buildTwitchRedirectUrl());
             count({
               path: 'live: authenticate with twitch',
               title: 'authenticate',
               event: true,
-            })
-          }>
+            });
+          }}>
           <TwitchIcon />
           Sign in with twitch to request a song!
-        </TextLink>
+        </Button>
       )}
       <TableSection>
         <Pagination {...pagination} />

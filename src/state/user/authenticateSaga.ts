@@ -1,48 +1,45 @@
+import { navigate } from 'gatsby';
 import {
   put,
   PutEffect,
   takeEvery,
   ForkEffect,
-  take,
-  TakeEffect,
   call,
   CallEffect,
 } from 'redux-saga/effects';
 
+import { authorize } from 'helpers/auth';
 import {
   AUTHENTICATE,
   AuthenticateAction,
-  USER_REQUEST_GET,
+  AuthenticateRefreshAction,
+  AUTHENTICATE_REFRESH,
+  CLEAR_USER,
+  SET_USER,
 } from 'state/user/actions';
-import {
-  WebsocketConnectAction,
-  WebsocketDisconnectAction,
-  WS_CONNECT,
-  WS_DISCONNECT,
-  WS_SEND,
-} from 'state/websocket/actions';
-
-function* requestGetUser(): Generator<PutEffect, void, never> {
-  yield put({ type: WS_SEND, payload: { action: 'getUser' } });
-}
 
 function* authenticate(
-  action: AuthenticateAction
-): Generator<
-  | PutEffect<WebsocketConnectAction | WebsocketDisconnectAction>
-  | TakeEffect
-  | CallEffect,
-  void,
-  never
-> {
-  yield put({ type: WS_DISCONNECT });
-  yield put({ type: WS_CONNECT, payload: action.payload });
-  yield take(USER_REQUEST_GET);
-  yield call(requestGetUser);
+  action: AuthenticateAction | AuthenticateRefreshAction
+): Generator<CallEffect | PutEffect, void, never> {
+  try {
+    const principal = yield call(
+      authorize,
+      action.payload.code,
+      action.payload.state
+    );
+    yield put({ type: SET_USER, payload: principal });
+    // We don't redirect if we're refreshing since the twitch magic happened in an iframe
+    if (action.type !== AUTHENTICATE_REFRESH) {
+      yield call(url => navigate(url, { replace: true }), '/live/songlist');
+    }
+  } catch (error) {
+    console.error('Authentication failed', error);
+    yield put({ type: CLEAR_USER });
+  }
 }
 
 function* authSaga(): Generator<ForkEffect<never>, void, never> {
-  yield takeEvery(AUTHENTICATE, authenticate);
+  yield takeEvery([AUTHENTICATE, AUTHENTICATE_REFRESH], authenticate);
 }
 
 export default authSaga;

@@ -5,52 +5,71 @@ import {
   ForkEffect,
   take,
   takeEvery,
-  all,
-  AllEffect,
   put,
   PutEffect,
 } from 'redux-saga/effects';
 
+import apiClient from 'api/apiClient';
+
+import { notifyError } from 'helpers/notify';
+import {
+  AuthenticatedActionGenerator,
+  requestAuthenticatedAction,
+} from 'helpers/sagaActions';
 import {
   QueueRequestBumpAction,
   QueueRequestCancelAction,
-  QueueRequestPlayedAction,
   QUEUE_REQUEST_BUMP,
   QUEUE_REQUEST_CANCEL,
   QUEUE_REQUEST_GET,
   QUEUE_REQUEST_PLAYED,
+  QUEUE_SET,
 } from 'state/queue/actions';
-import { WS_SEND } from 'state/websocket/actions';
 
-function* requestGet(): Generator<PutEffect, void, never> {
-  yield put({ type: WS_SEND, payload: { action: 'queueGet' } });
+function* requestGet(): Generator<CallEffect | PutEffect, void, never> {
+  try {
+    const queueItems = yield call(apiClient.queueGet);
+    yield put({ type: QUEUE_SET, payload: queueItems });
+  } catch (error) {
+    notifyError('Currently unable to fetch the queue', error);
+  }
 }
 
-function* sendWebsocketMessage(
-  wsActionType: string,
-  action:
-    | QueueRequestBumpAction
-    | QueueRequestCancelAction
-    | QueueRequestPlayedAction
-): Generator<PutEffect, void, never> {
-  yield put({
-    type: WS_SEND,
-    payload: { ...action.payload, action: wsActionType },
-  });
-}
+const requestQueueBump = (
+  action: QueueRequestBumpAction
+): AuthenticatedActionGenerator =>
+  requestAuthenticatedAction(
+    client => client.queueBump,
+    action.payload.songId,
+    action.payload.position
+  );
+
+const requestQueueCancel = (
+  action: QueueRequestCancelAction
+): AuthenticatedActionGenerator =>
+  requestAuthenticatedAction(
+    client => client.queueCancel,
+    action.payload.songId
+  );
+
+const requestQueuePlayed = (
+  action: QueueRequestCancelAction
+): AuthenticatedActionGenerator =>
+  requestAuthenticatedAction(
+    client => client.queuePlayed,
+    action.payload.songId
+  );
 
 function* queueManagementSaga(): Generator<
-  TakeEffect | CallEffect | AllEffect<ForkEffect>,
+  TakeEffect | CallEffect | ForkEffect,
   void,
   never
 > {
   yield take(QUEUE_REQUEST_GET);
   yield call(requestGet);
-  yield all([
-    takeEvery(QUEUE_REQUEST_BUMP, sendWebsocketMessage, 'queueBump'),
-    takeEvery(QUEUE_REQUEST_CANCEL, sendWebsocketMessage, 'queueCancel'),
-    takeEvery(QUEUE_REQUEST_PLAYED, sendWebsocketMessage, 'queuePlayed'),
-  ]);
+  yield takeEvery(QUEUE_REQUEST_BUMP, requestQueueBump);
+  yield takeEvery(QUEUE_REQUEST_CANCEL, requestQueueCancel);
+  yield takeEvery(QUEUE_REQUEST_PLAYED, requestQueuePlayed);
 }
 
 export default queueManagementSaga;

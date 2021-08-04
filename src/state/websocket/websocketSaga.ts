@@ -16,7 +16,6 @@ import {
 import { RootAction } from 'state/types';
 
 import {
-  WebsocketConnectAction,
   WebsocketSendAction,
   WS_CONNECT,
   WS_DISCONNECT,
@@ -51,16 +50,15 @@ function* closeWebsocket(
   yield call(socketClose, socket);
 }
 
-function* initialiseWebsocket(
-  action: WebsocketConnectAction
-): Generator<
+function* initialiseWebsocket(): Generator<
   AllEffect<unknown> | TakeEffect | CallEffect | PutEffect,
   void,
   never
 > {
-  const socket = new WebSocket(
-    `${process.env.GATSBY_WEBSOCKET_URL}?auth=${action.payload?.code ?? 'anon'}`
-  );
+  if (!process.env.GATSBY_WEBSOCKET_URL) {
+    throw new Error('Websocket URL missing');
+  }
+  const socket = new WebSocket(process.env.GATSBY_WEBSOCKET_URL);
   const channel = (yield call(
     createWebsocketChannel,
     socket

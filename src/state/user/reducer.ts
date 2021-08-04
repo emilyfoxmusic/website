@@ -6,19 +6,13 @@ const anonymousPrincipal: Principal = {
   isAdmin: false,
 };
 
-const authenticatedPrincipal = (username: string): Principal => ({
-  username,
-  isAuthenticated: true,
-  isAdmin: username === process.env.GATSBY_ADMIN_USERNAME,
-});
-
 const reducer = (
   state: Principal = anonymousPrincipal,
   action: UserAction
 ): Principal => {
   switch (action.type) {
     case SET_USER:
-      return authenticatedPrincipal(action.payload.username);
+      return action.payload;
     case CLEAR_USER:
       return anonymousPrincipal;
     default:
