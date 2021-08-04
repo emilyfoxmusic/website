@@ -2,7 +2,6 @@ import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
 import { buttonStyle, invertedButtonStyle } from 'components/Button/styles';
-import { largeBreakpoint } from 'helpers/breakpoints';
 import ArrowImg from 'images/arrow.svg';
 
 export const Button = styled(Link)`
@@ -23,10 +22,6 @@ export const Arrow = styled(ArrowImg)`
 
   ${({ $back }) => css`
     margin-${$back ? 'right' : 'left'}: 16px;
-
-    ${largeBreakpoint`
-      margin-${$back ? 'right' : 'left'}: 24px;
-    `}
   `}
 
   ${({ $back }): string => $back && 'transform: rotate(180deg);'}

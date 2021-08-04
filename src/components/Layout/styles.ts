@@ -30,11 +30,18 @@ export const PortraitBackground = styled(BackgroundImage)<{
 `;
 
 export const ButtonContainer = styled.nav`
-  flex: 0 1 50%;
+  flex: 0 1 100%;
+
+  @media (min-width: 450px) {
+    flex: 0 1 50%;
+  }
 
   ${largeBreakpoint`
     display: flex;
     justify-content: space-evenly;
+
+    max-width: 1500px;
+    margin: auto;
   `}
 `;
 

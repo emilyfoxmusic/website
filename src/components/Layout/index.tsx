@@ -49,7 +49,7 @@ const Layout: React.FC<LayoutProps> = ({
         back
         to="/music/"
         onClick={(): void => trackNavClick('music')}>
-        Back to main site
+        Back
       </ButtonLink>
       <ButtonLink to="/live/" onClick={(): void => trackNavClick('music')}>
         Watch
