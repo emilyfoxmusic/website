@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -15,16 +15,8 @@ import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
 import { count } from 'helpers/goatcounter';
 import useTable, { SortConfig } from 'helpers/useTable';
-import {
-  QueueAction,
-  QUEUE_REQUEST_ADD,
-  QUEUE_REQUEST_GET,
-} from 'state/queue/actions';
-import {
-  ListAction,
-  LIST_REQUEST_ADD,
-  LIST_REQUEST_GET,
-} from 'state/songlist/actions';
+import { QueueAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
+import { ListAction, LIST_REQUEST_ADD } from 'state/songlist/actions';
 import { RootState } from 'state/types';
 import { lightRed } from 'styles/colors';
 
@@ -57,11 +49,6 @@ const Songlist: React.FC<RouteComponentProps> = () => {
     (state: RootState) => state
   );
   const dispatch = useDispatch<Dispatch<ListAction | QueueAction>>();
-
-  useEffect(() => {
-    dispatch({ type: LIST_REQUEST_GET });
-    dispatch({ type: QUEUE_REQUEST_GET });
-  }, [dispatch]);
 
   const [title, setTitle] = useState<string>('');
   const [artist, setArtist] = useState<string>('');

@@ -1,9 +1,7 @@
 import {
   CallEffect,
   call,
-  TakeEffect,
   ForkEffect,
-  take,
   takeEvery,
   PutEffect,
   put,
@@ -47,13 +45,8 @@ const requestQueueAdd = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(client => client.queueAdd, action.payload.songId);
 
-function* listManagementSaga(): Generator<
-  TakeEffect | CallEffect | ForkEffect,
-  void,
-  never
-> {
-  yield take(LIST_REQUEST_GET);
-  yield call(requestGet);
+function* listManagementSaga(): Generator<ForkEffect, void, never> {
+  yield takeEvery(LIST_REQUEST_GET, requestGet);
   yield takeEvery(LIST_REQUEST_ADD, requestListAdd);
   yield takeEvery(QUEUE_REQUEST_ADD, requestQueueAdd);
 }

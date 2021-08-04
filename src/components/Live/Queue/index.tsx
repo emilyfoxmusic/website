@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React, { Dispatch, useEffect } from 'react';
+import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Table, TableHeaderCell, TableRow } from 'components/Table';
@@ -10,7 +10,6 @@ import {
   QueueAction,
   QUEUE_REQUEST_BUMP,
   QUEUE_REQUEST_CANCEL,
-  QUEUE_REQUEST_GET,
   QUEUE_REQUEST_PLAYED,
 } from 'state/queue/actions';
 import { QueueItem } from 'state/queue/types';
@@ -30,10 +29,6 @@ import TitleCell from '../Shared/TitleCell';
 const Queue: React.FC<RouteComponentProps> = () => {
   const { queue: queuedSongs, user } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch<QueueAction>>();
-
-  useEffect(() => {
-    dispatch({ type: QUEUE_REQUEST_GET });
-  }, [dispatch]);
 
   const { data } = useTable(queuedSongs, {}, 'priority');
 

@@ -9,38 +9,24 @@ import TwitchEmbed from 'components/Live';
 import Queue from 'components/Live/Queue';
 import Songlist from 'components/Live/Songlist';
 import { buildTwitchRedirectUrl } from 'helpers/auth';
-import {
-  RequestStatusAction,
-  STATUS_REQUEST_GET,
-} from 'state/requestStatus/actions';
-import { RootState } from 'state/types';
-import {
-  AuthenticateAction,
-  AuthenticateRefreshAction,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  AUTHENTICATE_REFRESH,
-} from 'state/user/actions';
-import {
-  WebsocketAction,
-  WS_CONNECT,
-  WS_DISCONNECT,
-} from 'state/websocket/actions';
+import { QUEUE_REQUEST_GET } from 'state/queue/actions';
+import { STATUS_REQUEST_GET } from 'state/requestStatus/actions';
+import { LIST_REQUEST_GET } from 'state/songlist/actions';
+import { RootAction, RootState } from 'state/types';
+import { AUTHENTICATE_REFRESH } from 'state/user/actions';
+import { WS_CONNECT, WS_DISCONNECT } from 'state/websocket/actions';
 
 const Live: React.FC<PageProps> = () => {
   const user = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<
-    Dispatch<
-      | WebsocketAction
-      | AuthenticateAction
-      | AuthenticateRefreshAction
-      | RequestStatusAction
-    >
-  >();
+  const dispatch = useDispatch<Dispatch<RootAction>>();
   const authFrameRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     dispatch({ type: WS_CONNECT });
     dispatch({ type: STATUS_REQUEST_GET });
+    dispatch({ type: QUEUE_REQUEST_GET });
+    dispatch({ type: LIST_REQUEST_GET });
+
     return () => {
       dispatch({ type: WS_DISCONNECT });
     };

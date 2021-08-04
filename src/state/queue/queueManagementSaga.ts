@@ -1,9 +1,7 @@
 import {
   CallEffect,
   call,
-  TakeEffect,
   ForkEffect,
-  take,
   takeEvery,
   put,
   PutEffect,
@@ -60,13 +58,8 @@ const requestQueuePlayed = (
     action.payload.songId
   );
 
-function* queueManagementSaga(): Generator<
-  TakeEffect | CallEffect | ForkEffect,
-  void,
-  never
-> {
-  yield take(QUEUE_REQUEST_GET);
-  yield call(requestGet);
+function* queueManagementSaga(): Generator<ForkEffect, void, never> {
+  yield takeEvery(QUEUE_REQUEST_GET, requestGet);
   yield takeEvery(QUEUE_REQUEST_BUMP, requestQueueBump);
   yield takeEvery(QUEUE_REQUEST_CANCEL, requestQueueCancel);
   yield takeEvery(QUEUE_REQUEST_PLAYED, requestQueuePlayed);
