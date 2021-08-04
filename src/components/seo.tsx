@@ -7,7 +7,7 @@ type SEOProps = {
   description?: string;
 };
 
-const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
+export const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(
@@ -36,5 +36,3 @@ const SEO: React.FC<SEOProps> = ({ title, description }: SEOProps) => {
     </Helmet>
   );
 };
-
-export default SEO;
