@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { css, ThemeProps, Interpolation } from 'styled-components';
+import styled, {
+  css,
+  ThemeProps,
+  Interpolation,
+  FlattenInterpolation,
+} from 'styled-components';
 
 const breakpoint = '800px';
 
@@ -11,4 +16,28 @@ export const largeBreakpoint = (
   @media (min-width: ${breakpoint}) {
     ${css(strings, ...interpolations)}
   }
+`;
+
+export const largeBreakpointOnlyStyle = (
+  display: string
+): FlattenInterpolation<ThemeProps<unknown>> => css`
+  display: none;
+
+  ${largeBreakpoint`
+    display: ${display};
+  `}
+`;
+
+export const MobileOnly = styled.div`
+  ${largeBreakpoint`
+    display: none;
+  `}
+`;
+
+export const LargeBreakpointOnly = styled.div`
+  display: none;
+
+  ${largeBreakpoint`
+    display: block;
+  `}
 `;

@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import React, { useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ import { Dispatch } from 'redux';
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
+import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
 import useTable from 'helpers/useTable';
 import {
@@ -31,8 +33,15 @@ import {
   SecretAdminSection,
   SubmitSongButton,
   TableSection,
-  RequestButton,
+  XLargeBreakpointOnlyHeaderCell,
+  XLargeBreakpointOnlyCell,
 } from './styles';
+
+import {
+  ActionButton,
+  LargeBreakpointOnlyHeaderCell,
+  LargeBreakpointOnlyCell,
+} from '../Shared';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
   const { songlist: songs, queue } = useSelector((state: RootState) => state);
@@ -90,35 +99,35 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         <Table>
           <thead>
             <TableRow>
-              <TableHeaderCell $width="120px">
+              <LargeBreakpointOnlyHeaderCell $width="120px">
                 <span aria-label="Position in queue">#Queue</span>
                 <SortButton sort={sort} sortKey="positionInQueue" />
-              </TableHeaderCell>
+              </LargeBreakpointOnlyHeaderCell>
               <TableHeaderCell>
                 Title
                 <SortButton sort={sort} sortKey="title" />
               </TableHeaderCell>
-              <TableHeaderCell>
+              <TableHeaderCell $width="30%" $widthLarge="17%">
                 Artist
                 <SortButton sort={sort} sortKey="artist" />
               </TableHeaderCell>
-              <TableHeaderCell $width="130px">
+              <XLargeBreakpointOnlyHeaderCell $width="130px">
                 <span aria-label="Number of plays">#Plays</span>
                 <SortButton
                   sort={sort}
                   sortKey="numberOfPlays"
                   switchDefaultOrder
                 />
-              </TableHeaderCell>
-              <TableHeaderCell $width="180px">
+              </XLargeBreakpointOnlyHeaderCell>
+              <LargeBreakpointOnlyHeaderCell $width="180px">
                 Last played
                 <SortButton
                   sort={sort}
                   sortKey="lastPlayed"
                   switchDefaultOrder
                 />
-              </TableHeaderCell>
-              <TableHeaderCell $width="96px">Request</TableHeaderCell>
+              </LargeBreakpointOnlyHeaderCell>
+              <TableHeaderCell $width="42px" $widthLarge="96px" />
             </TableRow>
           </thead>
           <tbody>
@@ -126,19 +135,26 @@ const Songlist: React.FC<RouteComponentProps> = () => {
               <TableRow
                 key={`${song.artist}-${song.title}`}
                 $background={song.isInQueue ? 'lavender' : undefined}>
-                <td>{song.isInQueue ? song.positionInQueue : ''}</td>
+                <LargeBreakpointOnlyCell>
+                  {song.isInQueue ? song.positionInQueue : ''}
+                </LargeBreakpointOnlyCell>
                 <td>{song.title}</td>
                 <td>{song.artist}</td>
-                <td>{song.numberOfPlays}</td>
-                <td>{formatTimeAgo(song.lastPlayed)}</td>
+                <XLargeBreakpointOnlyCell>
+                  {song.numberOfPlays}
+                </XLargeBreakpointOnlyCell>
+                <LargeBreakpointOnlyCell>
+                  {formatTimeAgo(song.lastPlayed)}
+                </LargeBreakpointOnlyCell>
                 <td>
                   {!song.isInQueue && (
-                    <RequestButton
+                    <ActionButton
                       aria-label={`Request ${song.title} by ${song.artist}`}
                       type="button"
                       onClick={() => requestSong(song.id)}>
-                      Request
-                    </RequestButton>
+                      <MobileOnly>Req</MobileOnly>
+                      <LargeBreakpointOnly>Request</LargeBreakpointOnly>
+                    </ActionButton>
                   )}
                 </td>
               </TableRow>

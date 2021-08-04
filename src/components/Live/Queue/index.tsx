@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import React, { Dispatch, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Table, TableCell, TableHeaderCell } from 'components/Table';
+import { TableHeaderCell, TableRow } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import useTable from 'helpers/useTable';
 import {
@@ -13,7 +13,21 @@ import {
   QUEUE_REQUEST_GET,
   QUEUE_REQUEST_PLAYED,
 } from 'state/queue/actions';
+import { QueueItem } from 'state/queue/types';
 import { RootState } from 'state/types';
+
+import {
+  Bump1Button,
+  Bump2Button,
+  Bump3Button,
+  TableWithBottomMargin,
+} from './styles';
+
+import {
+  LargeBreakpointOnlyHeaderCell,
+  LargeBreakpointOnlyCell,
+  ActionButton,
+} from '../Shared';
 
 const Queue: React.FC<RouteComponentProps> = () => {
   const queuedSongs = useSelector((state: RootState) => state.queue);
@@ -25,15 +39,24 @@ const Queue: React.FC<RouteComponentProps> = () => {
 
   const { data } = useTable(queuedSongs, 'priority', 'songId');
 
-  const bumpSong = (songId: string): void => {
+  const bumpSong = (songId: string, position: number): void => {
     dispatch({
       type: QUEUE_REQUEST_BUMP,
-      payload: { songId, position: 1 },
+      payload: { songId, position },
     });
   };
 
-  const removeSong = (songId: string): void => {
-    dispatch({ type: QUEUE_REQUEST_CANCEL, payload: { songId } });
+  const removeSong = (song: QueueItem): void => {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const confirmRemove = confirm(
+      `Are you sure you want to remove '${song.title}' from the queue?`
+    );
+    if (confirmRemove) {
+      dispatch({
+        type: QUEUE_REQUEST_CANCEL,
+        payload: { songId: song.songId },
+      });
+    }
   };
 
   const markSongAsPlayed = (songId: string): void => {
@@ -42,44 +65,69 @@ const Queue: React.FC<RouteComponentProps> = () => {
 
   return (
     <>
-      <PageHeading>Current song queue</PageHeading>
+      <PageHeading>Current queue</PageHeading>
       {queuedSongs.length ? (
-        <Table>
+        <TableWithBottomMargin>
           <thead>
-            <tr>
-              <TableHeaderCell>Position</TableHeaderCell>
+            <TableRow>
+              <TableHeaderCell
+                $width="30px"
+                $widthLarge="50px"
+                aria-label="Position in queue">
+                #
+              </TableHeaderCell>
               <TableHeaderCell>Title</TableHeaderCell>
               <TableHeaderCell>Artist</TableHeaderCell>
-              <TableHeaderCell>Actions</TableHeaderCell>
-            </tr>
+              <LargeBreakpointOnlyHeaderCell>
+                Actions
+              </LargeBreakpointOnlyHeaderCell>
+            </TableRow>
           </thead>
           <tbody>
             {data.map((song, index) => (
-              <tr key={`${song.artist}-${song.title}`}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{song.title}</TableCell>
-                <TableCell>{song.artist}</TableCell>
-                <TableCell>
+              <TableRow key={`${song.artist}-${song.title}`}>
+                <td>{index + 1}</td>
+                <td>{song.title}</td>
+                <td>{song.artist}</td>
+                <LargeBreakpointOnlyCell>
                   {index !== 0 && (
-                    <button type="button" onClick={() => bumpSong(song.songId)}>
-                      Bump to #1
-                    </button>
+                    <Bump1Button
+                      onClick={() => bumpSong(song.songId, 1)}
+                      aria-label={`Bump ${song.title} to position 1`}>
+                      #1
+                    </Bump1Button>
+                  )}
+                  {index > 1 && (
+                    <Bump2Button
+                      onClick={() => bumpSong(song.songId, 2)}
+                      aria-label={`Bump ${song.title} to position 2`}>
+                      #2
+                    </Bump2Button>
+                  )}
+                  {index > 2 && (
+                    <Bump3Button
+                      onClick={() => bumpSong(song.songId, 3)}
+                      aria-label={`Bump ${song.title} to position 3`}>
+                      #3
+                    </Bump3Button>
                   )}
                   {index === 0 && (
-                    <button
-                      type="button"
-                      onClick={() => markSongAsPlayed(song.songId)}>
-                      Mark as played
-                    </button>
+                    <ActionButton
+                      onClick={() => markSongAsPlayed(song.songId)}
+                      aria-label={`Mark ${song.title} as played`}>
+                      Played
+                    </ActionButton>
                   )}
-                  <button type="button" onClick={() => removeSong(song.songId)}>
+                  <ActionButton
+                    onClick={() => removeSong(song)}
+                    aria-label={`Remove ${song.title} from the queue`}>
                     Remove
-                  </button>
-                </TableCell>
-              </tr>
+                  </ActionButton>
+                </LargeBreakpointOnlyCell>
+              </TableRow>
             ))}
           </tbody>
-        </Table>
+        </TableWithBottomMargin>
       ) : (
         <p>The queue is currently empty.</p>
       )}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Button from 'components/Button';
+import { TableHeaderCell } from 'components/Table';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import { fontFamily } from 'styles/fonts';
 
@@ -22,15 +22,26 @@ export const FormHeading = styled.h2`
   `}
 `;
 
+export const XLargeBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
+  display: none;
+
+  @media (min-width: 1000px) {
+    display: table-cell;
+  }
+`;
+
+export const XLargeBreakpointOnlyCell = styled.td`
+  display: none;
+
+  @media (min-width: 1000px) {
+    display: table-cell;
+  }
+`;
+
 export const TableSection = styled.div`
   width: min(90vw, 1400px);
   position: relative;
   left: calc((min(90vw, 1400px)) * -0.5 + 50%);
-`;
-
-export const RequestButton = styled(Button)`
-  padding: 4px;
-  margin: 4px 0;
 `;
 
 export const SecretAdminSection = styled.section`

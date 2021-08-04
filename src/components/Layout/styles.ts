@@ -11,12 +11,8 @@ export const PageContainer = styled.main`
 
   ${largeBreakpoint`
     margin: auto;
-    max-width: 630px;
-  `}
-
-  @media (min-width: 900px) {
     max-width: 800px;
-  }
+  `}
 
   font-family: ${fontFamily};
   font-size: 1.3rem;
