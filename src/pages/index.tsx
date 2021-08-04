@@ -43,19 +43,15 @@ const VideoContainer = styled.div`
 
 const IndexPage: React.FC = () => {
   return (
-    <Layout
-      fullHeightNav
-      links={[
-        { text: 'music', path: '/music' },
-        { text: 'bio', path: '/bio' },
-        { text: 'contact', path: '/contact' },
-        { text: 'tech', path: '/tech' },
-      ]}>
+    <Layout fullHeightNav>
       <SEO title="Emily Fox Music" />
       <NewAlbumContainer>
         <PageHeadingNoUnderline>
           New album:
-          <a href="https://emilyfoxmusic.bandcamp.com" tabIndex={-1} aria-hidden>
+          <a
+            href="https://emilyfoxmusic.bandcamp.com"
+            tabIndex={-1}
+            aria-hidden>
             <WhereFeelingsGrow aria-label="Where feelings grow" />
           </a>
           <TextLink href="https://emilyfoxmusic.bandcamp.com">

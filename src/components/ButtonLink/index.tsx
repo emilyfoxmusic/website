@@ -10,7 +10,7 @@ const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
   to,
   children,
 }) => (
-  <Button to={to}>
+  <Button to={to} activeClassName="current-page">
     {children}
     <Arrow />
   </Button>

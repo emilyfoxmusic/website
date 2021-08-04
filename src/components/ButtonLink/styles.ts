@@ -1,9 +1,19 @@
 import { Link } from 'gatsby';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { largeBreakpoint } from 'helpers/breakpoints';
 import ArrowImg from 'images/arrow.svg';
 import { fontFamily } from 'styles/fonts';
+
+const invertedStyle = css`
+  background: white;
+  color: black;
+  border: black solid 4px;
+
+  & svg {
+    stroke: black;
+  }
+`;
 
 export const Button = styled(Link)`
   display: flex;
@@ -25,20 +35,17 @@ export const Button = styled(Link)`
 
   margin: 16px 0;
 
+  transition: all 0.2s ease-out;
+
   ${largeBreakpoint`
     font-size: 1.5rem;
     padding: 12px 24px;
   `}
 
   &:hover,
-  &:focus {
-    background: white;
-    color: black;
-    border: black solid 4px;
-
-    & svg {
-      stroke: black;
-    }
+  &:focus,
+  &.current-page {
+    ${invertedStyle}
   }
 
   &:focus {
