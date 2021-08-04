@@ -36,10 +36,11 @@ export type QueueRequestCancelAction = {
   };
 };
 
-export type QueueRequestRemoveAction = {
+export type QueueRemoveAction = {
   type: typeof QUEUE_REMOVE;
   payload: {
     songId: string;
+    songPlayed: boolean;
   };
 };
 
