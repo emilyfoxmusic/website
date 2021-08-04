@@ -28,7 +28,7 @@ import {
 } from '../Shared';
 import TitleCell from '../Shared/TitleCell';
 
-const Queue: React.FC<RouteComponentProps> = () => {
+const Queue: React.FC<RouteComponentProps> = ({ location }) => {
   const { queue: queuedSongs, user } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch<QueueAction>>();
 
@@ -63,7 +63,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
       <SEO
         title="Song queue"
         description="Song queue for Emily Fox's live performances on Twitch."
-        location={window.location}
+        location={location}
       />
       <PageHeading>Current queue</PageHeading>
       {queuedSongs.length ? (

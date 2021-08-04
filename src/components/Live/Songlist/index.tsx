@@ -44,7 +44,7 @@ import {
 } from '../Shared';
 import TitleCell from '../Shared/TitleCell';
 
-const Songlist: React.FC<RouteComponentProps> = () => {
+const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
   const { songlist: songs, queue, user, requestStatus } = useSelector(
     (state: RootState) => state
   );
@@ -109,7 +109,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
       <SEO
         title="Song list"
         description="Song list for Emily Fox's live performances on Twitch."
-        location={window.location}
+        location={location}
       />
       <PageHeading>Song list</PageHeading>
       <p>

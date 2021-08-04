@@ -21,14 +21,14 @@ import {
   Table,
 } from './styles';
 
-const Overlay: React.FC<RouteComponentProps> = () => {
+const Overlay: React.FC<RouteComponentProps> = ({ location }) => {
   const { queue, requestStatus } = useSelector((state: RootState) => state);
 
   const { data: topOfQueue } = useTable(queue, {}, 'priority', 2);
 
   return (
     <>
-      <SEO title="Overlay" location={window.location} hideFromCrawlers />
+      <SEO title="Overlay" location={location} hideFromCrawlers />
       <header>
         <RequestStatus>
           Requests are

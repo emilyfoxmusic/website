@@ -1,14 +1,15 @@
+import { PageProps } from 'gatsby';
 import React, { Dispatch, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import SEO from 'components/SEO';
 import { AUTHENTICATE, AuthenticateAction } from 'state/user/actions';
 
-const Redirect: React.FC = () => {
+const Redirect: React.FC<PageProps> = ({ location }) => {
   const dispatch = useDispatch<Dispatch<AuthenticateAction>>();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const code = urlParams.get('code');
     const state = urlParams.get('state');
 
@@ -24,11 +25,11 @@ const Redirect: React.FC = () => {
         window.parent.postMessage(payload, process.env.GATSBY_SITE_URL ?? '');
       }
     }
-  }, [dispatch]);
+  }, [dispatch, location.search]);
 
   return (
     <>
-      <SEO title="Redirect" location={window.location} hideFromCrawlers />
+      <SEO title="Redirect" location={location} hideFromCrawlers />
     </>
   );
 };
