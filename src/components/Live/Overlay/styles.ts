@@ -99,7 +99,7 @@ export const Table = styled.table`
 export const SectionHeading = styled.h2`
   font-size: 0.8rem;
   font-family: arial;
-  margin: 0;
+  margin: 4px 0 0;
   color: gray;
 
   text-decoration: underline;
