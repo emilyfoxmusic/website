@@ -6,6 +6,14 @@ export const Table = styled.table`
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
+
+  font-size: 1rem;
+  line-height: 1.3rem;
+
+  ${largeBreakpoint`
+    font-size: 1.3rem;
+    line-height: 1.6rem;
+  `}
 `;
 
 export const TableRow = styled.tr<{ $background?: string }>`
@@ -16,7 +24,7 @@ export const TableRow = styled.tr<{ $background?: string }>`
 
   & td,
   & th {
-    padding: 0 4px;
+    padding: 8px 4px;
   }
 `;
 

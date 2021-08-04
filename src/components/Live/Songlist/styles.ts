@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { Rose } from 'components/Rose';
 import { TableHeaderCell } from 'components/Table';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import { fontFamily } from 'styles/fonts';
@@ -65,4 +66,10 @@ export const SubmitSongButton = styled.button`
   display: block;
   margin: 40px 0 8px;
   padding: 4px 32px;
+`;
+
+export const SmallRose = styled(Rose)`
+  height: 24px;
+  display: inline;
+  margin: 0 0 0 8px;
 `;

@@ -1,24 +1,25 @@
 import styled from 'styled-components';
 
 import { Table } from 'components/Table';
+import { gold, silver, bronze } from 'styles/colors';
 
 import { ActionButton } from '../Shared';
 
 export const Bump1Button = styled(ActionButton)`
   && {
-    border-color: #b8860b;
+    border-color: ${gold};
   }
 `;
 
 export const Bump2Button = styled(ActionButton)`
   && {
-    border-color: silver;
+    border-color: ${silver};
   }
 `;
 
 export const Bump3Button = styled(ActionButton)`
   && {
-    border-color: #aa6b39;
+    border-color: ${bronze};
   }
 `;
 

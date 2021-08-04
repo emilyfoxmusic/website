@@ -16,5 +16,5 @@ export const ActionButton = styled(Button).attrs(() => ({
   type: 'button',
 }))`
   padding: 8px 4px 4px 4px;
-  margin: 4px 4px 4px 0;
+  margin: 0 4px 0 0;
 `;

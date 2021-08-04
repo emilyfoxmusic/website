@@ -8,6 +8,7 @@ import { Dispatch } from 'redux';
 
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
+import Tag from 'components/Tag';
 import { PageHeading } from 'components/Typography';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
@@ -24,6 +25,7 @@ import {
   LIST_REQUEST_GET,
 } from 'state/songlist/actions';
 import { RootState } from 'state/types';
+import { lightRed } from 'styles/colors';
 
 import SortButton from './SortButton';
 import {
@@ -35,6 +37,7 @@ import {
   TableSection,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
+  SmallRose,
 } from './styles';
 
 import {
@@ -134,11 +137,29 @@ const Songlist: React.FC<RouteComponentProps> = () => {
             {data.map(song => (
               <TableRow
                 key={`${song.artist}-${song.title}`}
-                $background={song.isInQueue ? 'lavender' : undefined}>
+                $background={song.isInQueue ? lightRed : undefined}>
                 <LargeBreakpointOnlyCell>
                   {song.isInQueue ? song.positionInQueue : ''}
                 </LargeBreakpointOnlyCell>
-                <td>{song.title}</td>
+                <td>
+                  <span>{song.title}</span>
+                  {song.artist === 'Emily Fox' && (
+                    <>
+                      {[
+                        'Where Feelings Grow',
+                        'Toxic',
+                        'Faces (No One Else Is Counting)',
+                        'Original Human',
+                        'gods',
+                        'House Song',
+                        'Cry',
+                        'One Part',
+                        "Don't know why I'm here",
+                      ].includes(song.title) && <SmallRose />}
+                      <Tag>Original</Tag>
+                    </>
+                  )}
+                </td>
                 <td>{song.artist}</td>
                 <XLargeBreakpointOnlyCell>
                   {song.numberOfPlays}
