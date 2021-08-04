@@ -103,15 +103,30 @@ const Songlist: React.FC<RouteComponentProps> = () => {
             <TableRow>
               <LargeBreakpointOnlyHeaderCell $width="120px">
                 <span aria-label="Position in queue">#Queue</span>
-                <SortButton sort={sort} sortKey="positionInQueue" />
+                <SortButton
+                  sort={sort}
+                  sortKey="positionInQueue"
+                  aria-label={sort.ariaText(
+                    'positionInQueue',
+                    'position in queue'
+                  )}
+                />
               </LargeBreakpointOnlyHeaderCell>
               <TableHeaderCell>
                 Title
-                <SortButton sort={sort} sortKey="title" />
+                <SortButton
+                  sort={sort}
+                  sortKey="title"
+                  aria-label={sort.ariaText('title', 'title')}
+                />
               </TableHeaderCell>
               <TableHeaderCell $width="30%" $widthLarge="17%">
                 Artist
-                <SortButton sort={sort} sortKey="artist" />
+                <SortButton
+                  sort={sort}
+                  sortKey="artist"
+                  aria-label={sort.ariaText('artist', 'artist')}
+                />
               </TableHeaderCell>
               <XLargeBreakpointOnlyHeaderCell $width="130px">
                 <span aria-label="Number of plays">#Plays</span>
@@ -119,6 +134,11 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                   sort={sort}
                   sortKey="numberOfPlays"
                   switchDefaultOrder
+                  aria-label={sort.ariaText(
+                    'numberOfPlays',
+                    'number of plays',
+                    true
+                  )}
                 />
               </XLargeBreakpointOnlyHeaderCell>
               <LargeBreakpointOnlyHeaderCell $width="180px">
@@ -127,6 +147,13 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                   sort={sort}
                   sortKey="lastPlayed"
                   switchDefaultOrder
+                  aria-label={sort.ariaText(
+                    'lastPlayed',
+                    'last played',
+                    true,
+                    '- least recently played first',
+                    '- most recently played first'
+                  )}
                 />
               </LargeBreakpointOnlyHeaderCell>
               <TableHeaderCell $width="42px" $widthLarge="96px" />

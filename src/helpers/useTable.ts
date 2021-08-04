@@ -15,6 +15,13 @@ export type SortInfo<TData> = {
   switchSortDirection: () => void;
   setSort: (key: keyof TData, ascending: boolean) => void;
   toggleSort: (key: keyof TData, defaultAscending?: boolean) => void;
+  ariaText: (
+    key: keyof TData,
+    label: string,
+    switchDefaultOrder?: boolean,
+    ascendingText?: string,
+    descendingText?: string
+  ) => string;
 };
 
 export type PaginationInfo = {
@@ -117,6 +124,25 @@ const useTable = <TData extends DataObject>(
       return { key, ascending: defaultAscending ?? true };
     });
 
+  const ariaText = (
+    key: keyof TData,
+    label: string,
+    switchDefaultOrder?: boolean,
+    ascendingText?: string,
+    descendingText?: string
+  ): string =>
+    currentSort.key === key
+      ? `Sort by ${label} ${
+          currentSort.ascending
+            ? descendingText ?? 'descending'
+            : ascendingText ?? 'ascending'
+        }`
+      : `Sort by ${label} ${
+          switchDefaultOrder
+            ? descendingText ?? 'descending'
+            : ascendingText ?? 'ascending'
+        }`;
+
   return {
     data: pageSize
       ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
@@ -127,6 +153,7 @@ const useTable = <TData extends DataObject>(
       switchSortDirection,
       setSort,
       toggleSort,
+      ariaText,
     },
     pagination: {
       currentPage,
