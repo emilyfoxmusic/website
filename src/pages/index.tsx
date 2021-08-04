@@ -6,49 +6,76 @@ import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
 import Video from 'components/Video';
+import { largeBreakpoint } from 'helpers/breakpoints';
 import RoseImg from 'images/rose.svg';
 
 const NewAlbumContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
+  flex: 0 1 50%;
+
+  margin-top: 32px;
+  margin-right: 32px;
+  text-align: center;
+
+  ${largeBreakpoint`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `}
 `;
 
 const Rose = styled(RoseImg)`
-  height: 6rem;
-  width: 4rem;
-  margin-left: 2rem;
+  height: 96px;
+  width: 64px;
+
+  ${largeBreakpoint`
+    margin-left: 32px;
+  `}
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
+  flex: 0 1 50%;
 
-  & > * {
-    margin: 0 1rem;
-  }
+  ${largeBreakpoint`
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 48px;
+  `}
+`;
+
+const MainContentContainer = styled.div`
+  padding: 16px 32px;
+
+  display: flex;
+  justify-content: space-between;
+
+  ${largeBreakpoint`
+    display: block;
+  `}
 `;
 
 const VideoContainer = styled.div`
   width: 100%;
-  margin: 2rem auto;
+
+  ${largeBreakpoint`
+    margin: 32px auto;
+  `}
 `;
 
 const IndexPage: React.FC = () => (
   <Layout>
     <SEO title="Home" />
-    <NewAlbumContainer>
-      <PageHeadingNoUnderline>New album coming soon!</PageHeadingNoUnderline>
-      <Rose />
-    </NewAlbumContainer>
-    <ButtonContainer>
-      <ButtonLink to="/music">Music</ButtonLink>
-      <ButtonLink to="/bio">Bio</ButtonLink>
-      <ButtonLink to="/contact">Contact</ButtonLink>
-      <ButtonLink to="/tech">Tech</ButtonLink>
-    </ButtonContainer>
+    <MainContentContainer>
+      <NewAlbumContainer>
+        <PageHeadingNoUnderline>New album coming soon!</PageHeadingNoUnderline>
+        <Rose />
+      </NewAlbumContainer>
+      <ButtonContainer>
+        <ButtonLink to="/music">Music</ButtonLink>
+        <ButtonLink to="/bio">Bio</ButtonLink>
+        <ButtonLink to="/contact">Contact</ButtonLink>
+        <ButtonLink to="/tech">Tech</ButtonLink>
+      </ButtonContainer>
+    </MainContentContainer>
     <VideoContainer>
       <Video
         title="Bad Things Can Happen (Original Song)"

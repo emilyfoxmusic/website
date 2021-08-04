@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { Button, Arrow } from './styles';
+import { Arrow, Button } from './styles';
 
 type ButtonLinkProps = {
   to: string;

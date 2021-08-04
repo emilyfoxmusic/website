@@ -1,36 +1,47 @@
 import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
+import { largeBreakpoint } from 'helpers/breakpoints';
 import { fontFamily } from 'styles/fonts';
-
-const headerHeight = '5rem';
-const headerFontSize = '2.5rem';
 
 const HalfOfHeaderCss = css`
   font-family: ${fontFamily};
-  font-size: ${headerFontSize};
-  width: 50%;
-  height: ${headerHeight};
 
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0 8px;
+
+  font-size: 1.75rem;
+  line-height: 2rem;
+  height: 64px;
+
+  ${largeBreakpoint`
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    height: 80px;
+  `}
 `;
 
 export const HeaderContainerLink = styled(Link)`
   display: flex;
   text-decoration: none;
 
-  margin-top: 1rem;
+  margin-top: 16px;
 `;
 
 export const LeftDiv = styled.div`
   ${HalfOfHeaderCss}
   background: white;
-  border: solid black 0.25rem;
+  border: solid black 4px;
   border-left: none;
   color: black;
   justify-content: flex-end;
+
+  width: 53%;
+
+  ${largeBreakpoint`
+    width: 50%;
+  `}
 `;
 
 export const RightDiv = styled.div`
@@ -38,7 +49,13 @@ export const RightDiv = styled.div`
   background: black;
   border: solid white;
   border-right: none;
-  border-width: 0.25rem 0.25rem 0.25rem 0;
+  border-width: 4px 4px 4px 0;
   color: white;
   justify-content: flex-start;
+
+  width: 47%;
+
+  ${largeBreakpoint`
+    width: 50%;
+  `}
 `;
