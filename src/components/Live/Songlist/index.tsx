@@ -1,35 +1,49 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { LIST_ADD, LIST_REQUEST_GET } from 'state/songlist/actions';
+import {
+  ListAction,
+  LIST_REQUEST_ADD,
+  LIST_REQUEST_GET,
+} from 'state/songlist/actions';
 import { RootState } from 'state/types';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
   const songs = useSelector((state: RootState) => state.songlist);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<ListAction>>();
 
   useEffect(() => {
     dispatch({ type: LIST_REQUEST_GET });
-  });
+  }, [dispatch]);
+
+  const [title, setTitle] = useState<string>('');
+  const [artist, setArtist] = useState<string>('');
+
+  const submit: React.FormEventHandler<HTMLFormElement> = e => {
+    e.preventDefault();
+    dispatch({ type: LIST_REQUEST_ADD, payload: { title, artist } });
+    setTitle('');
+    setArtist('');
+  };
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() =>
-          dispatch({
-            type: LIST_ADD,
-            payload: {
-              title: 'test',
-              artist: 'song',
-              id: 'xx',
-            },
-          })
-        }>
-        Add song
-      </button>
+      <form onSubmit={submit}>
+        <input
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          value={artist}
+          onChange={e => setArtist(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
       {songs.map(song => (
         <div>
           {song.title} by {song.artist}

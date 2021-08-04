@@ -57,7 +57,7 @@ rules:
         - # By default it only detects internal files that start with 'src', which ours don't. Note: this _should_
           # be possible to do using the import/internal-regex setting, but I have not been able to get that working...
           # See https://github.com/benmosher/eslint-plugin-import/blob/master/README.md#importinternal-regex
-          pattern: "@(components|pages|fonts|styles|images|helpers|utils)/**"
+          pattern: "@(components|pages|fonts|styles|images|helpers|utils|state)/**"
           group: internal
           position: after
       newlines-between: always

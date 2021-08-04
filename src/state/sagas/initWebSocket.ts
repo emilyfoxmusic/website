@@ -2,40 +2,26 @@ import { eventChannel, TakeableChannel } from 'redux-saga';
 import {
   call,
   CallEffect,
-  ChannelTakeEffect,
+  ForkEffect,
   put,
   PutEffect,
   take,
+  TakeEffect,
+  takeEvery,
 } from 'redux-saga/effects';
 
+import { createWebSocketConnection } from 'helpers/webSocketConnection';
 import {
+  QUEUE_REQUEST_GET,
   QUEUE_ADD,
   QUEUE_BUMP,
   QUEUE_REMOVE,
   QUEUE_SET,
-} from './queue/actions';
-import { LIST_ADD, LIST_SET } from './songlist/actions';
-import { RootAction } from './types';
+} from 'state/queue/actions';
+import { LIST_REQUEST_GET, LIST_ADD, LIST_SET } from 'state/songlist/actions';
+import { RootAction } from 'state/types';
 
-// eslint-disable-next-line import/no-mutable-exports
-export let ws: WebSocket;
-
-const createWebSocketConnection = (): Promise<WebSocket> => {
-  return new Promise((resolve, reject) => {
-    const socket = new WebSocket('wss://');
-
-    socket.onopen = () => {
-      ws = socket;
-      resolve(socket);
-    };
-
-    socket.onerror = evt => {
-      reject(evt);
-    };
-  });
-};
-
-const createSocketChannel = (socket: WebSocket): TakeableChannel<RootAction> =>
+const createChannel = (socket: WebSocket): TakeableChannel<RootAction> =>
   eventChannel(emitter => {
     // eslint-disable-next-line no-param-reassign
     socket.onmessage = event => {
@@ -68,23 +54,28 @@ const createSocketChannel = (socket: WebSocket): TakeableChannel<RootAction> =>
     };
   });
 
-function* websocketListenerSaga(): Generator<
+function* processChannelEvent(
+  action: RootAction
+): Generator<PutEffect<RootAction>, void, never> {
+  yield put(action);
+}
+
+function* initWebSocket(): Generator<
+  | TakeEffect
   | CallEffect<WebSocket>
   | CallEffect<TakeableChannel<RootAction>>
-  | PutEffect<RootAction>
-  | ChannelTakeEffect<RootAction>,
+  | ForkEffect,
   void,
-  WebSocket | TakeableChannel<RootAction> | RootAction
+  never
 > {
+  yield take([LIST_REQUEST_GET, QUEUE_REQUEST_GET]);
+
   const socket = (yield call(createWebSocketConnection)) as WebSocket;
-  const channel = (yield call(createSocketChannel, socket)) as TakeableChannel<
+  const channel = (yield call(createChannel, socket)) as TakeableChannel<
     RootAction
   >;
 
-  while (true) {
-    const action = (yield take<RootAction>(channel)) as RootAction;
-    yield put(action);
-  }
+  yield takeEvery(channel, processChannelEvent);
 }
 
-export default websocketListenerSaga;
+export default initWebSocket;
