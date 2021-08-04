@@ -48,7 +48,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "lint": "eslint src",
-    "lint:fix": "prettier --write \"**/*.{js,jsx,json,md,tsx,ts}\" && eslint src"
+    "lint": "eslint \"src/**/*.{js,jsx,tsx,ts}\"",
+    "lint:fix": "prettier --write \"**/*.{js,jsx,json,md,tsx,ts}\" && eslint \"src/**/*.{js,jsx,tsx,ts}\""
   }
 }
