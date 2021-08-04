@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
-import Header from './header';
-import GlobalFonts from '../fonts/globalFonts';
+import GlobalFonts from 'src/fonts/globalFonts';
+import Header from 'src/components/header';
 
 const Layout: React.FC = ({ children }: PropsWithChildren<{}>) => {
   return (
