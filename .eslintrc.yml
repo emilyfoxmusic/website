@@ -9,11 +9,15 @@ extends:
   - plugin:import/warnings
   - airbnb
   - airbnb/hooks
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:import/typescript
+  - airbnb-typescript
   - plugin:prettier/recommended
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
-parser: 'babel-eslint'
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
@@ -23,6 +27,7 @@ parserOptions:
 plugins:
   - react
   - prefer-arrow
+  - '@typescript-eslint'
 rules:
   prettier/prettier: warn
   prefer-arrow/prefer-arrow-functions: error
@@ -57,13 +62,3 @@ settings:
       moduleDirectory:
         - node_modules
         - src
-overrides:
-  - files: ["**/*.ts", "**/*.tsx"]
-    extends:
-      - plugin:@typescript-eslint/eslint-recommended
-      - plugin:@typescript-eslint/recommended
-      - plugin:import/typescript
-      - airbnb-typescript
-    parser: '@typescript-eslint/parser'
-    plugins:
-      - '@typescript-eslint'
