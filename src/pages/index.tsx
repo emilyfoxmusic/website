@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ButtonLink from 'components/ButtonLink';
 import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
-import Video from 'components/Video';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import WhereFeelingsGrowImg from 'images/where-feelings-grow.svg';
 
@@ -35,9 +35,13 @@ const WhereFeelingsGrow = styled(WhereFeelingsGrowImg)`
   `}
 `;
 
-const VideoContainer = styled.div`
-  width: 100vw;
-  margin: 32px calc((100% - 100vw) / 2) 0;
+const MusicButton = styled(ButtonLink)`
+  width: 100px !important;
+  margin: 32px auto;
+
+  ${largeBreakpoint`
+    margin: 24px auto 32px;
+  `}
 `;
 
 const IndexPage: React.FC = () => {
@@ -51,18 +55,7 @@ const IndexPage: React.FC = () => {
           coming soon!
         </PageHeadingNoUnderline>
       </NewAlbumContainer>
-      <VideoContainer>
-        <Video
-          title="Bad Things Can Happen (original song)"
-          src="https://www.youtube.com/embed/peoXGwCcWBk"
-        />
-      </VideoContainer>
-      <VideoContainer>
-        <Video
-          title="Hostages - The Howl and the Hum cover"
-          src="https://www.youtube.com/embed/gmWIahbrHDs"
-        />
-      </VideoContainer>
+      <MusicButton to="/music">Listen</MusicButton>
     </Layout>
   );
 };
