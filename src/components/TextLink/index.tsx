@@ -8,7 +8,9 @@ type TextLinkProps = {
 };
 
 const TextLink: React.FC<TextLinkProps> = ({ href, className, children }) => (
-  <Link className={className} href={href}>{children}</Link>
+  <Link className={className} href={href}>
+    {children}
+  </Link>
 );
 
 export default TextLink;
