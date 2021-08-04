@@ -20,5 +20,5 @@ export type WebsocketDisconnectAction = {
 
 export type WebsocketAction =
   | WebsocketConnectAction
-  | WebsocketSendAction<any>
+  | WebsocketSendAction<unknown>
   | WebsocketDisconnectAction;

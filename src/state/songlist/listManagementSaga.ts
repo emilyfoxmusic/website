@@ -21,34 +21,25 @@ function* requestGet(): Generator<PutEffect, void, never> {
   yield put({ type: WS_SEND, payload: { action: 'listGet' } });
 }
 
-function* requestAdd(
-  action: ListRequestAddAction
-): Generator<PutEffect, void, never> {
-  console.info('request add');
-  yield put({
-    type: WS_SEND,
-    payload: { ...action.payload, action: 'listAdd' },
-  });
-}
-
-function* requestAddToQueue(
-  action: QueueRequestAddAction
+function* sendWebsocketMessage(
+  wsActionType: string,
+  action: QueueRequestAddAction | ListRequestAddAction
 ): Generator<PutEffect, void, never> {
   yield put({
     type: WS_SEND,
-    payload: { ...action.payload, action: 'queueAdd' },
+    payload: { ...action.payload, action: wsActionType },
   });
 }
 
-function* listManagement(): Generator<
+function* listManagementSaga(): Generator<
   TakeEffect | CallEffect | ForkEffect,
   void,
   never
 > {
   yield take(LIST_REQUEST_GET);
   yield call(requestGet);
-  yield takeEvery(LIST_REQUEST_ADD, requestAdd);
-  yield takeEvery(QUEUE_REQUEST_ADD, requestAddToQueue);
+  yield takeEvery(LIST_REQUEST_ADD, sendWebsocketMessage, 'listAdd');
+  yield takeEvery(QUEUE_REQUEST_ADD, sendWebsocketMessage, 'queueAdd');
 }
 
-export default listManagement;
+export default listManagementSaga;
