@@ -2,11 +2,19 @@ import React from 'react';
 
 import Layout from 'components/Layout';
 import { Rose } from 'components/Rose';
+import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 
 const Bio: React.FC = () => (
-  <Layout>
+  <Layout
+    links={[
+      { text: 'home', path: '/' },
+      { text: 'music', path: '/music' },
+      { text: 'contact', path: '/contact' },
+      { text: 'tech', path: '/tech' },
+    ]}>
+    <SEO title="Emily Fox Music | Bio" />
     <PageHeading>Bio</PageHeading>
     <p>
       Emily discovered the guitar at the age of 15 and never looked back. Before
@@ -32,7 +40,7 @@ const Bio: React.FC = () => (
     </p>
     <p>
       Business enquiries to:{' '}
-      <TextLink href="mailto:emily@emilyfoxmusic.co.uk">
+      <TextLink href="mailto:emily@emilyfoxmusic.co.uk" aria-label="send an email">
         emily@emilyfoxmusic.co.uk
       </TextLink>
     </p>
