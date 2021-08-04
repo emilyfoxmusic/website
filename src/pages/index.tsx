@@ -44,10 +44,10 @@ const IndexPage: React.FC = () => (
       <Rose />
     </NewAlbumContainer>
     <ButtonContainer>
-      <ButtonLink to="/bio">Downloads</ButtonLink>
+      <ButtonLink to="/music">Music</ButtonLink>
       <ButtonLink to="/bio">Bio</ButtonLink>
-      <ButtonLink to="/bio">Contact</ButtonLink>
-      <ButtonLink to="/bio">Tech</ButtonLink>
+      <ButtonLink to="/contact">Contact</ButtonLink>
+      <ButtonLink to="/tech">Tech</ButtonLink>
     </ButtonContainer>
     <VideoContainer>
       <Video
