@@ -21,8 +21,6 @@ import {
   Table,
 } from './styles';
 
-import TitleCell from '../Shared/TitleCell';
-
 const Overlay: React.FC<RouteComponentProps> = () => {
   const { queue, requestStatus } = useSelector((state: RootState) => state);
 
@@ -65,22 +63,35 @@ const Overlay: React.FC<RouteComponentProps> = () => {
             </HeadingRow>
           </thead>
           <tbody>
-            {topOfQueue.map((song, i) => (
-              <Fragment key={`${song.songId}-${song.priority}`}>
-                <tr>
-                  <TitleCell title={song.title} artist={song.artist} />
-                  <td>{song.artist}</td>
-                  <td>{song.requestedBy}</td>
-                </tr>
-                {i === 0 && (
+            {topOfQueue.length ? (
+              topOfQueue.map((song, i) => (
+                <Fragment key={`${song.songId}-${song.priority}`}>
                   <tr>
-                    <th colSpan={3}>
-                      <SectionHeading>Up next</SectionHeading>
-                    </th>
+                    <td>{song.title}</td>
+                    <td>{song.artist}</td>
+                    <td>{song.requestedBy}</td>
                   </tr>
-                )}
-              </Fragment>
-            ))}
+                  {i === 0 && (
+                    <>
+                      <tr>
+                        <th colSpan={3}>
+                          <SectionHeading>Up next</SectionHeading>
+                        </th>
+                      </tr>
+                      {topOfQueue.length === 1 && (
+                        <tr>
+                          <td colSpan={3}>-</td>
+                        </tr>
+                      )}
+                    </>
+                  )}
+                </Fragment>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3}>-</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </PageContainer>
