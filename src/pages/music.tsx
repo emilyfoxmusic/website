@@ -6,6 +6,7 @@ import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 import Video from 'components/Video';
+import { bandcamp, youtube } from 'utils/links';
 
 const CenteredContainer = styled.div`
   display: flex;
@@ -29,14 +30,8 @@ const Music: React.FC = () => (
     <PageHeading>Music</PageHeading>
     <p>
       All my original music is available on{' '}
-      <TextLink href="https://emilyfoxmusic.bandcamp.com">
-        my bandcamp page
-      </TextLink>{' '}
-      and all my videos can be watched on{' '}
-      <TextLink href="https://www.youtube.com/foxxemusic">
-        my YouTube channel
-      </TextLink>
-      .
+      <TextLink href={bandcamp}>my bandcamp page</TextLink> and all my videos
+      can be watched on <TextLink href={youtube}>my YouTube channel</TextLink>.
     </p>
     <CenteredContainer>
       <BandcampEmbed

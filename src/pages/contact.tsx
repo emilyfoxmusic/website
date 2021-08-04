@@ -6,6 +6,7 @@ import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
+import { facebook, youtube, emailAddress } from 'utils/links';
 
 const MaxWidthContainer = styled.div`
   max-width: 1000px;
@@ -27,19 +28,19 @@ const Contact: React.FC = () => (
     <MaxWidthContainer>
       <PageHeading>Contact</PageHeading>
       <LinkWrapper>
-        <TextLink href="mailto:contact@emilyfoxmusic.co.uk">
+        <TextLink href={`mailto:${emailAddress}`}>
           <IconWithMargin icon="envelope" aria-hidden />
           Email
         </TextLink>
       </LinkWrapper>
       <LinkWrapper>
-        <TextLink href="https://www.youtube.com/foxxemusic">
+        <TextLink href={youtube}>
           <IconWithMargin icon={['fab', 'youtube']} aria-hidden />
           YouTube
         </TextLink>
       </LinkWrapper>
       <LinkWrapper>
-        <TextLink href="https://www.facebook.com/emilyfoxmusic">
+        <TextLink href={facebook}>
           <IconWithMargin icon={['fab', 'facebook']} aria-hidden />
           Facebook
         </TextLink>
