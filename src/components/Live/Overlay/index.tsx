@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import LiveHeader from 'components/LiveHeader';
@@ -8,7 +8,13 @@ import SEO from 'components/SEO';
 import useTable from 'helpers/useTable';
 import { RootState } from 'state/types';
 
-import { SectionHeading, HeadingRow, PageContainer, Table } from './styles';
+import {
+  SectionHeading,
+  HeadingRow,
+  PageContainer,
+  Table,
+  OverlayRose,
+} from './styles';
 
 import TitleCell from '../Shared/TitleCell';
 
@@ -41,7 +47,7 @@ const Overlay: React.FC<RouteComponentProps> = () => {
           </thead>
           <tbody>
             {topOfQueue.map((song, i) => (
-              <>
+              <Fragment key={`${song.songId}-${song.priority}`}>
                 <tr>
                   <TitleCell title={song.title} artist={song.artist} />
                   <td>{song.artist}</td>
@@ -54,10 +60,11 @@ const Overlay: React.FC<RouteComponentProps> = () => {
                     </th>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </Table>
+        <OverlayRose />
       </PageContainer>
     </>
   );
