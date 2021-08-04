@@ -17,7 +17,7 @@ import {
   AuthenticationBlock,
 } from './styles';
 
-const LiveHeader: React.FC = () => {
+const LiveHeader: React.FC<{ className?: string }> = ({ className }) => {
   const { user, requestStatus } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch<RequestStatusAction>>();
   const userBannerRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ const LiveHeader: React.FC = () => {
   }, []);
 
   return (
-    <UserBanner ref={userBannerRef} aria-live="polite">
+    <UserBanner ref={userBannerRef} aria-live="polite" className={className}>
       <RequestStatusBlock>
         Requests are{' '}
         {requestStatus.requestsOpen ? (

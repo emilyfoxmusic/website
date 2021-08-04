@@ -3,33 +3,32 @@ import { RouteComponentProps } from '@reach/router';
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
-import LiveHeader from 'components/LiveHeader';
 import SEO from 'components/SEO';
 import useTable from 'helpers/useTable';
 import { RootState } from 'state/types';
 
 import {
+  SmallRequestHeader,
   SectionHeading,
   HeadingRow,
   PageContainer,
   Table,
-  OverlayRose,
 } from './styles';
 
 import TitleCell from '../Shared/TitleCell';
 
 const Overlay: React.FC<RouteComponentProps> = () => {
   const queue = useSelector((state: RootState) =>
-    state.queue.sort((a, b) => a.priority - b.priority).slice(0, 3)
+    state.queue.sort((a, b) => a.priority - b.priority)
   );
 
-  const { data: topOfQueue } = useTable(queue, {}, 'priority', 3);
+  const { data: topOfQueue } = useTable(queue, {}, 'priority', 2);
 
   return (
     <>
       <SEO title="Overlay" location={window.location} hideFromCrawlers />
       <header>
-        <LiveHeader />
+        <SmallRequestHeader />
       </header>
       <PageContainer>
         <Table>
@@ -64,7 +63,6 @@ const Overlay: React.FC<RouteComponentProps> = () => {
             ))}
           </tbody>
         </Table>
-        <OverlayRose />
       </PageContainer>
     </>
   );
