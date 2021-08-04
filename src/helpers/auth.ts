@@ -10,11 +10,7 @@ const stateKey = 'AUTH_STATE';
 export const buildTwitchRedirectUrl = (): string => {
   const state = uuidv4();
   sessionStorage.setItem(stateKey, state);
-  return `https://id.twitch.tv/oauth2/authorize?client_id=${
-    process.env.GATSBY_TWITCH_CLIENT_ID
-  }&redirect_uri=${
-    process.env.GATSBY_SITE_URL
-  }/redirect&response_type=code&scope=openid&claims={"id_token":{"preferred_username":null}}&state=${state}&nonce=${uuidv4()}`;
+  return `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.GATSBY_TWITCH_CLIENT_ID}&redirect_uri=${process.env.GATSBY_SITE_URL}/redirect&response_type=code&scope=openid&claims={"id_token":{"preferred_username":null}}&state=${state}`;
 };
 
 type Token = {
