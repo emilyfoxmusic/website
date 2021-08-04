@@ -58,13 +58,13 @@ export const Arrow = styled(ArrowImg)`
   stroke: white;
   height: 24px;
 
-  ${({ back }) => css`
-    margin-${back ? 'right' : 'left'}: 16px;
+  ${({ $back }) => css`
+    margin-${$back ? 'right' : 'left'}: 16px;
 
     ${largeBreakpoint`
-      margin-${back ? 'right' : 'left'}: 24px;
+      margin-${$back ? 'right' : 'left'}: 24px;
     `}
   `}
 
-  ${({ back }): string => back && 'transform: rotate(180deg);'}
+  ${({ $back }): string => $back && 'transform: rotate(180deg);'}
 `;

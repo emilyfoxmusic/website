@@ -21,7 +21,7 @@ const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
     activeClassName="current-page"
     className={className}
     onClick={onClick}>
-    {back && <Arrow back />}
+    {back && <Arrow $back />}
     {children}
     {!back && <Arrow />}
   </Button>
