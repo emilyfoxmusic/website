@@ -1,9 +1,8 @@
 /* eslint-disable no-param-reassign */
 
-import { toast } from 'react-toastify';
 import { TakeableChannel, eventChannel } from 'redux-saga';
 
-import { notifyError, notifySuccess } from 'helpers/notify';
+import { notifyError } from 'helpers/notify';
 import {
   QUEUE_ADD,
   QUEUE_BUMP,
@@ -19,15 +18,15 @@ type WebsocketHandler = (
 ) => (event: Event) => void;
 
 const onOpen: WebsocketHandler = () => () => {
-  notifySuccess('Websocket open!');
+  console.info('Websocket open');
 };
 
 const onError: WebsocketHandler = () => event => {
-  notifyError('Socket error', event);
+  notifyError('Socket communication error - you may need to refresh', event);
 };
 
 const onClose: WebsocketHandler = () => () => {
-  toast.warn('Websocket closed');
+  console.info('Websocket closed');
 };
 
 const onMessage = (emitter: (a: RootAction) => void) => (event: {

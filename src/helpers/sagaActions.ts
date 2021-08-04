@@ -26,6 +26,7 @@ export type AuthenticatedActionGenerator = Generator<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function* requestAuthenticatedAction<Fn extends (...args: any[]) => any>(
   buildFn: (client: AuthenticatedClient) => Fn,
+  errorMessage: string,
   ...params: Parameters<Fn>
 ): AuthenticatedActionGenerator {
   try {
@@ -35,7 +36,9 @@ export function* requestAuthenticatedAction<Fn extends (...args: any[]) => any>(
   } catch (error) {
     if (error.response && error.response.status === 401) {
       yield put({ type: CLEAR_USER });
+      notifyError('You must be signed in to do that', error);
+    } else {
+      notifyError(errorMessage, error);
     }
-    notifyError('Action failed', error);
   }
 }

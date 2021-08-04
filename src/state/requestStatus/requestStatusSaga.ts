@@ -29,7 +29,7 @@ function* requestGet(): Generator<CallEffect | PutEffect, void, never> {
     const status = yield call(apiClient.statusGet);
     yield put({ type: STATUS_SET, payload: status });
   } catch (error) {
-    notifyError('Currently unable to fetch the requests status', error);
+    notifyError('Currently unable to fetch the request status', error);
   }
 }
 
@@ -38,6 +38,7 @@ const requestStatusUpdate = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(
     client => client.statusUpdate,
+    'Failed to update request status',
     action.payload.requestsOpen
   );
 

@@ -38,6 +38,7 @@ const requestQueueBump = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(
     client => client.queueBump,
+    'Failed to bump song',
     action.payload.songId,
     action.payload.position
   );
@@ -47,6 +48,7 @@ const requestQueueCancel = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(
     client => client.queueCancel,
+    'Failed to cancel song',
     action.payload.songId
   );
 
@@ -55,6 +57,7 @@ const requestQueuePlayed = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(
     client => client.queuePlayed,
+    'Failed to mark song as played',
     action.payload.songId
   );
 

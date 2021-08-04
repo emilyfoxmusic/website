@@ -36,6 +36,7 @@ const requestListAdd = (
 ): AuthenticatedActionGenerator =>
   requestAuthenticatedAction(
     client => client.listAdd,
+    'Failed to add song to list',
     action.payload.title,
     action.payload.artist
   );
@@ -43,7 +44,11 @@ const requestListAdd = (
 const requestQueueAdd = (
   action: QueueRequestAddAction
 ): AuthenticatedActionGenerator =>
-  requestAuthenticatedAction(client => client.queueAdd, action.payload.songId);
+  requestAuthenticatedAction(
+    client => client.queueAdd,
+    'Failed to add song to queue',
+    action.payload.songId
+  );
 
 function* listManagementSaga(): Generator<ForkEffect, void, never> {
   yield takeEvery(LIST_REQUEST_GET, requestGet);
