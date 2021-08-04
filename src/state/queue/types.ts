@@ -2,6 +2,6 @@ export type QueueItem = {
   songId: string;
   artist: string;
   title: string;
-  priority: string;
+  priority: number;
   requestedBy: string;
 };
