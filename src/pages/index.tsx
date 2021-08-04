@@ -12,7 +12,7 @@ import '../utils/icons';
 
 const NewAlbumContainer = styled.div`
   flex: 0 1 50%;
-  margin: 24px;
+  margin-top: 32px;
 
   text-align: center;
 
@@ -37,7 +37,7 @@ const WhereFeelingsGrow = styled(WhereFeelingsGrowImg)`
 
 const VideoContainer = styled.div`
   width: 100vw;
-  margin: 16px calc((100% - 100vw) / 2);
+  margin: 32px calc((100% - 100vw) / 2) 0;
 `;
 
 const IndexPage: React.FC = () => {
