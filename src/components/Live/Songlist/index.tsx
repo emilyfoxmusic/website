@@ -1,14 +1,19 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { LIST_ADD } from 'state/songlist/actions';
-import { StoreState } from 'state/types';
+import { LIST_ADD, LIST_REQUEST_GET } from 'state/songlist/actions';
+import { RootState } from 'state/types';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
-  const songs = useSelector((state: StoreState) => state.songlist);
+  const songs = useSelector((state: RootState) => state.songlist);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: LIST_REQUEST_GET });
+  });
+
   return (
     <>
       <button

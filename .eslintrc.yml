@@ -37,6 +37,13 @@ rules:
   react/no-unescaped-entities: off
   react/require-default-props: off
   '@typescript-eslint/indent': off
+  no-console:
+    - error
+    - allow:
+      - debug
+      - info
+      - warn
+      - error
   react/prop-types:
     - 0
   import/order:
