@@ -35,7 +35,7 @@ function* authenticate(
   } finally {
     // We don't redirect if we're refreshing since the twitch magic happened in an iframe
     if (action.type !== AUTHENTICATE_REFRESH) {
-      yield call(url => navigate(url, { replace: true }), '/live/songlist');
+      yield call(url => navigate(url, { replace: true }), '/live/songlist/');
     }
   }
 }
