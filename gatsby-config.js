@@ -1,3 +1,25 @@
+// Load the environment variables, per
+// https://www.gatsbyjs.org/docs/environment-variables/#server-side-nodejs
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
+function checkEnv(envName) {
+  if (
+    typeof process.env[envName] === 'undefined' ||
+    process.env[envName] === ''
+  ) {
+    throw new Error(`Missing required environment variables: ${envName}`);
+  }
+}
+
+checkEnv('GATSBY_GOATCOUNTER_URL');
+checkEnv('GATSBY_TWITCH_CLIENT_ID');
+checkEnv('GATSBY_SITE_URL');
+checkEnv('GATSBY_API_URL');
+checkEnv('GATSBY_WEBSOCKET_URL');
+checkEnv('TWITCH_CHANNEL');
+
 /* eslint-disable @typescript-eslint/camelcase */
 module.exports = {
   siteMetadata: {
