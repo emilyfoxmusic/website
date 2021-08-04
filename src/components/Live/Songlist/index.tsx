@@ -8,7 +8,6 @@ import { Dispatch } from 'redux';
 
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
-import Tag from 'components/Tag';
 import { PageHeading } from 'components/Typography';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
@@ -37,7 +36,6 @@ import {
   TableSection,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
-  SmallRose,
 } from './styles';
 
 import {
@@ -45,6 +43,7 @@ import {
   LargeBreakpointOnlyHeaderCell,
   LargeBreakpointOnlyCell,
 } from '../Shared';
+import TitleCell from '../Shared/TitleCell';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
   const { songlist: songs, queue } = useSelector((state: RootState) => state);
@@ -141,25 +140,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <LargeBreakpointOnlyCell>
                   {song.isInQueue ? song.positionInQueue : ''}
                 </LargeBreakpointOnlyCell>
-                <td>
-                  <span>{song.title}</span>
-                  {song.artist === 'Emily Fox' && (
-                    <>
-                      {[
-                        'Where Feelings Grow',
-                        'Toxic',
-                        'Faces (No One Else Is Counting)',
-                        'Original Human',
-                        'gods',
-                        'House Song',
-                        'Cry',
-                        'One Part',
-                        "Don't know why I'm here",
-                      ].includes(song.title) && <SmallRose />}
-                      <Tag>Original</Tag>
-                    </>
-                  )}
-                </td>
+                <TitleCell title={song.title} artist={song.artist} />
                 <td>{song.artist}</td>
                 <XLargeBreakpointOnlyCell>
                   {song.numberOfPlays}

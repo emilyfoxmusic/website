@@ -7,7 +7,7 @@ export const TagContainer = styled.span`
   vertical-align: super;
 
   font-size: 0.8rem;
-  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: Arial, sans-serif;
   font-weight: bold;
 
   background: ${red};

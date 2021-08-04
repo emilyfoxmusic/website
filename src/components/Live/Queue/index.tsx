@@ -28,6 +28,7 @@ import {
   LargeBreakpointOnlyCell,
   ActionButton,
 } from '../Shared';
+import TitleCell from '../Shared/TitleCell';
 
 const Queue: React.FC<RouteComponentProps> = () => {
   const queuedSongs = useSelector((state: RootState) => state.queue);
@@ -87,7 +88,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
             {data.map((song, index) => (
               <TableRow key={`${song.artist}-${song.title}`}>
                 <td>{index + 1}</td>
-                <td>{song.title}</td>
+                <TitleCell title={song.title} artist={song.artist} />
                 <td>{song.artist}</td>
                 <LargeBreakpointOnlyCell>
                   {index !== 0 && (
