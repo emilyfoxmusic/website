@@ -3,6 +3,7 @@ import {
   faYoutube,
   faFacebook,
   faBandcamp,
+  faTwitch,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
@@ -15,6 +16,7 @@ library.add(
   faYoutube,
   faFacebook,
   faBandcamp,
+  faTwitch,
   faTimesCircle,
   faExternalLinkAlt
 );

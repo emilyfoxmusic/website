@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 import { TableHeaderCell } from 'components/Table';
@@ -92,4 +93,11 @@ export const VisuallyHiddenSortText = styled.span`
   padding: 0;
   position: absolute;
   width: 1px;
+`;
+
+export const TwitchIcon = styled(FontAwesomeIcon).attrs({
+  icon: ['fab', 'twitch'],
+  'aria-hidden': true,
+})`
+  margin-right: 8px;
 `;

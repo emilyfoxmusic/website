@@ -2,26 +2,23 @@
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import Pagination from 'components/Pagination';
 import { Table, TableRow, TableHeaderCell } from 'components/Table';
+import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
+import { twitchAuthUrl } from 'helpers/auth';
 import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
+import { count } from 'helpers/goatcounter';
 import useTable, { SortConfig } from 'helpers/useTable';
-import {
-  QueueRequestAddAction,
-  QueueRequestGetAction,
-  QUEUE_REQUEST_ADD,
-} from 'state/queue/actions';
-import {
-  ListAction,
-  LIST_REQUEST_ADD,
-} from 'state/songlist/actions';
+import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
+import { ListAction, LIST_REQUEST_ADD } from 'state/songlist/actions';
 import { RootState } from 'state/types';
+import { AuthenticateAction } from 'state/user/actions';
 import { lightRed } from 'styles/colors';
 
 import SortButton from './SortButton';
@@ -37,6 +34,7 @@ import {
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
   VisuallyHiddenSortText,
+  TwitchIcon,
 } from './styles';
 
 import {
@@ -47,9 +45,11 @@ import {
 import TitleCell from '../Shared/TitleCell';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
-  const { songlist: songs, queue } = useSelector((state: RootState) => state);
+  const { songlist: songs, queue, user } = useSelector(
+    (state: RootState) => state
+  );
   const dispatch = useDispatch<
-    Dispatch<ListAction | QueueRequestGetAction | QueueRequestAddAction>
+    Dispatch<ListAction | QueueRequestAddAction | AuthenticateAction>
   >();
 
   const [title, setTitle] = useState<string>('');
@@ -119,6 +119,20 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         a stream, feel free to suggest something not on the list and if I know
         it I <i>might</i> give it a shot!
       </p>
+      {!user.isAuthenticated && (
+        <TextLink
+          href={twitchAuthUrl(window.location)}
+          onClick={() =>
+            count({
+              path: 'live: authenticate with twitch',
+              title: 'authenticate',
+              event: true,
+            })
+          }>
+          <TwitchIcon />
+          Sign in with twitch to request a song!
+        </TextLink>
+      )}
       <TableSection>
         <Pagination {...pagination} />
         <VisuallyHiddenSortText aria-live="polite">
@@ -157,7 +171,9 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 Last played
                 <SortButton sort={sort} sortKey="lastPlayed" />
               </MedBreakpointOnlyHeaderCell>
-              <TableHeaderCell $width="42px" $widthLarge="96px" />
+              {user.isAuthenticated && (
+                <TableHeaderCell $width="42px" $widthLarge="96px" />
+              )}
             </TableRow>
           </thead>
           <tbody>
@@ -176,17 +192,19 @@ const Songlist: React.FC<RouteComponentProps> = () => {
                 <MedBreakpointOnlyCell>
                   {formatTimeAgo(song.lastPlayed)}
                 </MedBreakpointOnlyCell>
-                <td>
-                  {!song.isInQueue && (
-                    <ActionButton
-                      aria-label={`Request ${song.title} by ${song.artist}`}
-                      type="button"
-                      onClick={() => requestSong(song.id)}>
-                      <MobileOnly>Req</MobileOnly>
-                      <LargeBreakpointOnly>Request</LargeBreakpointOnly>
-                    </ActionButton>
-                  )}
-                </td>
+                {user.isAuthenticated && (
+                  <td>
+                    {!song.isInQueue && (
+                      <ActionButton
+                        aria-label={`Request ${song.title} by ${song.artist}`}
+                        type="button"
+                        onClick={() => requestSong(song.id)}>
+                        <MobileOnly>Req</MobileOnly>
+                        <LargeBreakpointOnly>Request</LargeBreakpointOnly>
+                      </ActionButton>
+                    )}
+                  </td>
+                )}
               </TableRow>
             ))}
           </tbody>
@@ -194,28 +212,30 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         <Pagination {...pagination} />
       </TableSection>
 
-      <SecretAdminSection>
-        <FormHeading>Secret admin section</FormHeading>
-        <form onSubmit={submit}>
-          <Label htmlFor="title">Title</Label>
-          <FullWidthInput
-            id="title"
-            type="text"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-          />
+      {user.isAdmin && (
+        <SecretAdminSection>
+          <FormHeading>Secret admin section</FormHeading>
+          <form onSubmit={submit}>
+            <Label htmlFor="title">Title</Label>
+            <FullWidthInput
+              id="title"
+              type="text"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
 
-          <Label htmlFor="artist">Artist</Label>
-          <FullWidthInput
-            id="artist"
-            type="text"
-            value={artist}
-            onChange={e => setArtist(e.target.value)}
-          />
+            <Label htmlFor="artist">Artist</Label>
+            <FullWidthInput
+              id="artist"
+              type="text"
+              value={artist}
+              onChange={e => setArtist(e.target.value)}
+            />
 
-          <SubmitSongButton type="submit">Add song</SubmitSongButton>
-        </form>
-      </SecretAdminSection>
+            <SubmitSongButton type="submit">Add song</SubmitSongButton>
+          </form>
+        </SecretAdminSection>
+      )}
     </>
   );
 };

@@ -30,7 +30,7 @@ import {
 import TitleCell from '../Shared/TitleCell';
 
 const Queue: React.FC<RouteComponentProps> = () => {
-  const queuedSongs = useSelector((state: RootState) => state.queue);
+  const { queue: queuedSongs, user } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<Dispatch<QueueAction>>();
 
   const { data } = useTable(queuedSongs, {}, 'priority');
@@ -74,9 +74,11 @@ const Queue: React.FC<RouteComponentProps> = () => {
               </TableHeaderCell>
               <TableHeaderCell>Title</TableHeaderCell>
               <TableHeaderCell>Artist</TableHeaderCell>
-              <LargeBreakpointOnlyHeaderCell>
-                Actions
-              </LargeBreakpointOnlyHeaderCell>
+              {user.isAdmin && (
+                <LargeBreakpointOnlyHeaderCell>
+                  Actions
+                </LargeBreakpointOnlyHeaderCell>
+              )}
             </TableRow>
           </thead>
           <tbody>
@@ -85,41 +87,43 @@ const Queue: React.FC<RouteComponentProps> = () => {
                 <td>{index + 1}</td>
                 <TitleCell title={song.title} artist={song.artist} />
                 <td>{song.artist}</td>
-                <LargeBreakpointOnlyCell>
-                  {index !== 0 && (
-                    <Bump1Button
-                      onClick={() => bumpSong(song.songId, 1)}
-                      aria-label={`Bump ${song.title} to position 1`}>
-                      #1
-                    </Bump1Button>
-                  )}
-                  {index > 1 && (
-                    <Bump2Button
-                      onClick={() => bumpSong(song.songId, 2)}
-                      aria-label={`Bump ${song.title} to position 2`}>
-                      #2
-                    </Bump2Button>
-                  )}
-                  {index > 2 && (
-                    <Bump3Button
-                      onClick={() => bumpSong(song.songId, 3)}
-                      aria-label={`Bump ${song.title} to position 3`}>
-                      #3
-                    </Bump3Button>
-                  )}
-                  {index === 0 && (
+                {user.isAdmin && (
+                  <LargeBreakpointOnlyCell>
+                    {index !== 0 && (
+                      <Bump1Button
+                        onClick={() => bumpSong(song.songId, 1)}
+                        aria-label={`Bump ${song.title} to position 1`}>
+                        #1
+                      </Bump1Button>
+                    )}
+                    {index > 1 && (
+                      <Bump2Button
+                        onClick={() => bumpSong(song.songId, 2)}
+                        aria-label={`Bump ${song.title} to position 2`}>
+                        #2
+                      </Bump2Button>
+                    )}
+                    {index > 2 && (
+                      <Bump3Button
+                        onClick={() => bumpSong(song.songId, 3)}
+                        aria-label={`Bump ${song.title} to position 3`}>
+                        #3
+                      </Bump3Button>
+                    )}
+                    {index === 0 && (
+                      <ActionButton
+                        onClick={() => markSongAsPlayed(song.songId)}
+                        aria-label={`Mark ${song.title} as played`}>
+                        Played
+                      </ActionButton>
+                    )}
                     <ActionButton
-                      onClick={() => markSongAsPlayed(song.songId)}
-                      aria-label={`Mark ${song.title} as played`}>
-                      Played
+                      onClick={() => removeSong(song)}
+                      aria-label={`Remove ${song.title} from the queue`}>
+                      Remove
                     </ActionButton>
-                  )}
-                  <ActionButton
-                    onClick={() => removeSong(song)}
-                    aria-label={`Remove ${song.title} from the queue`}>
-                    Remove
-                  </ActionButton>
-                </LargeBreakpointOnlyCell>
+                  </LargeBreakpointOnlyCell>
+                )}
               </TableRow>
             ))}
           </tbody>
