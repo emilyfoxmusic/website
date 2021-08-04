@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from 'components/Button';
+import ButtonLink from 'components/ButtonLink';
 import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
@@ -44,10 +44,10 @@ const IndexPage: React.FC = () => (
       <Rose />
     </NewAlbumContainer>
     <ButtonContainer>
-      <Button>Downloads</Button>
-      <Button>Bio</Button>
-      <Button>Contact</Button>
-      <Button>Tech</Button>
+      <ButtonLink to="/bio">Downloads</ButtonLink>
+      <ButtonLink to="/bio">Bio</ButtonLink>
+      <ButtonLink to="/bio">Contact</ButtonLink>
+      <ButtonLink to="/bio">Tech</ButtonLink>
     </ButtonContainer>
     <VideoContainer>
       <Video
