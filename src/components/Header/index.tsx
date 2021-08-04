@@ -57,15 +57,6 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
     <header>
       {liveLayout && (
         <UserBanner ref={userBannerRef} aria-live="polite">
-          {user.isAuthenticated && (
-            <AuthenticationBlock>
-              You are signed in as{' '}
-              <RedText>
-                {user.username}
-                {user.isAdmin ? ' (admin)' : ''}
-              </RedText>
-            </AuthenticationBlock>
-          )}
           <RequestStatusBlock>
             Requests are{' '}
             {requestStatus.requestsOpen ? (
@@ -92,6 +83,15 @@ const Header: React.FC<HeaderProps> = ({ liveLayout }) => {
               </UpdateStatusButton>
             )}
           </RequestStatusBlock>
+          {user.isAuthenticated && (
+            <AuthenticationBlock>
+              You are signed in as{' '}
+              <RedText>
+                {user.username}
+                {user.isAdmin ? ' (admin)' : ''}
+              </RedText>
+            </AuthenticationBlock>
+          )}
         </UserBanner>
       )}
       <HeaderContainer

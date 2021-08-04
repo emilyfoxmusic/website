@@ -89,9 +89,11 @@ export const SocialMedia = styled.nav`
 `;
 
 export const UserBanner = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+
   ${largeBreakpoint`
-    display: flex;
-    justify-content: space-between;
+    flex-direction: row;
   `}
 
   background: black;
@@ -121,7 +123,6 @@ export const RequestStatusBlock = styled.div`
   font-size: 1.1rem;
 
   ${largeBreakpoint`
-    text-align: right;
     font-size: 1.3rem;
   `}
 `;
@@ -131,8 +132,8 @@ export const AuthenticationBlock = styled.div`
   margin-bottom: 8px;
 
   ${largeBreakpoint`
-    text-align: left;
     margin-bottom: 0;
+    margin-left: auto;
   `}
 `;
 
