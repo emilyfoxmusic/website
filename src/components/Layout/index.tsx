@@ -68,6 +68,11 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
                   onClick={(): void => trackNavClick('tech')}>
                   tech
                 </ButtonLink>
+                <ButtonLink
+                  to="/live/"
+                  onClick={(): void => trackNavClick('live')}>
+                  live
+                </ButtonLink>
               </ButtonContainer>
             </MainContentContainer>
           </PortraitBackground>

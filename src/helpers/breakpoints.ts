@@ -1,6 +1,6 @@
 import { css, SimpleInterpolation } from 'styled-components';
 
-const breakpoint = '730px';
+const breakpoint = '800px';
 
 export const largeBreakpoint = (
   styling: TemplateStringsArray

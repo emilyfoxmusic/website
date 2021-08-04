@@ -10,7 +10,7 @@ import { count } from 'helpers/goatcounter';
 
 const MusicButton = styled(ButtonLink)`
   max-width: 250px;
-  
+
   ${largeBreakpoint`
     width: 250px !important;
   `}
