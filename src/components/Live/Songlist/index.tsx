@@ -111,98 +111,104 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         a stream, feel free to suggest something not on the list and if I know
         it I <i>might</i> give it a shot!
       </p>
-      {!user.isAuthenticated && (
-        <TwitchLoginButton
-          onClick={() => {
-            navigate(buildTwitchRedirectUrl());
-            count({
-              path: 'live: authenticate with twitch',
-              title: 'authenticate',
-              event: true,
-            });
-          }}>
-          <TwitchIcon />
-          Sign in with twitch to request a song
-        </TwitchLoginButton>
-      )}
-      <TableBlock>
-        <Pagination {...pagination} />
-        <VisuallyHiddenSortText aria-live="polite">
-          Currently sorting by: {sort.currentSortText}
-        </VisuallyHiddenSortText>
-        <Table>
-          <thead>
-            <TableRow>
-              <LargeBreakpointOnlyHeaderCell
-                $width="120px"
-                aria-sort={sort.ariaSort('positionInQueue')}>
-                <span aria-label="Position in queue">#Queue</span>
-                <SortButton sort={sort} sortKey="positionInQueue" />
-              </LargeBreakpointOnlyHeaderCell>
-              <TableHeaderCell aria-sort={sort.ariaSort('title')}>
-                Title
-                <SortButton sort={sort} sortKey="title" />
-              </TableHeaderCell>
-              <TableHeaderCell
-                $width="30%"
-                $widthLarge="18%"
-                aria-sort={sort.ariaSort('artist')}>
-                Artist
-                <SortButton sort={sort} sortKey="artist" />
-              </TableHeaderCell>
-              <XLargeBreakpointOnlyHeaderCell
-                $width="130px"
-                aria-sort={sort.ariaSort('numberOfPlays')}>
-                <span aria-label="Number of plays">#Plays</span>
-                <SortButton sort={sort} sortKey="numberOfPlays" />
-              </XLargeBreakpointOnlyHeaderCell>
-              <MedBreakpointOnlyHeaderCell
-                $width="123px"
-                $widthLarge="180px"
-                aria-sort={sort.ariaSort('lastPlayed')}>
-                Last played
-                <SortButton sort={sort} sortKey="lastPlayed" />
-              </MedBreakpointOnlyHeaderCell>
-              {enableRequests && (
-                <TableHeaderCell $width="42px" $widthLarge="96px" />
-              )}
-            </TableRow>
-          </thead>
-          <tbody>
-            {data.map(song => (
-              <TableRow
-                key={`${song.artist}-${song.title}`}
-                $background={song.isInQueue ? lightRed : undefined}>
-                <LargeBreakpointOnlyCell>
-                  {song.isInQueue ? song.positionInQueue : ''}
-                </LargeBreakpointOnlyCell>
-                <TitleCell title={song.title} artist={song.artist} />
-                <td>{song.artist}</td>
-                <XLargeBreakpointOnlyCell>
-                  {song.numberOfPlays}
-                </XLargeBreakpointOnlyCell>
-                <MedBreakpointOnlyCell>
-                  {formatTimeAgo(song.lastPlayed)}
-                </MedBreakpointOnlyCell>
-                {enableRequests && (
-                  <td>
-                    {!song.isInQueue && (
-                      <ActionButton
-                        aria-label={`Request ${song.title} by ${song.artist}`}
-                        type="button"
-                        onClick={() => requestSong(song.id)}>
-                        <MobileOnly>Req</MobileOnly>
-                        <LargeBreakpointOnly>Request</LargeBreakpointOnly>
-                      </ActionButton>
+      {songs.length ? (
+        <>
+          {!user.isAuthenticated && (
+            <TwitchLoginButton
+              onClick={() => {
+                navigate(buildTwitchRedirectUrl());
+                count({
+                  path: 'live: authenticate with twitch',
+                  title: 'authenticate',
+                  event: true,
+                });
+              }}>
+              <TwitchIcon />
+              Sign in with twitch to request a song
+            </TwitchLoginButton>
+          )}
+          <TableBlock>
+            <Pagination {...pagination} />
+            <VisuallyHiddenSortText aria-live="polite">
+              Currently sorting by: {sort.currentSortText}
+            </VisuallyHiddenSortText>
+            <Table>
+              <thead>
+                <TableRow>
+                  <LargeBreakpointOnlyHeaderCell
+                    $width="120px"
+                    aria-sort={sort.ariaSort('positionInQueue')}>
+                    <span aria-label="Position in queue">#Queue</span>
+                    <SortButton sort={sort} sortKey="positionInQueue" />
+                  </LargeBreakpointOnlyHeaderCell>
+                  <TableHeaderCell aria-sort={sort.ariaSort('title')}>
+                    Title
+                    <SortButton sort={sort} sortKey="title" />
+                  </TableHeaderCell>
+                  <TableHeaderCell
+                    $width="30%"
+                    $widthLarge="18%"
+                    aria-sort={sort.ariaSort('artist')}>
+                    Artist
+                    <SortButton sort={sort} sortKey="artist" />
+                  </TableHeaderCell>
+                  <XLargeBreakpointOnlyHeaderCell
+                    $width="130px"
+                    aria-sort={sort.ariaSort('numberOfPlays')}>
+                    <span aria-label="Number of plays">#Plays</span>
+                    <SortButton sort={sort} sortKey="numberOfPlays" />
+                  </XLargeBreakpointOnlyHeaderCell>
+                  <MedBreakpointOnlyHeaderCell
+                    $width="123px"
+                    $widthLarge="180px"
+                    aria-sort={sort.ariaSort('lastPlayed')}>
+                    Last played
+                    <SortButton sort={sort} sortKey="lastPlayed" />
+                  </MedBreakpointOnlyHeaderCell>
+                  {enableRequests && (
+                    <TableHeaderCell $width="42px" $widthLarge="96px" />
+                  )}
+                </TableRow>
+              </thead>
+              <tbody>
+                {data.map(song => (
+                  <TableRow
+                    key={`${song.artist}-${song.title}`}
+                    $background={song.isInQueue ? lightRed : undefined}>
+                    <LargeBreakpointOnlyCell>
+                      {song.isInQueue ? song.positionInQueue : ''}
+                    </LargeBreakpointOnlyCell>
+                    <TitleCell title={song.title} artist={song.artist} />
+                    <td>{song.artist}</td>
+                    <XLargeBreakpointOnlyCell>
+                      {song.numberOfPlays}
+                    </XLargeBreakpointOnlyCell>
+                    <MedBreakpointOnlyCell>
+                      {formatTimeAgo(song.lastPlayed)}
+                    </MedBreakpointOnlyCell>
+                    {enableRequests && (
+                      <td>
+                        {!song.isInQueue && (
+                          <ActionButton
+                            aria-label={`Request ${song.title} by ${song.artist}`}
+                            type="button"
+                            onClick={() => requestSong(song.id)}>
+                            <MobileOnly>Req</MobileOnly>
+                            <LargeBreakpointOnly>Request</LargeBreakpointOnly>
+                          </ActionButton>
+                        )}
+                      </td>
                     )}
-                  </td>
-                )}
-              </TableRow>
-            ))}
-          </tbody>
-        </Table>
-        <Pagination {...pagination} />
-      </TableBlock>
+                  </TableRow>
+                ))}
+              </tbody>
+            </Table>
+            <Pagination {...pagination} />
+          </TableBlock>
+        </>
+      ) : (
+        <p>No songs loaded 😭</p>
+      )}
 
       {user.isAdmin && <AddSongForm />}
     </>

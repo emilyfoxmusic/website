@@ -50,7 +50,7 @@ const notifyStatus = (action: StatusSetAction): void => {
     if (action.payload.requestsOpen) {
       notifyEvent('Requests are now open!', () => navigate('/live/songlist/'));
     } else {
-      notifyEvent('Requests are now closed!');
+      notifyEvent('Requests are now closed!', () => navigate('/live/queue/'));
     }
   }
 };
