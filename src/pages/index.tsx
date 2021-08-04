@@ -11,6 +11,8 @@ import Video from 'components/Video';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import RoseImg from 'images/rose.svg';
 
+import '../utils/icons';
+
 const NewAlbumContainer = styled.div`
   flex: 0 1 50%;
   margin: 24px;
@@ -86,6 +88,7 @@ const IndexPage: React.FC = () => {
       <PortraitBackground fluid={imageData}>
         <MainContentContainer>
           <ButtonContainer>
+            <ButtonLink to="/music">Music</ButtonLink>
             <ButtonLink to="/bio">Bio</ButtonLink>
             <ButtonLink to="/contact">Contact</ButtonLink>
             <ButtonLink to="/tech">Tech</ButtonLink>
