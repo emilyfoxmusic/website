@@ -12,16 +12,28 @@ const Header: React.FC = () => (
       <RightDiv aria-hidden>| Music</RightDiv>
     </HeaderContainer>
     <SocialMedia aria-label="Social media links">
-      <a href={youtube} aria-label="YouTube">
+      <a
+        href={youtube}
+        aria-label="YouTube"
+        data-goatcounter-click="header: YouTube">
         <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
       </a>
-      <a href={facebook} aria-label="Facebook">
+      <a
+        href={facebook}
+        aria-label="Facebook"
+        data-goatcounter-click="header: Facebook">
         <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
       </a>
-      <a href={bandcamp} aria-label="Bandcamp">
+      <a
+        href={bandcamp}
+        aria-label="Bandcamp"
+        data-goatcounter-click="header: Bandcamp">
         <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
       </a>
-      <a href={`mailto:${emailAddress}`} aria-label="Email">
+      <a
+        href={`mailto:${emailAddress}`}
+        aria-label="Email"
+        data-goatcounter-click="header: email">
         <FontAwesomeIcon icon="envelope" aria-hidden />
       </a>
     </SocialMedia>
