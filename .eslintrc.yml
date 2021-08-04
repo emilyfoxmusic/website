@@ -36,6 +36,7 @@ rules:
   react/jsx-curly-newline: off
   react/no-unescaped-entities: off
   react/require-default-props: off
+  no-nested-ternary: off
   '@typescript-eslint/indent': off
   no-console:
     - error

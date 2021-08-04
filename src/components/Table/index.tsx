@@ -5,6 +5,7 @@ import { largeBreakpoint } from 'helpers/breakpoints';
 export const Table = styled.table`
   width: 100%;
   table-layout: fixed;
+  border-collapse: collapse;
 `;
 
 const commonCellStyling = css`
@@ -13,16 +14,6 @@ const commonCellStyling = css`
   text-align: left;
 
   border-radius: 8px;
-`;
-
-export const TableHeaderCell = styled.th`
-  ${commonCellStyling}
-  text-decoration: underline;
-  font-weight: bold;
-  padding: 16px 24px;
-
-  background: white;
-  color: black;
 `;
 
 export const TableCell = styled.td<{ $highlight?: boolean }>`
@@ -41,4 +32,15 @@ export const TableCell = styled.td<{ $highlight?: boolean }>`
     css`
       background: purple;
     `}
+`;
+
+export const TableRow = styled.tr<{ $background?: string }>`
+  background: ${({ $background }) => $background ?? 'white'};
+  border-bottom: dotted black 2px;
+  text-align: left;
+  height: 52px;
+`;
+
+export const TableHeaderCell = styled.th<{ $width?: string | undefined }>`
+  ${({ $width }) => $width && `width: ${$width};`}
 `;

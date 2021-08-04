@@ -23,7 +23,7 @@ const Queue: React.FC<RouteComponentProps> = () => {
     dispatch({ type: QUEUE_REQUEST_GET });
   }, [dispatch]);
 
-  const { data } = useTable(queuedSongs, 'priority');
+  const { data } = useTable(queuedSongs, 'priority', 'songId');
 
   const bumpSong = (songId: string): void => {
     dispatch({

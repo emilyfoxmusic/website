@@ -6,21 +6,29 @@ type DataObject = {
 
 type TableData<TData extends DataObject> = TData[];
 
+export type SortInfo<TData> = {
+  currentSort: {
+    key: keyof TData;
+    ascending: boolean;
+  };
+  sortByKey: (key: keyof TData) => void;
+  switchSortDirection: () => void;
+  setSort: (key: keyof TData, ascending: boolean) => void;
+  toggleSort: (key: keyof TData, defaultAscending?: boolean) => void;
+};
+
+export type PaginationInfo = {
+  currentPage: number;
+  lastPage: number;
+  setNextPage: () => void;
+  setPreviousPage: () => void;
+  setPage: (page: number) => void;
+};
+
 type ProcessedTableData<TData> = {
   data: TData[];
-  sort: {
-    sortByKey: (key: keyof TData) => void;
-    switchSortDirection: () => void;
-    setSort: (key: keyof TData, ascending: boolean) => void;
-    toggleSort: (key: keyof TData, defaultAscending?: boolean) => void;
-  };
-  pagination: {
-    currentPage: number;
-    lastPage: number;
-    setNextPage: () => void;
-    setPreviousPage: () => void;
-    setPage: (page: number) => void;
-  };
+  sort: SortInfo<TData>;
+  pagination: PaginationInfo;
 };
 
 const compareFn = <TData extends DataObject>(
@@ -45,13 +53,28 @@ const compareFn = <TData extends DataObject>(
   }
 };
 
+const compareFn2 = <TData extends DataObject>(
+  a: TData,
+  b: TData,
+  sortBy: keyof TData,
+  thenBy: keyof TData
+): number => {
+  const aVal = a[sortBy];
+  const bVal = b[sortBy];
+  if (aVal === bVal) {
+    return compareFn(a, b, thenBy);
+  }
+  return compareFn(a, b, sortBy);
+};
+
 const useTable = <TData extends DataObject>(
   data: TableData<TData>,
-  defaultSortKey: keyof TData,
+  defaultPrimarySortKey: keyof TData,
+  secondarySortKey: keyof TData,
   pageSize?: number
 ): ProcessedTableData<TData> => {
-  const [sortBy, setSortBy] = useState({
-    key: defaultSortKey,
+  const [currentSort, setCurrentSort] = useState({
+    key: defaultPrimarySortKey,
     ascending: true,
   });
 
@@ -72,22 +95,22 @@ const useTable = <TData extends DataObject>(
   };
 
   const sortedData = data.sort((a, b) =>
-    sortBy.ascending
-      ? compareFn(a, b, sortBy.key)
-      : -compareFn(a, b, sortBy.key)
+    currentSort.ascending
+      ? compareFn2(a, b, currentSort.key, secondarySortKey)
+      : -compareFn2(a, b, currentSort.key, secondarySortKey)
   );
 
   const sortByKey = (key: keyof TData): void =>
-    setSortBy(state => ({ ...state, key }));
+    setCurrentSort(state => ({ ...state, key }));
 
   const switchSortDirection = (): void =>
-    setSortBy(state => ({ ...state, ascending: !!state.ascending }));
+    setCurrentSort(state => ({ ...state, ascending: !!state.ascending }));
 
   const setSort = (key: keyof TData, ascending: boolean): void =>
-    setSortBy({ key, ascending });
+    setCurrentSort({ key, ascending });
 
   const toggleSort = (key: keyof TData, defaultAscending?: boolean): void =>
-    setSortBy(state => {
+    setCurrentSort(state => {
       if (state.key === key) {
         return { ...state, ascending: !state.ascending };
       }
@@ -99,6 +122,7 @@ const useTable = <TData extends DataObject>(
       ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
       : sortedData,
     sort: {
+      currentSort,
       sortByKey,
       switchSortDirection,
       setSort,

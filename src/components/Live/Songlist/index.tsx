@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { Table, TableCell, TableHeaderCell } from 'components/Table';
+import Pagination from 'components/Pagination';
+import { Table, TableRow, TableHeaderCell } from 'components/Table';
 import { PageHeading } from 'components/Typography';
 import { formatTimeAgo } from 'helpers/dates';
 import useTable from 'helpers/useTable';
@@ -21,12 +23,15 @@ import {
 } from 'state/songlist/actions';
 import { RootState } from 'state/types';
 
+import SortButton from './SortButton';
 import {
   Label,
   FormHeading,
   FullWidthInput,
   SecretAdminSection,
   SubmitSongButton,
+  TableSection,
+  RequestButton,
 } from './styles';
 
 const Songlist: React.FC<RouteComponentProps> = () => {
@@ -61,11 +66,12 @@ const Songlist: React.FC<RouteComponentProps> = () => {
     };
   });
 
-  const {
-    data,
-    sort: { toggleSort },
-    pagination: { currentPage, lastPage, setNextPage, setPreviousPage },
-  } = useTable(augmentedSongs, 'artist', 10);
+  const { data, sort, pagination } = useTable(
+    augmentedSongs,
+    'artist',
+    'title',
+    10
+  );
 
   const requestSong = (songId: string): void => {
     dispatch({ type: QUEUE_REQUEST_ADD, payload: { songId } });
@@ -79,80 +85,69 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         a stream, feel free to suggest something not on the list and if I know
         it I <i>might</i> give it a shot!
       </p>
-      <Table>
-        <thead>
-          <tr>
-            <TableHeaderCell>
-              Queue position
-              <button
-                type="button"
-                onClick={() => toggleSort('positionInQueue')}>
-                sort
-              </button>
-            </TableHeaderCell>
-            <TableHeaderCell>
-              Title
-              <button type="button" onClick={() => toggleSort('title')}>
-                sort
-              </button>
-            </TableHeaderCell>
-            <TableHeaderCell>
-              Artist
-              <button type="button" onClick={() => toggleSort('artist')}>
-                sort
-              </button>
-            </TableHeaderCell>
-            <TableHeaderCell>
-              Number of plays
-              <button
-                type="button"
-                onClick={() => toggleSort('numberOfPlays', false)}>
-                sort
-              </button>
-            </TableHeaderCell>
-            <TableHeaderCell>
-              Last played
-              <button
-                type="button"
-                onClick={() => toggleSort('lastPlayed', false)}>
-                sort
-              </button>
-            </TableHeaderCell>
-            <TableHeaderCell>Request</TableHeaderCell>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(song => (
-            <tr key={`${song.artist}-${song.title}`}>
-              <TableCell $highlight={song.isInQueue}>
-                {song.isInQueue ? song.positionInQueue : ''}
-              </TableCell>
-              <TableCell $highlight={song.isInQueue}>{song.title}</TableCell>
-              <TableCell $highlight={song.isInQueue}>{song.artist}</TableCell>
-              <TableCell $highlight={song.isInQueue}>
-                {song.numberOfPlays}
-              </TableCell>
-              <TableCell $highlight={song.isInQueue}>
-                {formatTimeAgo(song.lastPlayed)}
-              </TableCell>
-              <TableCell $highlight={song.isInQueue}>
-                {!song.isInQueue && (
-                  <button type="button" onClick={() => requestSong(song.id)}>
-                    Request
-                  </button>
-                )}
-              </TableCell>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      {currentPage}/{lastPage}
-      <button type="button" onClick={setPreviousPage}>
-        Prev page
-      </button>
-      <button type="button" onClick={setNextPage}>
-        Next page
-      </button>
+      <TableSection>
+        <Pagination {...pagination} />
+        <Table>
+          <thead>
+            <TableRow>
+              <TableHeaderCell $width="120px">
+                <span aria-label="Position in queue">#Queue</span>
+                <SortButton sort={sort} sortKey="positionInQueue" />
+              </TableHeaderCell>
+              <TableHeaderCell>
+                Title
+                <SortButton sort={sort} sortKey="title" />
+              </TableHeaderCell>
+              <TableHeaderCell>
+                Artist
+                <SortButton sort={sort} sortKey="artist" />
+              </TableHeaderCell>
+              <TableHeaderCell $width="130px">
+                <span aria-label="Number of plays">#Plays</span>
+                <SortButton
+                  sort={sort}
+                  sortKey="numberOfPlays"
+                  switchDefaultOrder
+                />
+              </TableHeaderCell>
+              <TableHeaderCell $width="180px">
+                Last played
+                <SortButton
+                  sort={sort}
+                  sortKey="lastPlayed"
+                  switchDefaultOrder
+                />
+              </TableHeaderCell>
+              <TableHeaderCell $width="96px">Request</TableHeaderCell>
+            </TableRow>
+          </thead>
+          <tbody>
+            {data.map(song => (
+              <TableRow
+                key={`${song.artist}-${song.title}`}
+                $background={song.isInQueue ? 'lavender' : undefined}>
+                <td>{song.isInQueue ? song.positionInQueue : ''}</td>
+                <td>{song.title}</td>
+                <td>{song.artist}</td>
+                <td>{song.numberOfPlays}</td>
+                <td>{formatTimeAgo(song.lastPlayed)}</td>
+                <td>
+                  {!song.isInQueue && (
+                    <RequestButton
+                      aria-label={`Request ${song.title} by ${song.artist}`}
+                      type="button"
+                      onClick={() => requestSong(song.id)}>
+                      Request
+                    </RequestButton>
+                  )}
+                </td>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+        <Pagination {...pagination} />
+      </TableSection>
+
       <SecretAdminSection>
         <FormHeading>Secret admin section</FormHeading>
         <form onSubmit={submit}>
