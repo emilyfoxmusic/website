@@ -20,7 +20,8 @@ const TextLink: React.FC<TextLinkProps> = ({
     className={className}
     href={href}
     onClick={onClick}
-    target={openInNewTab ? '_blank' : undefined}>
+    target={openInNewTab ? '_blank' : undefined}
+    rel={openInNewTab ? 'noreferrer' : undefined}>
     {children}
     {openInNewTab && (
       <ExternalLinkIcon
