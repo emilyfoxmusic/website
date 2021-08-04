@@ -25,7 +25,7 @@ export const TableHeaderCell = styled.th`
   color: black;
 `;
 
-export const TableCell = styled.td`
+export const TableCell = styled.td<{ $highlight?: boolean }>`
   ${commonCellStyling}
   background: dimgrey;
   color: white;
@@ -35,4 +35,10 @@ export const TableCell = styled.td`
   ${largeBreakpoint`
     padding: 8px 24px;
   `}
+
+  ${({ $highlight }) =>
+    $highlight &&
+    css`
+      background: purple;
+    `}
 `;

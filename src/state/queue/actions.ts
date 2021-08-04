@@ -4,8 +4,10 @@ export const QUEUE_REQUEST_GET = 'QUEUE_REQUEST_GET';
 export const QUEUE_SET = 'QUEUE_SET';
 
 export const QUEUE_REQUEST_PLAYED = 'QUEUE_REQUEST_PLAYED';
+export const QUEUE_PLAYED = 'QUEUE_PLAYED';
+
 export const QUEUE_REQUEST_CANCEL = 'QUEUE_REQUEST_CANCEL';
-export const QUEUE_REMOVE = 'QUEUE_REMOVE';
+export const QUEUE_CANCEL = 'QUEUE_CANCEL';
 
 export const QUEUE_REQUEST_ADD = 'QUEUE_REQUEST_ADD';
 export const QUEUE_ADD = 'QUEUE_ADD';
@@ -29,6 +31,15 @@ export type QueueRequestPlayedAction = {
   };
 };
 
+export type QueueSetPlayedAction = {
+  type: typeof QUEUE_PLAYED;
+  payload: {
+    songId: string;
+    numberOfPlays: number;
+    lastPlayed: string;
+  };
+};
+
 export type QueueRequestCancelAction = {
   type: typeof QUEUE_REQUEST_CANCEL;
   payload: {
@@ -36,11 +47,10 @@ export type QueueRequestCancelAction = {
   };
 };
 
-export type QueueRemoveAction = {
-  type: typeof QUEUE_REMOVE;
+export type QueueCancelAction = {
+  type: typeof QUEUE_CANCEL;
   payload: {
     songId: string;
-    songPlayed: boolean;
   };
 };
 
@@ -76,8 +86,9 @@ export type QueueAction =
   | QueueRequestGetAction
   | QueueSetAction
   | QueueRequestPlayedAction
+  | QueueSetPlayedAction
   | QueueRequestCancelAction
-  | QueueRequestRemoveAction
+  | QueueCancelAction
   | QueueRequestAddAction
   | QueueAddAction
   | QueueRequestBumpAction

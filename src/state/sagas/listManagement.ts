@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import {
   CallEffect,
   call,
@@ -11,12 +10,11 @@ import {
 } from 'redux-saga/effects';
 
 import { webSocket } from 'helpers/webSocketConnection';
+import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
 import {
   ListRequestAddAction,
   LIST_REQUEST_GET,
   LIST_REQUEST_ADD,
-  LIST_ADD,
-  ListAddAction,
 } from 'state/songlist/actions';
 
 const requestGet = (): void => webSocket.send({ action: 'listGet' });
@@ -24,10 +22,8 @@ const requestGet = (): void => webSocket.send({ action: 'listGet' });
 const requestAdd = (action: ListRequestAddAction): void =>
   webSocket.send({ action: 'listAdd', ...action.payload });
 
-const notifyAdd = (action: ListAddAction): unknown =>
-  toast.dark(
-    `${action.payload.title} by ${action.payload.artist} has been added to the songlist`
-  );
+const requestAddToQueue = (action: QueueRequestAddAction): void =>
+  webSocket.send({ ...action.payload, action: 'queueAdd' });
 
 function* listManagement(): Generator<
   TakeEffect | CallEffect | AllEffect<ForkEffect>,
@@ -38,7 +34,7 @@ function* listManagement(): Generator<
   yield call(requestGet);
   yield all([
     takeEvery(LIST_REQUEST_ADD, requestAdd),
-    takeEvery(LIST_ADD, notifyAdd),
+    takeEvery(QUEUE_REQUEST_ADD, requestAddToQueue),
   ]);
 }
 

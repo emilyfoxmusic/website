@@ -1,10 +1,19 @@
 import { useState } from 'react';
 
-type TableData<TData extends Record<string, number | string>> = TData[];
+type DataObject = {
+  [K: string]: boolean | string | number;
+};
+
+type TableData<TData extends DataObject> = TData[];
 
 type ProcessedTableData<TData> = {
   data: TData[];
-  setSortBy: (sortKey: keyof TData) => void;
+  sort: {
+    sortByKey: (key: keyof TData) => void;
+    switchSortDirection: () => void;
+    setSort: (key: keyof TData, ascending: boolean) => void;
+    toggleSort: (key: keyof TData, defaultAscending?: boolean) => void;
+  };
   pagination: {
     currentPage: number;
     lastPage: number;
@@ -14,12 +23,37 @@ type ProcessedTableData<TData> = {
   };
 };
 
-const useTable = <TData extends Record<string, number | string>>(
+const compareFn = <TData extends DataObject>(
+  a: TData,
+  b: TData,
+  sortBy: keyof TData
+): number => {
+  const aVal = a[sortBy];
+  const bVal = b[sortBy];
+  switch (typeof aVal) {
+    case 'number':
+      return aVal - (bVal as number);
+    case 'string':
+      return aVal.localeCompare(bVal as string);
+    case 'boolean':
+      if (aVal === bVal) {
+        return 0;
+      }
+      return aVal ? 1 : -1;
+    default:
+      throw new Error('Sort key of of unsupported type.');
+  }
+};
+
+const useTable = <TData extends DataObject>(
   data: TableData<TData>,
   defaultSortKey: keyof TData,
   pageSize?: number
 ): ProcessedTableData<TData> => {
-  const [sortBy, setSortBy] = useState<keyof TData>(defaultSortKey);
+  const [sortBy, setSortBy] = useState({
+    key: defaultSortKey,
+    ascending: true,
+  });
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const lastPage = pageSize ? Math.ceil(data.length / pageSize) : 1;
@@ -37,19 +71,39 @@ const useTable = <TData extends Record<string, number | string>>(
     setCurrentPage(page);
   };
 
-  const sortedData = data.sort((a, b) => {
-    const aVal = a[sortBy];
-    const bVal = b[sortBy];
-    return typeof aVal === 'number'
-      ? aVal - (bVal as number)
-      : aVal.localeCompare(bVal as string);
-  });
+  const sortedData = data.sort((a, b) =>
+    sortBy.ascending
+      ? compareFn(a, b, sortBy.key)
+      : -compareFn(a, b, sortBy.key)
+  );
+
+  const sortByKey = (key: keyof TData): void =>
+    setSortBy(state => ({ ...state, key }));
+
+  const switchSortDirection = (): void =>
+    setSortBy(state => ({ ...state, ascending: !!state.ascending }));
+
+  const setSort = (key: keyof TData, ascending: boolean): void =>
+    setSortBy({ key, ascending });
+
+  const toggleSort = (key: keyof TData, defaultAscending?: boolean): void =>
+    setSortBy(state => {
+      if (state.key === key) {
+        return { ...state, ascending: !state.ascending };
+      }
+      return { key, ascending: defaultAscending ?? true };
+    });
 
   return {
     data: pageSize
       ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
       : sortedData,
-    setSortBy,
+    sort: {
+      sortByKey,
+      switchSortDirection,
+      setSort,
+      toggleSort,
+    },
     pagination: {
       currentPage,
       lastPage,

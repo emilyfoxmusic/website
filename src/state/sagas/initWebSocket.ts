@@ -15,8 +15,9 @@ import {
   QUEUE_REQUEST_GET,
   QUEUE_ADD,
   QUEUE_BUMP,
-  QUEUE_REMOVE,
   QUEUE_SET,
+  QUEUE_PLAYED,
+  QUEUE_CANCEL,
 } from 'state/queue/actions';
 import { LIST_REQUEST_GET, LIST_ADD, LIST_SET } from 'state/songlist/actions';
 import { RootAction } from 'state/types';
@@ -38,8 +39,10 @@ const createChannel = (socket: WebSocket): TakeableChannel<RootAction> =>
             return emitter({ type: QUEUE_BUMP, payload: data.data });
           case 'queueGet':
             return emitter({ type: QUEUE_SET, payload: data.data });
-          case 'queueRemove':
-            return emitter({ type: QUEUE_REMOVE, payload: data.data });
+          case 'queueCancel':
+            return emitter({ type: QUEUE_CANCEL, payload: data.data });
+          case 'queuePlayed':
+            return emitter({ type: QUEUE_PLAYED, payload: data.data });
           default:
             console.warn('Unknown message received from websocket');
         }

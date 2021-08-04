@@ -2,7 +2,8 @@ import {
   QueueAction,
   QUEUE_ADD,
   QUEUE_BUMP,
-  QUEUE_REMOVE,
+  QUEUE_CANCEL,
+  QUEUE_PLAYED,
   QUEUE_SET,
 } from './actions';
 import { QueueItem } from './types';
@@ -11,7 +12,8 @@ const reducer = (state: QueueItem[] = [], action: QueueAction): QueueItem[] => {
   switch (action.type) {
     case QUEUE_SET:
       return action.payload;
-    case QUEUE_REMOVE:
+    case QUEUE_CANCEL:
+    case QUEUE_PLAYED:
       return state.filter(
         queueItem => queueItem.songId !== action.payload.songId
       );
