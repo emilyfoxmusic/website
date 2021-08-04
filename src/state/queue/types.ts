@@ -3,4 +3,5 @@ export type QueueItem = {
   artist: string;
   title: string;
   priority: string;
+  requestedBy: string;
 };

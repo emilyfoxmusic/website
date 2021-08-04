@@ -22,7 +22,7 @@ const notifyListAdd = (action: ListAddAction): void =>
 
 const notifyQueueAdd = (action: QueueAddAction): void =>
   notifyEvent(
-    `Someone requested ${action.payload.title} by ${action.payload.artist}!`,
+    `${action.payload.requestedBy} requested ${action.payload.title} by ${action.payload.artist}!`,
     () => navigate('/live/queue')
   );
 

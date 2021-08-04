@@ -23,10 +23,10 @@ export const Bump3Button = styled(ActionButton)`
   }
 `;
 
-export const TableSection = styled.div`
-  width: min(90vw, 1400px);
+export const TableBlock = styled.div`
+  width: min(90vw, 1000px);
   position: relative;
-  left: calc((min(90vw, 1400px)) * -0.5 + 50%);
+  left: calc((min(90vw, 1000px)) * -0.5 + 50%);
 `;
 
 export const TableWithBottomMargin = styled(Table)`

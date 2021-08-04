@@ -4,6 +4,22 @@ import Button from 'components/Button';
 import { TableHeaderCell } from 'components/Table';
 import { largeBreakpointOnlyStyle } from 'helpers/breakpoints';
 
+export const MedBreakpointOnlyCell = styled.td`
+  display: none;
+
+  @media (min-width: 600px) {
+    display: table-cell;
+  }
+`;
+
+export const MedBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
+  display: none;
+
+  @media (min-width: 600px) {
+    display: table-cell;
+  }
+`;
+
 export const LargeBreakpointOnlyCell = styled.td`
   ${largeBreakpointOnlyStyle('table-cell')}
 `;

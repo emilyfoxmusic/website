@@ -23,26 +23,10 @@ export const FormHeading = styled.h2`
   `}
 `;
 
-export const MedBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
-  display: none;
-
-  @media (min-width: 600px) {
-    display: table-cell;
-  }
-`;
-
 export const XLargeBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
   display: none;
 
   @media (min-width: 1000px) {
-    display: table-cell;
-  }
-`;
-
-export const MedBreakpointOnlyCell = styled.td`
-  display: none;
-
-  @media (min-width: 600px) {
     display: table-cell;
   }
 `;
@@ -55,7 +39,7 @@ export const XLargeBreakpointOnlyCell = styled.td`
   }
 `;
 
-export const TableSection = styled.div`
+export const TableBlock = styled.div`
   width: min(90vw, 1400px);
   position: relative;
   left: calc((min(90vw, 1400px)) * -0.5 + 50%);

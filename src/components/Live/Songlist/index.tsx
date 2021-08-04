@@ -34,11 +34,9 @@ import {
   Label,
   FormHeading,
   FullWidthInput,
-  MedBreakpointOnlyHeaderCell,
-  MedBreakpointOnlyCell,
   SecretAdminSection,
   SubmitSongButton,
-  TableSection,
+  TableBlock,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
   VisuallyHiddenSortText,
@@ -49,6 +47,8 @@ import {
   ActionButton,
   LargeBreakpointOnlyHeaderCell,
   LargeBreakpointOnlyCell,
+  MedBreakpointOnlyCell,
+  MedBreakpointOnlyHeaderCell,
 } from '../Shared';
 import TitleCell from '../Shared/TitleCell';
 
@@ -145,7 +145,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
           Sign in with twitch to request a song!
         </Button>
       )}
-      <TableSection>
+      <TableBlock>
         <Pagination {...pagination} />
         <VisuallyHiddenSortText aria-live="polite">
           Currently sorting by: {sort.currentSortText}
@@ -222,7 +222,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
           </tbody>
         </Table>
         <Pagination {...pagination} />
-      </TableSection>
+      </TableBlock>
 
       {user.isAdmin && (
         <SecretAdminSection>

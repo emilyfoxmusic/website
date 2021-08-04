@@ -20,6 +20,7 @@ import {
   Bump1Button,
   Bump2Button,
   Bump3Button,
+  TableBlock,
   TableWithBottomMargin,
 } from './styles';
 
@@ -27,6 +28,8 @@ import {
   LargeBreakpointOnlyHeaderCell,
   LargeBreakpointOnlyCell,
   ActionButton,
+  MedBreakpointOnlyHeaderCell,
+  MedBreakpointOnlyCell,
 } from '../Shared';
 import TitleCell from '../Shared/TitleCell';
 
@@ -68,71 +71,79 @@ const Queue: React.FC<RouteComponentProps> = () => {
     <>
       <PageHeading>Current queue</PageHeading>
       {queuedSongs.length ? (
-        <TableWithBottomMargin>
-          <thead>
-            <TableRow>
-              <TableHeaderCell
-                $width="30px"
-                $widthLarge="50px"
-                aria-label="Position in queue">
-                #
-              </TableHeaderCell>
-              <TableHeaderCell>Title</TableHeaderCell>
-              <TableHeaderCell>Artist</TableHeaderCell>
-              {user.isAdmin && (
-                <LargeBreakpointOnlyHeaderCell>
-                  Actions
-                </LargeBreakpointOnlyHeaderCell>
-              )}
-            </TableRow>
-          </thead>
-          <tbody>
-            {data.map((song, index) => (
-              <TableRow key={`${song.artist}-${song.title}`}>
-                <td>{index + 1}</td>
-                <TitleCell title={song.title} artist={song.artist} />
-                <td>{song.artist}</td>
+        <TableBlock>
+          <TableWithBottomMargin>
+            <thead>
+              <TableRow>
+                <TableHeaderCell
+                  $width="30px"
+                  $widthLarge="50px"
+                  aria-label="Position in queue">
+                  #
+                </TableHeaderCell>
+                <TableHeaderCell>Title</TableHeaderCell>
+                <TableHeaderCell>Artist</TableHeaderCell>
+                <MedBreakpointOnlyHeaderCell>
+                  Requested by
+                </MedBreakpointOnlyHeaderCell>
                 {user.isAdmin && (
-                  <LargeBreakpointOnlyCell>
-                    {index !== 0 && (
-                      <Bump1Button
-                        onClick={() => bumpSong(song.songId, 1)}
-                        aria-label={`Bump ${song.title} to position 1`}>
-                        #1
-                      </Bump1Button>
-                    )}
-                    {index > 1 && (
-                      <Bump2Button
-                        onClick={() => bumpSong(song.songId, 2)}
-                        aria-label={`Bump ${song.title} to position 2`}>
-                        #2
-                      </Bump2Button>
-                    )}
-                    {index > 2 && (
-                      <Bump3Button
-                        onClick={() => bumpSong(song.songId, 3)}
-                        aria-label={`Bump ${song.title} to position 3`}>
-                        #3
-                      </Bump3Button>
-                    )}
-                    {index === 0 && (
-                      <ActionButton
-                        onClick={() => markSongAsPlayed(song.songId)}
-                        aria-label={`Mark ${song.title} as played`}>
-                        Played
-                      </ActionButton>
-                    )}
-                    <ActionButton
-                      onClick={() => removeSong(song)}
-                      aria-label={`Remove ${song.title} from the queue`}>
-                      Remove
-                    </ActionButton>
-                  </LargeBreakpointOnlyCell>
+                  <LargeBreakpointOnlyHeaderCell>
+                    Actions
+                  </LargeBreakpointOnlyHeaderCell>
                 )}
               </TableRow>
-            ))}
-          </tbody>
-        </TableWithBottomMargin>
+            </thead>
+            <tbody>
+              {data.map((song, index) => (
+                <TableRow key={`${song.artist}-${song.title}`}>
+                  <td>{index + 1}</td>
+                  <TitleCell title={song.title} artist={song.artist} />
+                  <td>{song.artist}</td>
+                  <MedBreakpointOnlyCell>
+                    {song.requestedBy}
+                  </MedBreakpointOnlyCell>
+                  {user.isAdmin && (
+                    <LargeBreakpointOnlyCell>
+                      {index !== 0 && (
+                        <Bump1Button
+                          onClick={() => bumpSong(song.songId, 1)}
+                          aria-label={`Bump ${song.title} to position 1`}>
+                          #1
+                        </Bump1Button>
+                      )}
+                      {index > 1 && (
+                        <Bump2Button
+                          onClick={() => bumpSong(song.songId, 2)}
+                          aria-label={`Bump ${song.title} to position 2`}>
+                          #2
+                        </Bump2Button>
+                      )}
+                      {index > 2 && (
+                        <Bump3Button
+                          onClick={() => bumpSong(song.songId, 3)}
+                          aria-label={`Bump ${song.title} to position 3`}>
+                          #3
+                        </Bump3Button>
+                      )}
+                      {index === 0 && (
+                        <ActionButton
+                          onClick={() => markSongAsPlayed(song.songId)}
+                          aria-label={`Mark ${song.title} as played`}>
+                          Played
+                        </ActionButton>
+                      )}
+                      <ActionButton
+                        onClick={() => removeSong(song)}
+                        aria-label={`Remove ${song.title} from the queue`}>
+                        Remove
+                      </ActionButton>
+                    </LargeBreakpointOnlyCell>
+                  )}
+                </TableRow>
+              ))}
+            </tbody>
+          </TableWithBottomMargin>
+        </TableBlock>
       ) : (
         <p>The queue is currently empty.</p>
       )}

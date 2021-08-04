@@ -6,10 +6,12 @@ import { AuthenticatedPrincipal, Principal } from 'state/user/types';
 
 type AuthenticatedClientFactory = (user: Principal) => AuthenticatedClient;
 
+type QueueItemUpdate = Omit<QueueItem, 'requestedBy'>;
+
 export type AuthenticatedClient = {
   listAdd: (title: string, artist: string) => Promise<ListItem>;
-  queueAdd: (songId: string) => Promise<QueueItem>;
-  queueBump: (songId: string, toPosition: number) => Promise<QueueItem>;
+  queueAdd: (songId: string) => Promise<QueueItemUpdate>;
+  queueBump: (songId: string, toPosition: number) => Promise<QueueItemUpdate>;
   queueCancel: (songId: string) => Promise<void>;
   queuePlayed: (songId: string) => Promise<void>;
 };
