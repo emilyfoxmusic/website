@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -15,18 +15,13 @@ import { MobileOnly, LargeBreakpointOnly } from 'helpers/breakpoints';
 import { formatTimeAgo } from 'helpers/dates';
 import { count } from 'helpers/goatcounter';
 import useTable, { SortConfig } from 'helpers/useTable';
-import { QueueAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
-import { ListAction, LIST_REQUEST_ADD } from 'state/songlist/actions';
+import { QueueRequestAddAction, QUEUE_REQUEST_ADD } from 'state/queue/actions';
 import { RootState } from 'state/types';
 import { lightRed } from 'styles/colors';
 
+import AddSongForm from './AddSongForm';
 import SortButton from './SortButton';
 import {
-  Label,
-  FormHeading,
-  FullWidthInput,
-  SecretAdminSection,
-  SubmitSongButton,
   TableBlock,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
@@ -48,17 +43,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
   const { songlist: songs, queue, user, requestStatus } = useSelector(
     (state: RootState) => state
   );
-  const dispatch = useDispatch<Dispatch<ListAction | QueueAction>>();
-
-  const [title, setTitle] = useState<string>('');
-  const [artist, setArtist] = useState<string>('');
-
-  const submit: React.FormEventHandler<HTMLFormElement> = e => {
-    e.preventDefault();
-    dispatch({ type: LIST_REQUEST_ADD, payload: { title, artist } });
-    setTitle('');
-    setArtist('');
-  };
+  const dispatch = useDispatch<Dispatch<QueueRequestAddAction>>();
 
   const augmentedSongs = songs.map(song => {
     const queueIndex = queue.findIndex(s => s.songId === song.id);
@@ -213,30 +198,7 @@ const Songlist: React.FC<RouteComponentProps> = () => {
         <Pagination {...pagination} />
       </TableBlock>
 
-      {user.isAdmin && (
-        <SecretAdminSection>
-          <FormHeading>Secret admin section</FormHeading>
-          <form onSubmit={submit}>
-            <Label htmlFor="title">Title</Label>
-            <FullWidthInput
-              id="title"
-              type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-
-            <Label htmlFor="artist">Artist</Label>
-            <FullWidthInput
-              id="artist"
-              type="text"
-              value={artist}
-              onChange={e => setArtist(e.target.value)}
-            />
-
-            <SubmitSongButton type="submit">Add song</SubmitSongButton>
-          </form>
-        </SecretAdminSection>
-      )}
+      {user.isAdmin && <AddSongForm />}
     </>
   );
 };
