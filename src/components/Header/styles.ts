@@ -1,3 +1,4 @@
+import { Link } from 'gatsby';
 import styled, { css } from 'styled-components';
 
 import { largeBreakpoint } from 'helpers/breakpoints';
@@ -15,24 +16,16 @@ const HalfOfHeaderCss = css`
   height: 64px;
 
   ${largeBreakpoint`
-    font-size: 2.5rem;
-    line-height: 2.5rem;
+    font-size: 2.25rem;
     height: 80px;
   `}
 `;
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled(Link)`
   display: flex;
   text-decoration: none;
 
   margin-top: 16px;
-
-  margin-bottom: 64px;
-  position: relative;
-
-  ${largeBreakpoint`
-    margin-bottom: 0;
-  `}
 `;
 
 export const LeftDiv = styled.div`
@@ -66,9 +59,6 @@ export const RightDiv = styled.div`
 `;
 
 export const SocialMedia = styled.nav`
-  position: absolute;
-  left: 0;
-  top: calc(100% + 10px);
   width: 100%;
 
   display: flex;
@@ -77,10 +67,11 @@ export const SocialMedia = styled.nav`
   & a {
     display: inline-block;
     line-height: 0;
+    margin: 8px 6px;
 
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
+    ${largeBreakpoint`
+      margin: 16px;
+    `}
 
     &:hover,
     &:focus {
@@ -89,26 +80,9 @@ export const SocialMedia = styled.nav`
   }
 
   & svg {
+    height: 32px !important;
+    width: 32px !important;
     margin: 8px;
     color: black;
-  }
-
-  ${largeBreakpoint`
-    position: unset;
-    margin-right: 5%;
-    width: auto;
-    display: block;
-
-    & a {
-      &:hover,
-      &:focus {
-        outline-color: white;
-      }
-    }
-
-    & svg {
-      color: white;
-    }
-  `}  
   }
 `;

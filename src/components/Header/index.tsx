@@ -5,28 +5,24 @@ import { HeaderContainer, LeftDiv, RightDiv, SocialMedia } from './styles';
 
 const Header: React.FC = () => (
   <header>
-    <HeaderContainer aria-label="Emily Fox Music">
+    <HeaderContainer to="/" aria-label="Emily Fox Music">
       <LeftDiv aria-hidden>Emily Fox</LeftDiv>
-      <RightDiv>
-        <span aria-hidden>| Music</span>
-        <SocialMedia aria-label="Social media links">
-          <a href="https://www.youtube.com/foxxemusic" aria-label="YouTube">
-            <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
-          </a>
-          <a
-            href="https://www.facebook.com/emilyfoxmusic"
-            aria-label="Facebook">
-            <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
-          </a>
-          <a href="https://emilyfoxmusic.bandcamp.com" aria-label="Bandcamp">
-            <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
-          </a>
-          <a href="mailto:emily@emilyfoxmusic.co.uk" aria-label="Email">
-            <FontAwesomeIcon icon="envelope" aria-hidden />
-          </a>
-        </SocialMedia>
-      </RightDiv>
+      <RightDiv aria-hidden>| Music</RightDiv>
     </HeaderContainer>
+    <SocialMedia aria-label="Social media links">
+      <a href="https://www.youtube.com/foxxemusic" aria-label="YouTube">
+        <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
+      </a>
+      <a href="https://www.facebook.com/emilyfoxmusic" aria-label="Facebook">
+        <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
+      </a>
+      <a href="https://emilyfoxmusic.bandcamp.com" aria-label="Bandcamp">
+        <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
+      </a>
+      <a href="mailto:emily@emilyfoxmusic.co.uk" aria-label="Email">
+        <FontAwesomeIcon icon="envelope" aria-hidden />
+      </a>
+    </SocialMedia>
   </header>
 );
 
