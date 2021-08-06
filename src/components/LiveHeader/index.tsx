@@ -30,8 +30,10 @@ const LiveHeader: React.FC = () => {
     window.addEventListener('resize', adjustBodyPaddingForUserBanner);
     adjustBodyPaddingForUserBanner();
 
-    return () =>
+    return () => {
       window.removeEventListener('resize', adjustBodyPaddingForUserBanner);
+      document.body.style.paddingTop = '0px';
+    };
   }, []);
 
   return (
