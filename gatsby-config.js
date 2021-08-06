@@ -18,7 +18,7 @@ checkEnv('GATSBY_TWITCH_CLIENT_ID');
 checkEnv('GATSBY_SITE_URL');
 checkEnv('GATSBY_API_URL');
 checkEnv('GATSBY_WEBSOCKET_URL');
-checkEnv('TWITCH_CHANNEL');
+checkEnv('GATSBY_TWITCH_CHANNEL');
 
 /* eslint-disable @typescript-eslint/camelcase */
 module.exports = {
