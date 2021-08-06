@@ -5,6 +5,7 @@ import { Arrow, Button } from './styles';
 type ButtonLinkProps = {
   to: string;
   className?: string;
+  back?: boolean;
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
@@ -12,6 +13,7 @@ const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
   to,
   className,
   onClick,
+  back,
   children,
 }) => (
   <Button
@@ -19,8 +21,9 @@ const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
     activeClassName="current-page"
     className={className}
     onClick={onClick}>
+    {back && <Arrow $back />}
     {children}
-    <Arrow />
+    {!back && <Arrow />}
   </Button>
 );
 

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 import TextLink from 'components/TextLink';
-import { count } from 'helpers/goatcounter';
+import { trackAction, trackExternalLinkClick } from 'helpers/goatcounter';
 
 import {
   InnerContainer,
@@ -20,11 +20,7 @@ const PrivacyBanner: React.FC = () => {
       if (typeof window !== 'undefined') {
         localStorage.setItem(key, 'true');
       }
-      count({
-        path: 'privacy-close-banner',
-        title: 'Close privacy banner',
-        event: true,
-      });
+      trackAction('Close privacy banner');
       return true;
     },
     typeof window !== 'undefined' ? !!localStorage.getItem(key) : true
@@ -43,13 +39,7 @@ const PrivacyBanner: React.FC = () => {
             <TextLink
               openInNewTab
               href="https://www.goatcounter.com/"
-              onClick={(): void =>
-                count({
-                  path: 'privacy-goatcounter',
-                  title: 'Goatcounter',
-                  event: true,
-                })
-              }>
+              onClick={(): void => trackExternalLinkClick('Goatcounter')}>
               GoatCounter
             </TextLink>{' '}
             to <strong>anonymously</strong> track visits to this site in order
@@ -59,11 +49,7 @@ const PrivacyBanner: React.FC = () => {
               openInNewTab
               href="https://www.goatcounter.com/privacy"
               onClick={(): void =>
-                count({
-                  path: 'privacy-goatcounter-policy',
-                  title: 'Goatcounter PP',
-                  event: true,
-                })
+                trackExternalLinkClick('Goatcounter privacy policy')
               }>
               GoatCounter privacy policy
             </TextLink>

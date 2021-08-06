@@ -35,6 +35,16 @@ rules:
   react/jsx-closing-bracket-location: off
   react/jsx-curly-newline: off
   react/no-unescaped-entities: off
+  react/require-default-props: off
+  no-nested-ternary: 0
+  '@typescript-eslint/indent': off
+  no-console:
+    - error
+    - allow:
+      - debug
+      - info
+      - warn
+      - error
   react/prop-types:
     - 0
   import/order:
@@ -48,12 +58,15 @@ rules:
         - # By default it only detects internal files that start with 'src', which ours don't. Note: this _should_
           # be possible to do using the import/internal-regex setting, but I have not been able to get that working...
           # See https://github.com/benmosher/eslint-plugin-import/blob/master/README.md#importinternal-regex
-          pattern: "@(components|pages|fonts|styles|images|helpers|utils)/**"
+          pattern: "@(components|pages|fonts|styles|images|helpers|utils|state)/**"
           group: internal
           position: after
       newlines-between: always
       alphabetize:
         order: asc
+  '@typescript-eslint/explicit-function-return-type':
+    - error
+    - allowExpressions: true
 settings:
   react:
     version: detect

@@ -4,7 +4,7 @@ import React from 'react';
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
 import PrivacyBanner from 'components/PrivacyBanner';
-import { count } from 'helpers/goatcounter';
+import { trackInternalNav } from 'helpers/goatcounter';
 
 import {
   PageContainer,
@@ -15,9 +15,14 @@ import {
 
 type LayoutProps = {
   fullHeightNav?: boolean;
+  liveLayout?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
+const Layout: React.FC<LayoutProps> = ({
+  fullHeightNav,
+  liveLayout,
+  children,
+}) => {
   const { portrait } = useStaticQuery(
     graphql`
       query {
@@ -34,41 +39,57 @@ const Layout: React.FC<LayoutProps> = ({ fullHeightNav, children }) => {
 
   const imageData = portrait.childImageSharp.fluid;
 
-  const trackNavClick = (path: string): void => {
-    count({ path: `internal-nav:${path}`, title: path, event: true });
-  };
+  const navButtons = liveLayout ? (
+    <>
+      <ButtonLink back to="/" onClick={(): void => trackInternalNav('Back')}>
+        Back
+      </ButtonLink>
+      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+        Watch
+      </ButtonLink>
+      <ButtonLink
+        to="/live/songlist/"
+        onClick={(): void => trackInternalNav('Songlist')}>
+        Song list
+      </ButtonLink>
+      <ButtonLink
+        to="/live/queue/"
+        onClick={(): void => trackInternalNav('Queue')}>
+        Current queue
+      </ButtonLink>
+    </>
+  ) : (
+    <>
+      <ButtonLink to="/music/" onClick={(): void => trackInternalNav('Music')}>
+        music
+      </ButtonLink>
+      <ButtonLink to="/bio/" onClick={(): void => trackInternalNav('Bio')}>
+        bio
+      </ButtonLink>
+      <ButtonLink
+        to="/contact/"
+        onClick={(): void => trackInternalNav('Contact')}>
+        contact
+      </ButtonLink>
+      <ButtonLink to="/tech/" onClick={(): void => trackInternalNav('Tech')}>
+        tech
+      </ButtonLink>
+      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+        live
+      </ButtonLink>
+    </>
+  );
 
   return (
     <>
-      <Header />
+      <Header liveLayout={liveLayout} />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>
           <PortraitBackground
             fluid={imageData}
             isFullHeight={fullHeightNav ?? false}>
             <MainContentContainer>
-              <ButtonContainer>
-                <ButtonLink
-                  to="/music/"
-                  onClick={(): void => trackNavClick('music')}>
-                  music
-                </ButtonLink>
-                <ButtonLink
-                  to="/bio/"
-                  onClick={(): void => trackNavClick('bio')}>
-                  bio
-                </ButtonLink>
-                <ButtonLink
-                  to="/contact/"
-                  onClick={(): void => trackNavClick('contact')}>
-                  contact
-                </ButtonLink>
-                <ButtonLink
-                  to="/tech/"
-                  onClick={(): void => trackNavClick('tech')}>
-                  tech
-                </ButtonLink>
-              </ButtonContainer>
+              <ButtonContainer>{navButtons}</ButtonContainer>
             </MainContentContainer>
           </PortraitBackground>
           {children}

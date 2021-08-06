@@ -3,11 +3,14 @@ import {
   faYoutube,
   faFacebook,
   faBandcamp,
+  faTwitch,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
   faTimesCircle,
   faExternalLinkAlt,
+  faCircle,
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -15,6 +18,9 @@ library.add(
   faYoutube,
   faFacebook,
   faBandcamp,
+  faTwitch,
   faTimesCircle,
-  faExternalLinkAlt
+  faExternalLinkAlt,
+  faCircle,
+  faExclamationCircle
 );

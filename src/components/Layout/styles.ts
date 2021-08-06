@@ -11,12 +11,8 @@ export const PageContainer = styled.main`
 
   ${largeBreakpoint`
     margin: auto;
-    max-width: 630px;
-  `}
-
-  @media (min-width: 900px) {
     max-width: 800px;
-  }
+  `}
 
   font-family: ${fontFamily};
   font-size: 1.3rem;
@@ -34,11 +30,18 @@ export const PortraitBackground = styled(BackgroundImage)<{
 `;
 
 export const ButtonContainer = styled.nav`
-  flex: 0 1 50%;
+  flex: 0 1 100%;
+
+  @media (min-width: 450px) {
+    flex: 0 1 50%;
+  }
 
   ${largeBreakpoint`
     display: flex;
     justify-content: space-evenly;
+
+    max-width: 1500px;
+    margin: auto;
   `}
 `;
 

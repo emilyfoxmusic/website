@@ -67,7 +67,11 @@ export const SocialMedia = styled.nav`
   & a {
     display: inline-block;
     line-height: 0;
-    margin: 8px 6px;
+    margin: 8px 2px;
+
+    @media (min-width: 320px) {
+      margin: 8px 4px;
+    }
 
     ${largeBreakpoint`
       margin: 16px;
@@ -82,7 +86,11 @@ export const SocialMedia = styled.nav`
   & svg {
     height: 32px !important;
     width: 32px !important;
-    margin: 8px;
     color: black;
+    margin: 6px;
+
+    @media (min-width: 320px) {
+      margin: 8px;
+    }
   }
 `;

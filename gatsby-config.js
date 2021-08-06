@@ -1,3 +1,25 @@
+// Load the environment variables, per
+// https://www.gatsbyjs.org/docs/environment-variables/#server-side-nodejs
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV || 'production'}`,
+});
+
+function checkEnv(envName) {
+  if (
+    typeof process.env[envName] === 'undefined' ||
+    process.env[envName] === ''
+  ) {
+    throw new Error(`Missing required environment variables: ${envName}`);
+  }
+}
+
+checkEnv('GATSBY_GOATCOUNTER_URL');
+checkEnv('GATSBY_TWITCH_CLIENT_ID');
+checkEnv('GATSBY_SITE_URL');
+checkEnv('GATSBY_API_URL');
+checkEnv('GATSBY_WEBSOCKET_URL');
+checkEnv('TWITCH_CHANNEL');
+
 /* eslint-disable @typescript-eslint/camelcase */
 module.exports = {
   siteMetadata: {
@@ -51,17 +73,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-styled-components`,
     },
-    {
-      resolve: `gatsby-plugin-sitemap`,
-      options: {
-        serialize: ({ site, allSitePage }) =>
-          allSitePage.edges.map(edge => ({
-            url: site.siteMetadata.siteUrl + edge.node.path,
-            changefreq: `daily`,
-            priority: ['/', '/music/'].includes(edge.node.path) ? 1 : 0.7,
-          })),
-      },
-    },
     `gatsby-plugin-fontawesome-css`,
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/live/*`] },
+    },
   ],
 };
