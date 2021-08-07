@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
@@ -25,6 +25,7 @@ import { lightRed } from 'styles/colors';
 import AddSongForm from './AddSongForm';
 import SortButton from './SortButton';
 import {
+  UnderConstructionBanner,
   TableBlock,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
@@ -117,6 +118,11 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
         a stream, feel free to suggest something not on the list and if I know
         it I <i>might</i> give it a shot!
       </p>
+      <UnderConstructionBanner>
+        <FontAwesomeIcon icon="tools" />
+        Please note: we are just starting out so this songlist is under
+        construction.
+      </UnderConstructionBanner>
       {!user.isAuthenticated && (
         <TwitchLoginButton
           onClick={() => {

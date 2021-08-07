@@ -7,3 +7,4 @@ export const silver = 'silver';
 export const bronze = '#aa6b39';
 
 export const green = '#7FFF00';
+export const yellow = '#ffc107';

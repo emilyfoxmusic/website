@@ -4,6 +4,23 @@ import styled from 'styled-components';
 import Button from 'components/Button';
 import { TableHeaderCell } from 'components/Table';
 import { largeBreakpoint } from 'helpers/breakpoints';
+import { yellow } from 'styles/colors';
+
+export const UnderConstructionBanner = styled.p`
+  background: ${yellow};
+  border-radius: 16px;
+  border: black solid 2px;
+
+  padding: 16px;
+
+  ${largeBreakpoint`
+    padding: 16px 24px;
+  `}
+
+  & svg {
+    margin-right: 16px;
+  }
+`;
 
 export const XLargeBreakpointOnlyHeaderCell = styled(TableHeaderCell)`
   display: none;

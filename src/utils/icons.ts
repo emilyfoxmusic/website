@@ -11,6 +11,7 @@ import {
   faExternalLinkAlt,
   faCircle,
   faExclamationCircle,
+  faTools,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -22,5 +23,6 @@ library.add(
   faTimesCircle,
   faExternalLinkAlt,
   faCircle,
-  faExclamationCircle
+  faExclamationCircle,
+  faTools
 );

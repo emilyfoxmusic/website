@@ -33,4 +33,5 @@ export const ActionButton = styled(Button).attrs(() => ({
 }))`
   padding: 8px 4px 4px 4px;
   margin: 1px 4px 1px 0;
+  text-align: left;
 `;
