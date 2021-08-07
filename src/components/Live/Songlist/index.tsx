@@ -120,7 +120,7 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
       </p>
       <UnderConstructionBanner>
         <FontAwesomeIcon icon="tools" />
-        Please note: we are just starting out so this songlist is under
+        Please note: we are just starting out so this list is under
         construction.
       </UnderConstructionBanner>
       {!user.isAuthenticated && (
