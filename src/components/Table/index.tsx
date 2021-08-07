@@ -21,9 +21,9 @@ export const TableRow = styled.tr<{ $background?: string }>`
   text-align: left;
   height: 52px;
 
-  & td,
-  & th {
-    padding: 8px 8px;
+  & td:not(:last-child),
+  & th:not(:last-child) {
+    padding: 0 16px 0 0;
   }
 `;
 
