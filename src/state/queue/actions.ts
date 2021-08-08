@@ -84,7 +84,7 @@ export type QueueBumpAction = {
     songId: string;
     title: string;
     artist: string;
-    priority: string;
+    priority: number;
     position: number;
   };
 };
