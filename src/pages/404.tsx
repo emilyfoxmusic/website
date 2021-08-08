@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { RouteComponentProps } from '@reach/router';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -21,7 +23,7 @@ const CenteredParagraph = styled.p`
   text-align: center;
 `;
 
-const NotFoundPage: React.FC = () => (
+const NotFoundPage: React.FC<RouteComponentProps> = () => (
   <Layout>
     <SEO title="Page not found" />
     <PageHeading>NOT FOUND</PageHeading>

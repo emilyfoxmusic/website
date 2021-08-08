@@ -16,6 +16,8 @@ import { RootAction, RootState } from 'state/types';
 import { AUTHENTICATE_REFRESH, LOAD_AUTHENTICATION } from 'state/user/actions';
 import { WS_CONNECT, WS_DISCONNECT } from 'state/websocket/actions';
 
+import NotFoundPage from './404';
+
 const Live: React.FC<PageProps> = ({ location }) => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<Dispatch<RootAction>>();
@@ -80,6 +82,7 @@ const Live: React.FC<PageProps> = ({ location }) => {
         <Songlist path="/songlist" />
         <TwitchEmbed path="/" />
         <Overlay path="/overlay" />
+        <NotFoundPage default />
       </Router>
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
       <iframe
