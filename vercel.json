@@ -1,0 +1,4 @@
+{
+    "trailingSlash": true,
+    "rewrites": [{ "source": "/live/(.*)", "destination": "/live/" }]
+}
