@@ -18,6 +18,7 @@ export const UnderConstructionBanner = styled.p`
   `}
 
   & svg {
+    margin-left: 2px;
     margin-right: 16px;
   }
 `;
@@ -79,16 +80,13 @@ export const TwitchIcon = styled(FontAwesomeIcon).attrs({
   'aria-hidden': true,
 })`
   margin-right: 16px;
-
-  ${largeBreakpoint`
-    margin-right: 24px;
-  `}
 `;
 
 export const TwitchLoginButton = styled(Button).attrs({
   type: 'button',
 })`
   margin-top: 0;
+  text-align: left;
 
   ${largeBreakpoint`
     margin-bottom: 24px;
