@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ButtonLink from 'components/ButtonLink';
-import Layout from 'components/Layout';
+import { StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
 import { largeBreakpoint } from 'helpers/breakpoints';
@@ -45,7 +45,7 @@ const MusicButton = styled(ButtonLink)`
 `;
 
 const IndexPage: React.FC<PageProps> = ({ location }) => (
-  <Layout fullHeightNav>
+  <StandardLayout fullHeightNav>
     <SEO
       description="The home of Emily Fox Music: new album 'Where Feelings Grow' coming soon!"
       location={location}
@@ -60,7 +60,7 @@ const IndexPage: React.FC<PageProps> = ({ location }) => (
     <MusicButton to="/music/" onClick={() => trackCta('Album')}>
       Listen
     </MusicButton>
-  </Layout>
+  </StandardLayout>
 );
 
 export default IndexPage;

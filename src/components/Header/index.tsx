@@ -1,19 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
-import LiveHeader from 'components/LiveHeader';
 import { trackInternalNav, trackSocialsHeaderClick } from 'helpers/goatcounter';
 import { youtube, bandcamp, facebook, emailAddress, twitch } from 'utils/links';
 
 import { HeaderContainer, LeftDiv, RightDiv, SocialMedia } from './styles';
 
-type HeaderProps = {
-  liveLayout?: boolean;
-};
-
-const Header: React.FC<HeaderProps> = ({ liveLayout }) => (
+const Header: React.FC = () => (
   <header>
-    {liveLayout && <LiveHeader />}
     <HeaderContainer
       to="/"
       aria-label="Emily Fox Music"

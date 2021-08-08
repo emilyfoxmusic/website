@@ -3,6 +3,7 @@ import React from 'react';
 
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
+import LiveHeader from 'components/LiveHeader';
 import PrivacyBanner from 'components/PrivacyBanner';
 import { trackInternalNav } from 'helpers/goatcounter';
 
@@ -15,12 +16,12 @@ import {
 
 type LayoutProps = {
   fullHeightNav?: boolean;
-  liveLayout?: boolean;
+  navButtons?: JSX.Element;
 };
 
 const Layout: React.FC<LayoutProps> = ({
   fullHeightNav,
-  liveLayout,
+  navButtons,
   children,
 }) => {
   const { portrait } = useStaticQuery(
@@ -39,50 +40,9 @@ const Layout: React.FC<LayoutProps> = ({
 
   const imageData = portrait.childImageSharp.fluid;
 
-  const navButtons = liveLayout ? (
-    <>
-      <ButtonLink back to="/" onClick={(): void => trackInternalNav('Back')}>
-        Back
-      </ButtonLink>
-      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
-        Watch
-      </ButtonLink>
-      <ButtonLink
-        to="/live/songlist/"
-        onClick={(): void => trackInternalNav('Songlist')}>
-        Song list
-      </ButtonLink>
-      <ButtonLink
-        to="/live/queue/"
-        onClick={(): void => trackInternalNav('Queue')}>
-        Current queue
-      </ButtonLink>
-    </>
-  ) : (
-    <>
-      <ButtonLink to="/music/" onClick={(): void => trackInternalNav('Music')}>
-        music
-      </ButtonLink>
-      <ButtonLink to="/bio/" onClick={(): void => trackInternalNav('Bio')}>
-        bio
-      </ButtonLink>
-      <ButtonLink
-        to="/contact/"
-        onClick={(): void => trackInternalNav('Contact')}>
-        contact
-      </ButtonLink>
-      <ButtonLink to="/tech/" onClick={(): void => trackInternalNav('Tech')}>
-        tech
-      </ButtonLink>
-      <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
-        live
-      </ButtonLink>
-    </>
-  );
-
   return (
     <>
-      <Header liveLayout={liveLayout} />
+      <Header />
       <div style={{ overflow: 'hidden' }}>
         <PageContainer>
           <PortraitBackground
@@ -100,4 +60,65 @@ const Layout: React.FC<LayoutProps> = ({
   );
 };
 
-export default Layout;
+const standardNavButtons = (
+  <>
+    <ButtonLink to="/music/" onClick={(): void => trackInternalNav('Music')}>
+      music
+    </ButtonLink>
+    <ButtonLink to="/bio/" onClick={(): void => trackInternalNav('Bio')}>
+      bio
+    </ButtonLink>
+    <ButtonLink
+      to="/contact/"
+      onClick={(): void => trackInternalNav('Contact')}>
+      contact
+    </ButtonLink>
+    <ButtonLink to="/tech/" onClick={(): void => trackInternalNav('Tech')}>
+      tech
+    </ButtonLink>
+    <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+      live
+    </ButtonLink>
+  </>
+);
+
+type StandardLayoutProps = {
+  fullHeightNav?: boolean;
+};
+
+export const StandardLayout: React.FC<StandardLayoutProps> = ({
+  fullHeightNav,
+  children,
+}) => (
+  <Layout fullHeightNav={fullHeightNav} navButtons={standardNavButtons}>
+    {children}
+  </Layout>
+);
+
+const liveNavButtons = (
+  <>
+    <ButtonLink back to="/" onClick={(): void => trackInternalNav('Back')}>
+      Back
+    </ButtonLink>
+    <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+      Watch
+    </ButtonLink>
+    <ButtonLink
+      to="/live/songlist/"
+      onClick={(): void => trackInternalNav('Songlist')}>
+      Song list
+    </ButtonLink>
+    <ButtonLink
+      to="/live/queue/"
+      onClick={(): void => trackInternalNav('Queue')}>
+      Current queue
+    </ButtonLink>
+  </>
+);
+
+export const LiveLayout: React.FC = ({ children }) => (
+  <>
+    <LiveHeader />
+    <Layout navButtons={liveNavButtons}>{children}</Layout>
+  </>
+);

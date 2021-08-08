@@ -3,7 +3,7 @@ import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
-import Layout from 'components/Layout';
+import { StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
@@ -25,7 +25,7 @@ const LinkWrapper = styled.div`
 `;
 
 const Contact: React.FC<PageProps> = ({ location }) => (
-  <Layout>
+  <StandardLayout>
     <SEO
       title="Contact"
       description="Contact details and social media links for Emily Fox."
@@ -58,7 +58,7 @@ const Contact: React.FC<PageProps> = ({ location }) => (
         </TextLink>
       </LinkWrapper>
     </MaxWidthContainer>
-  </Layout>
+  </StandardLayout>
 );
 
 export default Contact;

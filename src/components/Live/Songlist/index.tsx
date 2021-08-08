@@ -7,7 +7,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Layout from 'components/Layout';
+import { LiveLayout } from 'components/Layout';
 import Pagination from 'components/Pagination';
 import ScreenreaderPagination from 'components/Pagination/ScreenreaderPagination';
 import SEO from 'components/SEO';
@@ -106,7 +106,7 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
   const resetPagination = (): void => pagination.setPage(1);
 
   return (
-    <Layout liveLayout>
+    <LiveLayout>
       <SEO
         title="Song list"
         description="Song list for Emily Fox's live performances on Twitch."
@@ -263,7 +263,7 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
       )}
 
       {user.isAdmin && <AddSongForm />}
-    </Layout>
+    </LiveLayout>
   );
 };
 

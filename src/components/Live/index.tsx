@@ -4,7 +4,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
-import Layout from 'components/Layout';
+import { LiveLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import { twitch } from 'utils/links';
@@ -29,7 +29,7 @@ const TwitchEmbedWrapper = styled.div`
 `;
 
 const TwitchEmbed: React.FC<RouteComponentProps> = ({ location }) => (
-  <Layout liveLayout>
+  <LiveLayout>
     <SEO
       title="Live on Twitch"
       description="Watch Emily Fox live on Twitch."
@@ -44,7 +44,7 @@ const TwitchEmbed: React.FC<RouteComponentProps> = ({ location }) => (
         controls
       />
     </TwitchEmbedWrapper>
-  </Layout>
+  </LiveLayout>
 );
 
 export default TwitchEmbed;
