@@ -1,5 +1,5 @@
 import { useStaticQuery, graphql } from 'gatsby';
-import React from 'react';
+import React, { useLayoutEffect, useReducer } from 'react';
 
 import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
@@ -116,9 +116,19 @@ const liveNavButtons = (
   </>
 );
 
-export const LiveLayout: React.FC = ({ children }) => (
-  <>
-    <LiveHeader />
-    <Layout navButtons={liveNavButtons}>{children}</Layout>
-  </>
-);
+export const LiveLayout: React.FC = ({ children }) => {
+  const [renderLayout, setRenderLayout] = useReducer(() => true, false);
+
+  // We must only render nav in the client otherwise we get hydration issues due
+  // to the different routes.
+  useLayoutEffect(() => {
+    setRenderLayout();
+  }, []);
+
+  return (
+    <>
+      <LiveHeader />
+      {renderLayout && <Layout navButtons={liveNavButtons}>{children}</Layout>}
+    </>
+  );
+};
