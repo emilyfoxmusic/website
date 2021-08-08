@@ -69,11 +69,11 @@ const Live: React.FC<PageProps> = () => {
   return (
     <>
       <Router basepath="/live">
-        <Queue path="/queue" />
-        <Songlist path="/songlist" />
+        <Queue path="/queue/" />
+        <Songlist path="/songlist/" />
         <TwitchEmbed path="/" />
-        <Overlay path="/overlay" />
-        <NotFoundPage default />
+        <Overlay path="/overlay/" />
+        <NotFoundPage liveLayout default />
       </Router>
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
       <iframe
