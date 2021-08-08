@@ -34,9 +34,9 @@ export const buttonStyle = css`
   transition: all 0.2s ease-out;
 
   ${largeBreakpoint`
-  font-size: 1.5rem;
-  padding: 12px 24px;
-`}
+    font-size: 1.5rem;
+    padding: 12px 24px;
+  `}
 
   &:hover,
   &:focus {
