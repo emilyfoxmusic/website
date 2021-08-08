@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Router } from '@reach/router';
-import { navigate, PageProps } from 'gatsby';
+import { PageProps } from 'gatsby';
 import React, { Dispatch, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,19 +18,10 @@ import { WS_CONNECT, WS_DISCONNECT } from 'state/websocket/actions';
 
 import NotFoundPage from './404';
 
-const Live: React.FC<PageProps> = ({ location }) => {
+const Live: React.FC<PageProps> = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<Dispatch<RootAction>>();
   const authFrameRef = useRef<HTMLIFrameElement>(null);
-
-  // Gatsby doesn't replace client site routed URLs, and if they don't match exactly
-  // then the nav buttons don't work properly, so fix it here manually.
-  useEffect(() => {
-    const currentPath = location.pathname;
-    if (!currentPath.endsWith('/')) {
-      navigate(`${currentPath}/`, { replace: true });
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     dispatch({ type: WS_CONNECT });
