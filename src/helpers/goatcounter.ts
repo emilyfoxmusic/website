@@ -49,4 +49,4 @@ export const trackSocialsLinkClick = (name: string): void =>
 export const trackSocialsMusicClick = (name: string): void =>
   trackEvent(name, `music-socials:${name}`);
 
-export const trackCta = (name: string): void => trackEvent(name, `cta:${name}`);
+export const trackCta = (name: string): void => trackEvent(name, `cta:${kebabCase(name)}`);
