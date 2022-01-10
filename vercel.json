@@ -1,4 +1,11 @@
 {
-    "trailingSlash": true,
-    "rewrites": [{ "source": "/live/(.*)", "destination": "/live/index.html" }]
+  "trailingSlash": true,
+  "rewrites": [{ "source": "/live/(.*)", "destination": "/live/index.html" }],
+  "redirects": [
+    {
+      "source": "/contact/",
+      "destination": "/links/",
+      "permanent": true
+    }
+  ]
 }
