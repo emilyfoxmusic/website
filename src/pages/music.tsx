@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
-import { PageHeading } from 'components/Typography';
+import { PageHeading, PageSubheading } from 'components/Typography';
 import Video from 'components/Video';
 import { trackSocialsMusicClick } from 'helpers/goatcounter';
 import { bandcamp, youtube } from 'utils/links';
@@ -23,7 +23,12 @@ const BandcampEmbed = styled.iframe`
 
 const VideoContainer = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-bottom: 32px;
+`;
+
+const CenteredParagraph = styled.p`
+  text-align: center;
+  margin-top: 12px;
 `;
 
 const Music: React.FC<PageProps> = ({ location }) => (
@@ -34,21 +39,17 @@ const Music: React.FC<PageProps> = ({ location }) => (
       location={location}
     />
     <PageHeading>Music</PageHeading>
-    <p>
+
+    <PageSubheading>Latest album: Where Feelings Grow</PageSubheading>
+    <CenteredParagraph>
       All my original music is available on{' '}
       <TextLink
         href={bandcamp}
         onClick={(): void => trackSocialsMusicClick('Bandcamp')}>
         my bandcamp page
-      </TextLink>{' '}
-      and all my videos can be watched on{' '}
-      <TextLink
-        href={youtube}
-        onClick={(): void => trackSocialsMusicClick('YouTube')}>
-        my YouTube channel
       </TextLink>
       .
-    </p>
+    </CenteredParagraph>
     <CenteredContainer>
       <BandcampEmbed
         src="https://bandcamp.com/EmbeddedPlayer/album=1322260653/size=large/bgcol=ffffff/linkcol=de270f/artwork=small/transparent=true/"
@@ -58,6 +59,17 @@ const Music: React.FC<PageProps> = ({ location }) => (
         </a>
       </BandcampEmbed>
     </CenteredContainer>
+
+    <PageSubheading>YouTube videos</PageSubheading>
+    <CenteredParagraph>
+      Visit{' '}
+      <TextLink
+        href={youtube}
+        onClick={(): void => trackSocialsMusicClick('YouTube')}>
+        my YouTube channel
+      </TextLink>{' '}
+      for the full selection.
+    </CenteredParagraph>
     <VideoContainer>
       <Video
         title="Hostages - The Howl and the Hum cover"

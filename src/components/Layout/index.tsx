@@ -63,24 +63,24 @@ const Layout: React.FC<LayoutProps> = ({
 const standardNavButtons = (
   <>
     <InternalButtonLink
-      to="/music/"
-      onClick={(): void => trackInternalNav('Music')}>
-      music
-    </InternalButtonLink>
-    <InternalButtonLink
       to="/bio/"
       onClick={(): void => trackInternalNav('Bio')}>
       bio
     </InternalButtonLink>
     <InternalButtonLink
-      to="/contact/"
-      onClick={(): void => trackInternalNav('Contact')}>
-      contact
+      to="/music/"
+      onClick={(): void => trackInternalNav('Music')}>
+      listen
     </InternalButtonLink>
     <InternalButtonLink
       to="/tech/"
       onClick={(): void => trackInternalNav('Tech')}>
       tech
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/links/"
+      onClick={(): void => trackInternalNav('Links')}>
+      links
     </InternalButtonLink>
     <InternalButtonLink
       to="/live/"

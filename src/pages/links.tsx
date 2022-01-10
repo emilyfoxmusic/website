@@ -1,30 +1,30 @@
 import { PageProps } from 'gatsby';
 import React from 'react';
+import styled from 'styled-components';
 
-import Header from 'components/Header';
-import { PageContainer } from 'components/Layout/styles';
-import Links from 'components/Links';
+import { StandardLayout } from 'components/Layout';
+import LinksComponent from 'components/Links';
 import SEO from 'components/SEO';
+import { PageHeading } from 'components/Typography';
 
-const LinksPage: React.FC<PageProps> = ({ location }) => {
-  return (
-    <>
-      <SEO title="Links" location={location} hideFromCrawlers />
-      <Header />
-      <PageContainer>
-        <Links
-          customLinks={[
-            {
-              href: '/',
-              title: 'Website',
-              icon: 'globe',
-              description: 'The central hub for everything Emily Fox Music.',
-            },
-          ]}
-        />
-      </PageContainer>
-    </>
-  );
-};
+const MaxWidthContainer = styled.div`
+  max-width: 550px;
+  margin: auto;
+  text-align: center;
+`;
 
-export default LinksPage;
+const Links: React.FC<PageProps> = ({ location }) => (
+  <StandardLayout>
+    <SEO
+      title="Contact"
+      description="Social media links and contact details for Emily Fox Music."
+      location={location}
+    />
+    <MaxWidthContainer>
+      <PageHeading>Links</PageHeading>
+      <LinksComponent showDescriptions />
+    </MaxWidthContainer>
+  </StandardLayout>
+);
+
+export default Links;

@@ -43,8 +43,8 @@ export const trackSocialsHeaderClick = (name: string): void =>
 export const trackSocialsBioClick = (name: string): void =>
   trackEvent(name, `bio-socials:${name}`);
 
-export const trackSocialsContactClick = (name: string): void =>
-  trackEvent(name, `contact-socials:${name}`);
+export const trackSocialsLinkClick = (name: string): void =>
+  trackEvent(name, `links-socials:${name}`);
 
 export const trackSocialsMusicClick = (name: string): void =>
   trackEvent(name, `music-socials:${name}`);

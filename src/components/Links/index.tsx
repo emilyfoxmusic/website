@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { trackSocialsContactClick } from 'helpers/goatcounter';
+import { trackSocialsLinkClick } from 'helpers/goatcounter';
 import {
   youtube,
   bandcamp,
@@ -81,7 +81,7 @@ const Links: React.FC<LinksProps> = ({ customLinks, showDescriptions }) => (
           <ExternalButtonLinkNarrow
             aria-describedby={showDescriptions ? title : undefined}
             href={href}
-            onClick={(): void => trackSocialsContactClick(title)}
+            onClick={(): void => trackSocialsLinkClick(title)}
             title={title}>
             <IconWithMargin icon={icon} aria-hidden />
             {title}
