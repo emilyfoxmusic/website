@@ -8,13 +8,11 @@ export const PageHeadingNoUnderline = styled.h1`
   font-weight: normal;
   text-align: center;
 
-  font-size: 1.5rem;
-  line-height: 1.5rem;
+  font-size: 2rem;
+  line-height: 2.5rem;
   margin: 24px 0;
 
   ${largeBreakpoint`
-    font-size: 2rem;
-    line-height: 2.5rem;
     margin: 32px 0;
   `}
 `;
