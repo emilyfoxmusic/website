@@ -1,3 +1,4 @@
+import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import { trackSocialsLinkClick } from 'helpers/goatcounter';
@@ -20,7 +21,7 @@ import {
 type LinkInfo = {
   href: string;
   title: string;
-  icon: string | [string, string];
+  icon: FontAwesomeIconProps['icon'];
   description?: string;
 };
 

@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
 import Arrow from 'components/Arrow';
-import { filterAriaProps } from 'utils/aria';
 
 import { ButtonAnchor } from './styles';
 
@@ -10,7 +9,8 @@ type ButtonLinkProps = {
   className?: string;
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
   title: string;
-} & Record<string, string>;
+  'aria-describedby'?: string;
+};
 
 const ExternalButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
   href,
@@ -26,8 +26,7 @@ const ExternalButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
     onClick={onClick}
     target="_blank"
     aria-label={`${title} (opens in a new tab)`}
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    {...filterAriaProps(props)}>
+    aria-describedby={props['aria-describedby']}>
     {children}
     <Arrow />
   </ButtonAnchor>
