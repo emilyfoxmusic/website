@@ -16,7 +16,7 @@ const MaxWidthContainer = styled.div`
 const Links: React.FC<PageProps> = ({ location }) => (
   <StandardLayout>
     <SEO
-      title="Contact"
+      title="Links"
       description="Social media links and contact details for Emily Fox Music."
       location={location}
     />
