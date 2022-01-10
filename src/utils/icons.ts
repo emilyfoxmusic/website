@@ -4,6 +4,7 @@ import {
   faFacebook,
   faBandcamp,
   faTwitch,
+  faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
@@ -24,5 +25,6 @@ library.add(
   faExternalLinkAlt,
   faCircle,
   faExclamationCircle,
-  faTools
+  faTools,
+  faInstagram
 );

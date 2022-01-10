@@ -8,7 +8,7 @@ import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 import { trackSocialsContactClick } from 'helpers/goatcounter';
-import { facebook, youtube, emailAddress } from 'utils/links';
+import { youtube, emailAddress } from 'utils/links';
 
 const MaxWidthContainer = styled.div`
   max-width: 1000px;
@@ -47,14 +47,6 @@ const Contact: React.FC<PageProps> = ({ location }) => (
           onClick={(): void => trackSocialsContactClick('YouTube')}>
           <IconWithMargin icon={['fab', 'youtube']} aria-hidden />
           YouTube
-        </TextLink>
-      </LinkWrapper>
-      <LinkWrapper>
-        <TextLink
-          href={facebook}
-          onClick={(): void => trackSocialsContactClick('Facebook')}>
-          <IconWithMargin icon={['fab', 'facebook']} aria-hidden />
-          Facebook
         </TextLink>
       </LinkWrapper>
     </MaxWidthContainer>
