@@ -2,7 +2,7 @@ import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
-import ButtonLink from 'components/ButtonLink';
+import InternalButtonLink from 'components/InternalButtonLink';
 import { StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeadingNoUnderline } from 'components/Typography';
@@ -35,7 +35,7 @@ const WhereFeelingsGrow = styled(WhereFeelingsGrowImg)`
   `}
 `;
 
-const MusicButton = styled(ButtonLink)`
+const MusicButton = styled(InternalButtonLink)`
   width: 100px !important;
   margin: 32px auto;
 

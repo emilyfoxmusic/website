@@ -3,14 +3,14 @@ import { RouteComponentProps } from '@reach/router';
 import React from 'react';
 import styled from 'styled-components';
 
-import ButtonLink from 'components/ButtonLink';
+import InternalButtonLink from 'components/InternalButtonLink';
 import { LiveLayout, StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeading } from 'components/Typography';
 import { largeBreakpoint } from 'helpers/breakpoints';
 import { trackCta } from 'helpers/goatcounter';
 
-const MusicButton = styled(ButtonLink)`
+const MusicButton = styled(InternalButtonLink)`
   max-width: 250px;
 
   ${largeBreakpoint`
