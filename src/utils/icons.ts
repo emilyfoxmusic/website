@@ -4,6 +4,8 @@ import {
   faFacebook,
   faBandcamp,
   faTwitch,
+  faInstagram,
+  faSoundcloud,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
@@ -12,6 +14,7 @@ import {
   faCircle,
   faExclamationCircle,
   faTools,
+  faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -24,5 +27,8 @@ library.add(
   faExternalLinkAlt,
   faCircle,
   faExclamationCircle,
-  faTools
+  faTools,
+  faInstagram,
+  faSoundcloud,
+  faGlobe
 );

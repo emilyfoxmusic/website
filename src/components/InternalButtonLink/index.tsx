@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 
-import { Arrow, Button } from './styles';
+import Arrow from 'components/Arrow';
+
+import { ButtonGatsbyLink } from './styles';
 
 type ButtonLinkProps = {
   to: string;
@@ -9,14 +11,14 @@ type ButtonLinkProps = {
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
-const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
+const InternalButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
   to,
   className,
   onClick,
   back,
   children,
 }) => (
-  <Button
+  <ButtonGatsbyLink
     to={to}
     activeClassName="current-page"
     className={className}
@@ -24,7 +26,7 @@ const ButtonLink: React.FC<PropsWithChildren<ButtonLinkProps>> = ({
     {back && <Arrow $back />}
     {children}
     {!back && <Arrow />}
-  </Button>
+  </ButtonGatsbyLink>
 );
 
-export default ButtonLink;
+export default InternalButtonLink;

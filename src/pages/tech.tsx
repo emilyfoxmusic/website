@@ -1,11 +1,11 @@
-import { PageProps } from 'gatsby';
+import { navigate, PageProps } from 'gatsby';
 import React from 'react';
 
 import { StandardLayout } from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
-import { trackExternalLinkClick } from 'helpers/goatcounter';
+import { trackCta, trackExternalLinkClick } from 'helpers/goatcounter';
 
 const Tech: React.FC<PageProps> = ({ location }) => (
   <StandardLayout>
@@ -63,19 +63,12 @@ const Tech: React.FC<PageProps> = ({ location }) => (
         </TextLink>
       </li>
       <li>
-        <b>Synthesisers</b>:{' '}
+        <b>Synthesiser</b>:{' '}
         <TextLink
           openInNewTab
           href="https://zynaddsubfx.sourceforge.io/"
           onClick={(): void => trackExternalLinkClick('ZynAddSubFX')}>
           ZynAddSubFX
-        </TextLink>{' '}
-        and{' '}
-        <TextLink
-          openInNewTab
-          href="https://tytel.org/helm/"
-          onClick={(): void => trackExternalLinkClick('Helm')}>
-          Helm
         </TextLink>
       </li>
       <li>
@@ -117,7 +110,17 @@ const Tech: React.FC<PageProps> = ({ location }) => (
       </li>
     </ul>
     <p>
-      I'm always up for chatting FOSS if you have any questions - come say hi!
+      I'm always up for chatting FOSS if you have any questions -{' '}
+      <TextLink
+        href="/links/"
+        onClick={e => {
+          e.preventDefault();
+          trackCta('Tech - say hi');
+          navigate('/links/');
+        }}>
+        come say hi
+      </TextLink>
+      !
     </p>
   </StandardLayout>
 );

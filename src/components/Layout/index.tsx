@@ -1,8 +1,8 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import React, { useLayoutEffect, useReducer } from 'react';
 
-import ButtonLink from 'components/ButtonLink';
 import Header from 'components/Header';
+import InternalButtonLink from 'components/InternalButtonLink';
 import LiveHeader from 'components/LiveHeader';
 import PrivacyBanner from 'components/PrivacyBanner';
 import { trackInternalNav } from 'helpers/goatcounter';
@@ -62,23 +62,31 @@ const Layout: React.FC<LayoutProps> = ({
 
 const standardNavButtons = (
   <>
-    <ButtonLink to="/music/" onClick={(): void => trackInternalNav('Music')}>
-      music
-    </ButtonLink>
-    <ButtonLink to="/bio/" onClick={(): void => trackInternalNav('Bio')}>
+    <InternalButtonLink
+      to="/bio/"
+      onClick={(): void => trackInternalNav('Bio')}>
       bio
-    </ButtonLink>
-    <ButtonLink
-      to="/contact/"
-      onClick={(): void => trackInternalNav('Contact')}>
-      contact
-    </ButtonLink>
-    <ButtonLink to="/tech/" onClick={(): void => trackInternalNav('Tech')}>
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/music/"
+      onClick={(): void => trackInternalNav('Music')}>
+      listen
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/tech/"
+      onClick={(): void => trackInternalNav('Tech')}>
       tech
-    </ButtonLink>
-    <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/links/"
+      onClick={(): void => trackInternalNav('Links')}>
+      links
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/live/"
+      onClick={(): void => trackInternalNav('Live')}>
       live
-    </ButtonLink>
+    </InternalButtonLink>
   </>
 );
 
@@ -97,22 +105,27 @@ export const StandardLayout: React.FC<StandardLayoutProps> = ({
 
 const liveNavButtons = (
   <>
-    <ButtonLink back to="/" onClick={(): void => trackInternalNav('Back')}>
+    <InternalButtonLink
+      back
+      to="/"
+      onClick={(): void => trackInternalNav('Back')}>
       Back
-    </ButtonLink>
-    <ButtonLink to="/live/" onClick={(): void => trackInternalNav('Live')}>
+    </InternalButtonLink>
+    <InternalButtonLink
+      to="/live/"
+      onClick={(): void => trackInternalNav('Live')}>
       Watch
-    </ButtonLink>
-    <ButtonLink
+    </InternalButtonLink>
+    <InternalButtonLink
       to="/live/songlist/"
       onClick={(): void => trackInternalNav('Songlist')}>
       Song list
-    </ButtonLink>
-    <ButtonLink
+    </InternalButtonLink>
+    <InternalButtonLink
       to="/live/queue/"
       onClick={(): void => trackInternalNav('Queue')}>
       Current queue
-    </ButtonLink>
+    </InternalButtonLink>
   </>
 );
 

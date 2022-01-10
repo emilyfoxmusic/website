@@ -26,7 +26,7 @@ export const buttonStyle = css`
   font-family: ${fontFamily};
   text-decoration: none;
 
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   line-height: 1.5rem;
 
   margin: 16px 0;
@@ -34,7 +34,6 @@ export const buttonStyle = css`
   transition: all 0.2s ease-out;
 
   ${largeBreakpoint`
-    font-size: 1.5rem;
     padding: 12px 24px;
   `}
 

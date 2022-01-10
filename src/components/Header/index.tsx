@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import { trackInternalNav, trackSocialsHeaderClick } from 'helpers/goatcounter';
-import { youtube, bandcamp, facebook, emailAddress, twitch } from 'utils/links';
+import { youtube, bandcamp, instagram, twitch } from 'utils/links';
 
 import { HeaderContainer, LeftDiv, RightDiv, SocialMedia } from './styles';
 
@@ -25,12 +25,12 @@ const Header: React.FC = () => (
         <FontAwesomeIcon icon={['fab', 'youtube']} aria-hidden />
       </a>
       <a
-        href={facebook}
-        aria-label="Facebook"
-        onClick={(): void => trackSocialsHeaderClick('Facebook')}
+        href={instagram}
+        aria-label="Instagram"
+        onClick={(): void => trackSocialsHeaderClick('Instagram')}
         target="_blank"
         rel="noreferrer">
-        <FontAwesomeIcon icon={['fab', 'facebook']} aria-hidden />
+        <FontAwesomeIcon icon={['fab', 'instagram']} aria-hidden />
       </a>
       <a
         href={twitch}
@@ -47,14 +47,6 @@ const Header: React.FC = () => (
         target="_blank"
         rel="noreferrer">
         <FontAwesomeIcon icon={['fab', 'bandcamp']} aria-hidden />
-      </a>
-      <a
-        href={`mailto:${emailAddress}`}
-        aria-label="Email"
-        onClick={(): void => trackSocialsHeaderClick('Email')}
-        target="_blank"
-        rel="noreferrer">
-        <FontAwesomeIcon icon="envelope" aria-hidden />
       </a>
     </SocialMedia>
   </header>
