@@ -1,7 +1,11 @@
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import { trackSocialsLinkClick } from 'helpers/goatcounter';
+import TextLink from 'components/TextLink';
+import {
+  trackExternalLinkClick,
+  trackSocialsLinkClick,
+} from 'helpers/goatcounter';
 import {
   youtube,
   bandcamp,
@@ -22,7 +26,7 @@ type LinkInfo = {
   href: string;
   title: string;
   icon: FontAwesomeIconProps['icon'];
-  description?: string;
+  description?: ReactNode;
 };
 
 const links: LinkInfo[] = [
@@ -56,15 +60,26 @@ const links: LinkInfo[] = [
     href: soundcloud,
     title: 'Soundcloud',
     icon: ['fab', 'soundcloud'],
-    description:
-      'For the keen-beans: I post some slightly less polished original music on Soundcloud, for example when I get round to participating in the songaweek reddit challenge.',
+    description: (
+      <>
+        For the keen-beans: I post some slightly less polished original music on
+        Soundcloud, for example when I create something for the{' '}
+        <TextLink
+          href="https://www.reddit.com/r/songaweek/"
+          onClick={() => trackExternalLinkClick('Songaweek')}
+          openInNewTab>
+          songaweek reddit challenge
+        </TextLink>
+        .
+      </>
+    ),
   },
   {
     href: `mailto:${emailAddress}`,
     title: 'Email',
     icon: 'envelope',
     description:
-      'If you just want to send me a message, feel free to drop me an email.',
+      "If you just want to send me a plain ol' message, feel free to drop me an email.",
   },
 ];
 
