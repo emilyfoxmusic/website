@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import SEO from 'components/SEO';
@@ -9,16 +9,17 @@ import { RootState } from 'state/types';
 import { red, green } from 'styles/colors';
 
 import {
-  RequestStatus,
+  BarLabel,
+  BarValue,
   RequestIcon,
-  Social,
   SocialIcon,
   UnderlinedText,
-  UnderlinedTextWithMargin,
-  SectionHeading,
-  HeadingRow,
-  PageContainer,
-  Table,
+  BottomBar,
+  Requests,
+  Youtube,
+  Instagram,
+  Bandcamp,
+  Website,
 } from './styles';
 
 const Overlay: React.FC<RouteComponentProps> = ({ location }) => {
@@ -30,71 +31,51 @@ const Overlay: React.FC<RouteComponentProps> = ({ location }) => {
     <>
       <SEO title="Overlay" location={location} hideFromCrawlers />
       <header>
-        <RequestStatus>
-          Requests are
-          <UnderlinedTextWithMargin>
+        <Youtube>
+          <SocialIcon icon={['fab', 'youtube']} />
+          <span>youtube.com/c/emilyfoxmusic</span>
+        </Youtube>
+        <Instagram>
+          <SocialIcon icon={['fab', 'instagram']} />
+          <span style={{ marginTop: '3px' }}>@emilyfox.music</span>
+        </Instagram>
+        <Bandcamp>
+          <SocialIcon icon={['fab', 'bandcamp']} />
+          <span>emilyfoxmusic.bandcamp.com</span>
+        </Bandcamp>
+        <Website>
+          <SocialIcon icon="globe" />
+          <span>emilyfoxmusic.co.uk</span>
+        </Website>
+      </header>
+      <BottomBar>
+        <Requests>
+          Requests are{' '}
+          <UnderlinedText>
             {requestStatus.requestsOpen ? 'open' : 'closed'}
-          </UnderlinedTextWithMargin>
+          </UnderlinedText>
           <RequestIcon
             icon="circle"
             style={{ color: requestStatus.requestsOpen ? green : red }}
           />
-        </RequestStatus>
-        <Social>
-          <SocialIcon icon={['fab', 'youtube']} />
-          <SocialIcon icon={['fab', 'facebook']} />
-          <SocialIcon icon={['fab', 'twitch']} />
-          <SocialIcon icon={['fab', 'bandcamp']} />
-          <UnderlinedText>emilyfox</UnderlinedText>music
-        </Social>
-      </header>
-      <PageContainer>
-        <Table>
-          <thead>
-            <tr>
-              <th colSpan={3}>
-                <SectionHeading>Currently playing</SectionHeading>
-              </th>
-            </tr>
-            <HeadingRow>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Requested by</th>
-            </HeadingRow>
-          </thead>
-          <tbody>
-            {topOfQueue.length ? (
-              topOfQueue.map((song, i) => (
-                <Fragment key={`${song.songId}-${song.priority}`}>
-                  <tr>
-                    <td>{song.title}</td>
-                    <td>{song.artist}</td>
-                    <td>{song.requestedBy}</td>
-                  </tr>
-                  {i === 0 && (
-                    <>
-                      <tr>
-                        <th colSpan={3}>
-                          <SectionHeading>Up next</SectionHeading>
-                        </th>
-                      </tr>
-                      {topOfQueue.length === 1 && (
-                        <tr>
-                          <td colSpan={3}>-</td>
-                        </tr>
-                      )}
-                    </>
-                  )}
-                </Fragment>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={3}>-</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </PageContainer>
+        </Requests>
+        <div>
+          <BarLabel>Currently playing: </BarLabel>
+          <BarValue>
+            {topOfQueue.length
+              ? `${topOfQueue[0].title} - ${topOfQueue[0].artist}`
+              : '-'}
+          </BarValue>
+        </div>
+        <div>
+          <BarLabel>Up next: </BarLabel>
+          <BarValue>
+            {topOfQueue.length > 1
+              ? `${topOfQueue[1].title} - ${topOfQueue[1].artist}`
+              : '-'}
+          </BarValue>
+        </div>
+      </BottomBar>
     </>
   );
 };

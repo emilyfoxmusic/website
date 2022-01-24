@@ -16,6 +16,9 @@ export const wrapRootElement = ({ element }) => (
 );
 
 const StyledToastsContainer = styled(ToastContainer)`
+  /* Extra bottom margin to avoid clashing with bar on overlay*/
+  margin-bottom: 16px;
+
   .Toastify__toast {
     font-family: Arial, sans-serif;
   }
