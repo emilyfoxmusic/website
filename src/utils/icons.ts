@@ -15,6 +15,7 @@ import {
   faExclamationCircle,
   faTools,
   faGlobe,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -30,5 +31,6 @@ library.add(
   faTools,
   faInstagram,
   faSoundcloud,
-  faGlobe
+  faGlobe,
+  faSearch
 );

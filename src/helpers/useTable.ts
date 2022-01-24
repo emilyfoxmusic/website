@@ -25,6 +25,7 @@ export type SortInfo<TData extends DataObject> = {
 export type PaginationInfo = {
   currentPage: number;
   lastPage: number;
+  totalResults: number;
   pageSize: number | undefined;
   setNextPage: () => void;
   setPreviousPage: () => void;
@@ -52,6 +53,7 @@ const useTable = <TData extends DataObject>(
   data: TableData<TData>,
   sortConfig: SortConfig<TData>,
   defaultSortKey: keyof TData & string,
+  filterFn?: (item: TData) => boolean,
   defaultPageSize?: number
 ): ProcessedTableData<TData> => {
   const [currentSort, setCurrentSort] = useState<CurrentSort<TData>>({
@@ -61,22 +63,10 @@ const useTable = <TData extends DataObject>(
   const [pageSize, setPageSize] = useState(defaultPageSize);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const lastPage = pageSize ? Math.ceil(data.length / pageSize) : 1;
 
-  const setNextPage = (): void =>
-    setCurrentPage(state => (state + 1 <= lastPage ? state + 1 : state));
+  const filteredData = filterFn ? data.filter(filterFn) : data;
 
-  const setPreviousPage = (): void =>
-    setCurrentPage(state => (state - 1 > 0 ? state - 1 : state));
-
-  const setPage = (page: number): void => {
-    if (page < 0 || page > lastPage) {
-      throw new Error(`Page ${page} doesn't exist!`);
-    }
-    setCurrentPage(page);
-  };
-
-  const sortedData = data.sort((a, b) => {
+  const filteredAndSortedData = filteredData.sort((a, b) => {
     const comparison = recursivelyCompareObjects(
       a,
       b,
@@ -85,6 +75,27 @@ const useTable = <TData extends DataObject>(
     );
     return currentSort.sortOrder === 'ascending' ? comparison : -comparison;
   });
+
+  const lastPage = pageSize ? Math.ceil(filteredData.length / pageSize) : 1;
+
+  const adjustedCurrentPage = currentPage > lastPage ? lastPage : currentPage;
+
+  const setNextPage = (): void =>
+    setCurrentPage(state =>
+      adjustedCurrentPage + 1 <= lastPage ? adjustedCurrentPage + 1 : state
+    );
+
+  const setPreviousPage = (): void =>
+    setCurrentPage(state =>
+      adjustedCurrentPage - 1 > 0 ? adjustedCurrentPage - 1 : state
+    );
+
+  const setPage = (page: number): void => {
+    if (page < 0 || page > lastPage) {
+      throw new Error(`Page ${page} doesn't exist!`);
+    }
+    setCurrentPage(page);
+  };
 
   const toggleSort = (key: keyof TData & string): void =>
     setCurrentSort(state => {
@@ -137,7 +148,7 @@ const useTable = <TData extends DataObject>(
     if (!pageSize) {
       return;
     }
-    const firstResultOnPage = pageSize * (currentPage - 1);
+    const firstResultOnPage = pageSize * (adjustedCurrentPage - 1);
     const updatedPage = Math.ceil((firstResultOnPage + 1) / size);
 
     setPageSize(size);
@@ -146,8 +157,11 @@ const useTable = <TData extends DataObject>(
 
   return {
     data: pageSize
-      ? sortedData.slice(pageSize * (currentPage - 1), pageSize * currentPage)
-      : sortedData,
+      ? filteredAndSortedData.slice(
+          pageSize * (adjustedCurrentPage - 1),
+          pageSize * adjustedCurrentPage
+        )
+      : filteredAndSortedData,
     sort: {
       currentSort,
       toggleSort,
@@ -157,8 +171,9 @@ const useTable = <TData extends DataObject>(
       toggleDirection,
     },
     pagination: {
-      currentPage,
+      currentPage: adjustedCurrentPage,
       lastPage,
+      totalResults: filteredData.length,
       pageSize,
       setNextPage,
       setPreviousPage,

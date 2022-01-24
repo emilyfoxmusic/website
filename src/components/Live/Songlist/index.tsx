@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -29,11 +29,13 @@ import {
   TableBlock,
   XLargeBreakpointOnlyHeaderCell,
   XLargeBreakpointOnlyCell,
-  VisuallyHiddenSortText,
   TwitchIcon,
   TwitchLoginButton,
   TableControls,
-  SelectWithMargin,
+  SelectWithLeftMargin,
+  InputWithLeftMargin,
+  LabelWithTopMargin,
+  NoSongsMatchMessage,
 } from './styles';
 
 import {
@@ -50,6 +52,8 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
     (state: RootState) => state
   );
   const dispatch = useDispatch<Dispatch<QueueRequestAddAction>>();
+
+  const [search, setSearch] = useState('');
 
   const augmentedSongs = songs.map(song => {
     const queueIndex = queue.findIndex(s => s.songId === song.id);
@@ -89,10 +93,15 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
     },
   };
 
+  const filterFn = (song: typeof augmentedSongs[0]): boolean =>
+    song.title.toLowerCase().includes(search.toLowerCase()) ||
+    song.artist.toLowerCase().includes(search.toLowerCase());
+
   const { data, sort, pagination } = useTable(
     augmentedSongs,
     sortConfig,
     'artist',
+    filterFn,
     10
   );
 
@@ -136,9 +145,126 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
       {songs.length ? (
         <TableBlock>
           <TableControls>
-            <label htmlFor="pageSize">
+            <LabelWithTopMargin htmlFor="search">
+              <FontAwesomeIcon icon="search" aria-label="Search" />
+              <InputWithLeftMargin
+                id="search"
+                name="search"
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+            </LabelWithTopMargin>
+            <ScreenreaderPagination
+              announceChanges
+              pageSize={pagination.pageSize ?? 0}
+              currentPage={pagination.currentPage}
+              total={pagination.totalResults}
+              search={search}
+              sort={sort.currentSortText}
+            />
+            <Pagination {...pagination} />
+          </TableControls>
+          {data.length ? (
+            <Table>
+              <thead>
+                <TableRow>
+                  <LargeBreakpointOnlyHeaderCell
+                    $width="120px"
+                    aria-sort={sort.ariaSort('positionInQueue')}>
+                    <span aria-label="Position in queue">#Queue</span>
+                    <SortButton
+                      sort={sort}
+                      sortKey="positionInQueue"
+                      onSort={resetPagination}
+                    />
+                  </LargeBreakpointOnlyHeaderCell>
+                  <TableHeaderCell aria-sort={sort.ariaSort('title')}>
+                    Title
+                    <SortButton
+                      sort={sort}
+                      sortKey="title"
+                      onSort={resetPagination}
+                    />
+                  </TableHeaderCell>
+                  <TableHeaderCell
+                    $widthLarge="18%"
+                    aria-sort={sort.ariaSort('artist')}>
+                    Artist
+                    <SortButton
+                      sort={sort}
+                      sortKey="artist"
+                      onSort={resetPagination}
+                    />
+                  </TableHeaderCell>
+                  <XLargeBreakpointOnlyHeaderCell
+                    $width="130px"
+                    aria-sort={sort.ariaSort('numberOfPlays')}>
+                    <span aria-label="Number of plays">#Plays</span>
+                    <SortButton
+                      sort={sort}
+                      sortKey="numberOfPlays"
+                      onSort={resetPagination}
+                    />
+                  </XLargeBreakpointOnlyHeaderCell>
+                  <MedBreakpointOnlyHeaderCell
+                    $width="123px"
+                    $widthLarge="180px"
+                    aria-sort={sort.ariaSort('lastPlayed')}>
+                    Last played
+                    <SortButton
+                      sort={sort}
+                      sortKey="lastPlayed"
+                      onSort={resetPagination}
+                    />
+                  </MedBreakpointOnlyHeaderCell>
+                  {enableRequests && (
+                    <TableHeaderCell $width="42px" $widthLarge="96px" />
+                  )}
+                </TableRow>
+              </thead>
+              <tbody>
+                {data.map(song => (
+                  <TableRow
+                    key={`${song.artist}-${song.title}`}
+                    $background={song.isInQueue ? lightRed : undefined}>
+                    <LargeBreakpointOnlyCell>
+                      {song.isInQueue ? song.positionInQueue : ''}
+                    </LargeBreakpointOnlyCell>
+                    <TitleCell title={song.title} artist={song.artist} />
+                    <td>{song.artist}</td>
+                    <XLargeBreakpointOnlyCell>
+                      {song.numberOfPlays}
+                    </XLargeBreakpointOnlyCell>
+                    <MedBreakpointOnlyCell>
+                      {formatTimeAgo(song.lastPlayed)}
+                    </MedBreakpointOnlyCell>
+                    {enableRequests && (
+                      <td>
+                        {!song.isInQueue && (
+                          <ActionButton
+                            aria-label={`Request ${song.title} by ${song.artist}`}
+                            type="button"
+                            onClick={() => requestSong(song.id)}>
+                            <MobileOnly>Req</MobileOnly>
+                            <LargeBreakpointOnly>Request</LargeBreakpointOnly>
+                          </ActionButton>
+                        )}
+                      </td>
+                    )}
+                  </TableRow>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <NoSongsMatchMessage>
+              No songs match the search 😭
+            </NoSongsMatchMessage>
+          )}
+          <TableControls>
+            <LabelWithTopMargin htmlFor="pageSize">
               Results per page
-              <SelectWithMargin
+              <SelectWithLeftMargin
                 id="pageSize"
                 name="pageSize"
                 value={pagination.pageSize?.toString()}
@@ -148,118 +274,20 @@ const Songlist: React.FC<RouteComponentProps> = ({ location }) => {
                     {size}
                   </option>
                 ))}
-              </SelectWithMargin>
-            </label>
+              </SelectWithLeftMargin>
+            </LabelWithTopMargin>
             <ScreenreaderPagination
-              announceChanges
               pageSize={pagination.pageSize ?? 0}
               currentPage={pagination.currentPage}
               total={songs.length}
+              search={search}
+              sort={sort.currentSortText}
             />
             <Pagination {...pagination} />
           </TableControls>
-          <VisuallyHiddenSortText aria-live="polite">
-            Currently sorting by: {sort.currentSortText}
-          </VisuallyHiddenSortText>
-          <Table>
-            <thead>
-              <TableRow>
-                <LargeBreakpointOnlyHeaderCell
-                  $width="120px"
-                  aria-sort={sort.ariaSort('positionInQueue')}>
-                  <span aria-label="Position in queue">#Queue</span>
-                  <SortButton
-                    sort={sort}
-                    sortKey="positionInQueue"
-                    onSort={resetPagination}
-                  />
-                </LargeBreakpointOnlyHeaderCell>
-                <TableHeaderCell aria-sort={sort.ariaSort('title')}>
-                  Title
-                  <SortButton
-                    sort={sort}
-                    sortKey="title"
-                    onSort={resetPagination}
-                  />
-                </TableHeaderCell>
-                <TableHeaderCell
-                  $widthLarge="18%"
-                  aria-sort={sort.ariaSort('artist')}>
-                  Artist
-                  <SortButton
-                    sort={sort}
-                    sortKey="artist"
-                    onSort={resetPagination}
-                  />
-                </TableHeaderCell>
-                <XLargeBreakpointOnlyHeaderCell
-                  $width="130px"
-                  aria-sort={sort.ariaSort('numberOfPlays')}>
-                  <span aria-label="Number of plays">#Plays</span>
-                  <SortButton
-                    sort={sort}
-                    sortKey="numberOfPlays"
-                    onSort={resetPagination}
-                  />
-                </XLargeBreakpointOnlyHeaderCell>
-                <MedBreakpointOnlyHeaderCell
-                  $width="123px"
-                  $widthLarge="180px"
-                  aria-sort={sort.ariaSort('lastPlayed')}>
-                  Last played
-                  <SortButton
-                    sort={sort}
-                    sortKey="lastPlayed"
-                    onSort={resetPagination}
-                  />
-                </MedBreakpointOnlyHeaderCell>
-                {enableRequests && (
-                  <TableHeaderCell $width="42px" $widthLarge="96px" />
-                )}
-              </TableRow>
-            </thead>
-            <tbody>
-              {data.map(song => (
-                <TableRow
-                  key={`${song.artist}-${song.title}`}
-                  $background={song.isInQueue ? lightRed : undefined}>
-                  <LargeBreakpointOnlyCell>
-                    {song.isInQueue ? song.positionInQueue : ''}
-                  </LargeBreakpointOnlyCell>
-                  <TitleCell title={song.title} artist={song.artist} />
-                  <td>{song.artist}</td>
-                  <XLargeBreakpointOnlyCell>
-                    {song.numberOfPlays}
-                  </XLargeBreakpointOnlyCell>
-                  <MedBreakpointOnlyCell>
-                    {formatTimeAgo(song.lastPlayed)}
-                  </MedBreakpointOnlyCell>
-                  {enableRequests && (
-                    <td>
-                      {!song.isInQueue && (
-                        <ActionButton
-                          aria-label={`Request ${song.title} by ${song.artist}`}
-                          type="button"
-                          onClick={() => requestSong(song.id)}>
-                          <MobileOnly>Req</MobileOnly>
-                          <LargeBreakpointOnly>Request</LargeBreakpointOnly>
-                        </ActionButton>
-                      )}
-                    </td>
-                  )}
-                </TableRow>
-              ))}
-            </tbody>
-          </Table>
-          <ScreenreaderPagination
-            pageSize={pagination.pageSize ?? 0}
-            currentPage={pagination.currentPage}
-            total={songs.length}
-          />
-          <Pagination {...pagination} />
         </TableBlock>
       ) : (
-        <p>No songs loaded 😭</p>
+        <p>No songs available 😭</p>
       )}
 
       {user.isAdmin && <AddSongForm />}

@@ -56,12 +56,19 @@ export const TableControls = styled.div`
     align-items: center;
     flex-direction: row-reverse;
   `}
-
-  min-height: 76px;
 `;
 
-export const SelectWithMargin = styled.select`
+export const SelectWithLeftMargin = styled.select`
   margin-left: 16px;
+`;
+
+export const InputWithLeftMargin = styled.input`
+  margin-left: 16px;
+`;
+
+export const LabelWithTopMargin = styled.label`
+  margin-top: 16px;
+  display: block;
 `;
 
 export const VisuallyHiddenSortText = styled.span`
@@ -91,4 +98,9 @@ export const TwitchLoginButton = styled(Button).attrs({
   ${largeBreakpoint`
     margin-bottom: 24px;
   `}
+`;
+
+export const NoSongsMatchMessage = styled.p`
+  text-align: center;
+  margin: 40px 0 32px 0;
 `;

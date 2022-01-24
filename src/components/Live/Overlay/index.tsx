@@ -25,7 +25,7 @@ import {
 const Overlay: React.FC<RouteComponentProps> = ({ location }) => {
   const { queue, requestStatus } = useSelector((state: RootState) => state);
 
-  const { data: topOfQueue } = useTable(queue, {}, 'priority', 2);
+  const { data: topOfQueue } = useTable(queue, {}, 'priority', undefined, 2);
 
   return (
     <>
