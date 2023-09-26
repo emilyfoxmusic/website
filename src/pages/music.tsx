@@ -2,7 +2,7 @@ import { PageProps } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
-import { StandardLayout } from 'components/Layout';
+import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading, PageSubheading } from 'components/Typography';
@@ -32,7 +32,7 @@ const CenteredParagraph = styled.p`
 `;
 
 const Music: React.FC<PageProps> = ({ location }) => (
-  <StandardLayout>
+  <Layout>
     <SEO
       title="Music"
       description="Find the latest music from Emily Fox, original releases and YouTube covers."
@@ -88,7 +88,7 @@ const Music: React.FC<PageProps> = ({ location }) => (
         src="https://www.youtube.com/embed/VLP6Z93iNFI"
       />
     </VideoContainer>
-  </StandardLayout>
+  </Layout>
 );
 
 export default Music;

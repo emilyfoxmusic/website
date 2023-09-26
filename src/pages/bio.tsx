@@ -1,7 +1,7 @@
 import { PageProps } from 'gatsby';
 import React from 'react';
 
-import { StandardLayout } from 'components/Layout';
+import Layout from 'components/Layout';
 import { Rose } from 'components/Rose';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
@@ -10,7 +10,7 @@ import { trackSocialsBioClick } from 'helpers/goatcounter';
 import { bandcamp, youtube, emailAddress } from 'utils/links';
 
 const Bio: React.FC<PageProps> = ({ location }) => (
-  <StandardLayout>
+  <Layout>
     <SEO
       title="Bio"
       description="About Emily Fox and her music."
@@ -53,7 +53,7 @@ const Bio: React.FC<PageProps> = ({ location }) => (
       </TextLink>
     </p>
     <Rose />
-  </StandardLayout>
+  </Layout>
 );
 
 export default Bio;

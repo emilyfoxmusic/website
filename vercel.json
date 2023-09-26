@@ -1,6 +1,6 @@
 {
   "trailingSlash": true,
-  "rewrites": [{ "source": "/live/(.*)", "destination": "/live/index.html" }],
+  "rewrites": [],
   "redirects": [
     {
       "source": "/contact/",

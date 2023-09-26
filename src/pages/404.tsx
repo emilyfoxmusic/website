@@ -1,10 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { RouteComponentProps } from '@reach/router';
 import React from 'react';
 import styled from 'styled-components';
 
 import InternalButtonLink from 'components/InternalButtonLink';
-import { LiveLayout, StandardLayout } from 'components/Layout';
+import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import { PageHeading } from 'components/Typography';
 import { largeBreakpoint } from 'helpers/breakpoints';
@@ -23,12 +21,7 @@ const CenteredParagraph = styled.p`
   text-align: center;
 `;
 
-type NotFoundPageProps = RouteComponentProps & {
-  liveLayout?: boolean;
-};
-
-const NotFoundPage: React.FC<NotFoundPageProps> = ({ liveLayout }) => {
-  const Layout = liveLayout ? LiveLayout : StandardLayout;
+const NotFoundPage: React.FC = () => {
   return (
     <Layout>
       <SEO title="Page not found" />

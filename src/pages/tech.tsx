@@ -1,14 +1,14 @@
 import { navigate, PageProps } from 'gatsby';
 import React from 'react';
 
-import { StandardLayout } from 'components/Layout';
+import Layout from 'components/Layout';
 import SEO from 'components/SEO';
 import TextLink from 'components/TextLink';
 import { PageHeading } from 'components/Typography';
 import { trackCta, trackExternalLinkClick } from 'helpers/goatcounter';
 
 const Tech: React.FC<PageProps> = ({ location }) => (
-  <StandardLayout>
+  <Layout>
     <SEO
       title="Tech"
       description="A dive into the free and open source software the powers Emily Fox Music."
@@ -122,7 +122,7 @@ const Tech: React.FC<PageProps> = ({ location }) => (
       </TextLink>
       !
     </p>
-  </StandardLayout>
+  </Layout>
 );
 
 export default Tech;
